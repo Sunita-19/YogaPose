@@ -1,40 +1,47 @@
-import React from 'react'
-
-import './About.css'
+import React from 'react';
+import './About.css';
 
 export default function About() {
     return (
         <div className="about-container">
-            <h1 className="about-heading">About</h1>
+            <h1 className="about-heading">About Fun Yoga</h1>
             <div className="about-main">
                 <p className="about-content">
-                    This is an realtime AI based Yoga Trainer which detects your pose how well you are doing.
-                    I created this as a personal project, and I have also deployed this project
-                    so people can use it and mainly the developers can who are learning AI can learn 
-                    from this project and make their own AI or they can also improve in this project.
-                    This is an open source project, The code is available on the GitHub - <a href="https://github.com/harshbhatt7585/YogaIntelliJ">https://github.com/harshbhatt7585/YogaIntelliJ</a>
-                    
-                    This AI first predicts keypoints or coordinates of different parts of the body(basically where
-                    they are present in an image) and then it use another classification model to classify the poses if 
-                    someone is doing a pose and if AI detects that pose more than 95% probability and then it will notify you are 
-                    doing correctly(by making virtual skeleton green). I have used Tensorflow pretrained Movenet Model To Predict the 
-                    Keypoints and building a neural network top of that which uses these coordinates and classify a yoga pose.
-
-                    I have trained the model in python because of tensorflowJS we can leverage the support of browser so I converted 
-                    the keras/tensorflow model to tensorflowJS.
+                    Welcome to Fun Yoga, your all-in-one platform for a healthier, balanced lifestyle. We’re here to help you master yoga while ensuring your diet complements your fitness journey, giving you a complete wellness experience.
                 </p>
+                <p className="about-content">
+                    At Fun Yoga, we use advanced pose detection technology to provide real-time feedback on your yoga poses. Whether you're working on flexibility, strength, or balance, we guide you with personalized tips to perfect your form and avoid injury.
+                </p>
+                <p className="about-content">
+                    But we don’t stop there. We believe that fitness is more than just exercise, which is why we offer customized diet plans tailored to your activity levels and health goals. Our system analyzes your yoga practice and creates a personalized diet to keep you energized and feeling your best.
+                </p>
+
+                <h3 className="about-subheading">Why Choose Fun Yoga?</h3>
+                <ul className="about-list">
+                    <li><b>Real-time Pose Correction:</b> Get instant feedback on your yoga postures to improve your practice.</li>
+                    <li><b>Personalized Diet Plans:</b> We suggest meal plans based on your yoga routine and health needs.</li>
+                    <li><b>User-Friendly:</b> Whether you’re new to yoga or a seasoned yogi, our platform is designed to be easy to use and enjoyable.</li>
+                    <li><b>Holistic Health Approach: </b>We combine yoga and nutrition to offer a balanced approach to fitness and well-being.</li>
+                </ul>
+
+                <p className="about-content">
+                    Our mission is simple: to make yoga fun, accessible, and effective for everyone. Whether you’re looking to reduce stress, improve flexibility, or build strength, Fun Yoga is here to support your journey.
+                </p>
+                <p className="about-content">
+                    Let’s start your wellness journey together! Practice smarter, eat better, and feel amazing with Fun Yoga.
+                </p>
+
                 <div className="developer-info">
-                    <h4>About Developer</h4>
-                    <p className="about-content">I am Harsh, I am Full Stack Developer, AI Enthusiastic, Content Creator, Tutor,
-                        I love to work with technology and love to share on my youtube channel, 
-                        I hope this project will help you. 
+                    <h4>About Us</h4>
+                    <p className="about-content">
+                        We are passionate about promoting wellness through yoga and nutrition. Our team is dedicated to providing you with the tools and resources you need to succeed in your wellness journey.
                     </p>
                     <h4>Contact</h4>
-                    <a href="https://www.instagram.com/codedharsh75/"><p className="about-content">Instagram</p></a>
-                    <a href="https://www.youtube.com/channel/UCiD7kslR7lKSaPGSQ-heOWg"><p  className="about-content">Youtube</p></a>
-                    <a href="https://github.com/harshbhatt7585"><p  className="about-content">GitHub</p></a>
+                    <a href="https://github.com/Sunita-19/YogaPose/tree/main">
+                        <p className="about-content">GitHub</p>
+                    </a>
                 </div>
             </div>
         </div>
-    )
+    );
 }
