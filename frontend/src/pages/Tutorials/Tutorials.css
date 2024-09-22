@@ -1,23 +1,57 @@
+/* Ensures the gradient background covers the entire height and remains consistent */
 .tutorials-container {
-    width: 100vw;
-    height: 100vh;
-    background: linear-gradient(100deg, #FF8C00, #FFA500);
+    min-height: 100vh; /* Use min-height to ensure it covers the full viewport */
+    background: linear-gradient(145deg, #3a7bd5, #3a6073); /* Full-height background gradient */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start; /* Adjusts the content to the top */
+    padding: 40px;
 }
+
 .tutorials-heading {
-    font-size: 54px;
-    margin-left: 100px;
-    padding-top: 50px;
-    color: white;
-    font-family: 'Raleway', sans-serif;
+    font-size: 48px;
+    padding-bottom: 20px;
+    color: #ffffff; /* Bright white for contrast */
+    font-family: 'Poppins', sans-serif; /* Professional and modern font */
+    text-align: center;
+    letter-spacing: 1.5px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4); /* More prominent shadow for better visibility */
+}
+
+.tutorials-content-container {
+    width: 80%;
+    background-color: rgba(255, 255, 255, 0.8); /* Lighter, opaque background for content */
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 30px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Soft shadow for depth */
 }
 
 .tutorials-content {
-    color: white;
-    font-size: 18px;
-    margin: auto;
-    margin-left: 100px;
-    margin-top: 4px;
+    color: #333333; /* Darker text for clear contrast */
+    font-size: 20px;
+    font-family: 'Open Sans', sans-serif; /* Clean and legible font */
+    line-height: 1.6;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    padding: 10px 20px;
+    border-radius: 8px;
+    background-color: rgba(255, 255, 255, 0.9); /* Solid background for better readability */
 }
-.tutorials-content-container {
-    width: 70%;
+
+@media (max-width: 768px) {
+    .tutorials-heading {
+        font-size: 36px;
+    }
+
+    .tutorials-content-container {
+        width: 90%;
+        padding: 15px;
+    }
+
+    .tutorials-content {
+        font-size: 16px;
+        padding: 8px 16px;
+    }
 }
