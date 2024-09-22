@@ -1,76 +1,73 @@
-.home-container {
-    background: #F6F8FA; /* Soft beige */
-    color: #2C3E50; /* Dark slate gray */
-    font-family: 'Raleway', sans-serif;
-    min-height: 100vh; /* Ensure the container covers the full height */
-    position: relative;
-}
-
-.home-header {
-    background: #001F3F; /* Deep navy blue */
-    width: 100%;
-    height: 70px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0 20px;
-    position: fixed; /* Fix the header at the top */
-    z-index: 1000; /* Ensure it stays above other elements */
-}
-
-.home-heading {
-    font-size: 36px;
-    color: white;
-    font-family: 'Kaushan Script', cursive;
-}
-
-.home-main {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    margin-top: 70px; /* Offset for fixed header */
-    height: calc(100vh - 70px); /* Adjust height to accommodate fixed header */
-    position: relative; /* Allow positioning of the image */
-    overflow: hidden; /* Prevent overflow of image */
-    background: url('../../utils/images/yoga_pose.png') no-repeat center center/cover; /* Ensure image is centered and covers */
-    opacity: 0.4; /* Adjust as needed for visibility */
-}
-
-.description {
-    font-size: 48px;
-    color: #3498DB; /* Light turquoise */
-    text-align: center;
-    margin: 20px 0; /* Add some spacing */
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Add shadow for better visibility */
-}
-
-.btn-section {
-    display: flex;
-    justify-content: center;
-}
-
-.btn {
-    padding: 10px 20px;
-    margin: 10px;
-    background-color: #3498DB; /* Light turquoise */
-    color: white;
-    font-size: 24px;
-    border: 2px solid #2980B9; /* Slightly darker turquoise */
-    border-radius: 8px;
-    transition: background 0.3s, color 0.3s;
-}
-
-.btn:hover {
-    background: #2980B9; /* Brighter turquoise */
-}
-
-.footer {
-    background: #001F3F; /* Deep navy blue */
+.about-container {
+    width: 100vw;
+    height: auto;
+    background: #E0F7FA; /* Light teal background */
     padding: 20px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+}
+
+.about-heading {
+    font-size: 48px;
     text-align: center;
-    position: relative;
-    bottom: 0;
-    width: 100%;
-    color: white;
+    padding: 20px 0;
+    color: #00695C; /* Deep teal */
+    font-family: 'Raleway', sans-serif;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+.about-main {
+    margin: auto;
+    max-width: 800px; /* Set a maximum width for better readability */
+    padding: 20px;
+    background: white; /* White background for the main content */
+    border-radius: 10px; /* Rounded corners */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Slight shadow for depth */
+}
+
+.about-content {
+    color: #263238; /* Dark charcoal */
+    font-size: 18px;
+    text-align: justify; /* Justify text for better alignment */
+    line-height: 1.6; /* Increase line height for better readability */
+    margin-bottom: 20px; /* Space between paragraphs */
+}
+
+.about-subheading {
+    color: #00695C; /* Deep teal */
+    font-size: 24px;
+    margin: 20px 0;
+    font-family: 'Raleway', sans-serif;
+    border-bottom: 2px solid #FF6F61; /* Coral underline */
+    padding-bottom: 5px; /* Space between text and underline */
+}
+
+.about-list {
+    color: #263238; /* Dark charcoal */
+    font-size: 18px;
+    list-style-type: disc; /* Use bullet points for clarity */
+    padding-left: 20px; /* Indent list */
+}
+
+.developer-info h4 {
+    color: #00695C; /* Deep teal */
+    font-family: 'Raleway', sans-serif;
+    margin-top: 30px;
+    text-decoration: underline;
+}
+
+.developer-info p {
+    color: #263238; /* Dark charcoal */
+    font-size: 16px;
+}
+
+.about-content a,
+.developer-info a {
+    color: #FF6F61; /* Coral */
+    text-decoration: none;
+    transition: color 0.3s; /* Smooth transition for hover effect */
+}
+
+.about-content a:hover,
+.developer-info a:hover {
+    color: #FF8A65; /* Light coral on hover */
 }

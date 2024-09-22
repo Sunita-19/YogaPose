@@ -18,10 +18,10 @@ export default function About() {
 
                 <h3 className="about-subheading">Why Choose Fun Yoga?</h3>
                 <ul className="about-list">
-                    <li><b>Real-time Pose Correction:</b> Get instant feedback on your yoga postures to improve your practice.</li>
-                    <li><b>Personalized Diet Plans:</b> We suggest meal plans based on your yoga routine and health needs.</li>
-                    <li><b>User-Friendly:</b> Whether you’re new to yoga or a seasoned yogi, our platform is designed to be easy to use and enjoyable.</li>
-                    <li><b>Holistic Health Approach: </b>We combine yoga and nutrition to offer a balanced approach to fitness and well-being.</li>
+                    <li>Real-time Pose Correction: Get instant feedback on your yoga postures to improve your practice.</li>
+                    <li>Personalized Diet Plans: We suggest meal plans based on your yoga routine and health needs.</li>
+                    <li>User-Friendly: Whether you’re new to yoga or a seasoned yogi, our platform is designed to be easy to use and enjoyable.</li>
+                    <li>Holistic Health Approach: We combine yoga and nutrition to offer a balanced approach to fitness and well-being.</li>
                 </ul>
 
                 <p className="about-content">

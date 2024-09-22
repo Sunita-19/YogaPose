@@ -7,13 +7,13 @@ export default function Home() {
         <div className='home-container'>
             <header className='home-header'>
                 <h1 className='home-heading'>SuMaY</h1>
+                <h1 className="description">A Yoga AI Trainer</h1>
                 <Link to='/about'>
                     <button className="btn btn-secondary" id="about-btn">About</button>
                 </Link>
             </header>
 
             <div className="home-main">
-                <h1 className="description">A Yoga AI Trainer</h1>
                 <div className="btn-section">
                     <Link to='/start'>
                         <button className="btn start-btn">Let's Start</button>

@@ -1,26 +1,28 @@
 .home-container {
-    background: linear-gradient(to bottom, #F7F7F7, #E9ECEF); /* Soft gradient */
-    color: #343A40; /* Dark gray */
+    background: #00695C; /* Match the yoga theme */
+    color: #FFFFFF; /* White text for contrast */
     font-family: 'Raleway', sans-serif;
     min-height: 100vh; /* Full height */
+    display: flex;
+    flex-direction: column; /* Flex layout for container */
+    overflow: hidden; /* Prevent overflow */
 }
 
 .home-header {
-    background: #007BFF; /* Bright blue */
+    background: #00695C; /* Header background */
     width: 100%;
     height: 70px;
     display: flex;
     align-items: center;
     justify-content: space-between;
     padding: 0 20px;
-    position: fixed; /* Fix the header at the top */
     z-index: 1000;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Subtle shadow for depth */
+    position: relative; /* Position relative to ensure stacking */
 }
 
 .home-heading {
     font-size: 30px;
-    color: white;
+    color: #f8a516; /* Bright orange */
     font-family: 'Kaushan Script', cursive;
 }
 
@@ -29,20 +31,20 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    margin-top: 70px; /* Offset for fixed header */
-    height: calc(100vh - 70px); /* Adjust height */
-    background: url('../../utils/images/yoga_pose.png') no-repeat center center/cover; /* Background image */
-    position: relative;
-    overflow: hidden;
-    opacity: 0.8; /* Make the background slightly transparent */
+    margin-top: 70px; /* Offset for header */
+    padding: 20px 0; /* Space at the top and bottom */
+    flex: 1; /* Allows the main section to grow */
+    background: url('../../utils/images/yoga_pose.png') no-repeat center center; /* Background image */
+    background-size: 500px; /* Ensure the image covers the entire area */
+    opacity: 0.9; /* Make the background slightly transparent */
 }
 
 .description {
     font-size: 48px;
-    color: #ffffff; /* White for contrast */
+    color: #FFFFFF; /* White for contrast */
     text-align: center;
     margin: 20px 0;
-    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.6); /* Shadow for better visibility */
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5); /* Subtle shadow for better visibility */
 }
 
 .btn-section {
@@ -53,7 +55,7 @@
 .btn {
     padding: 10px 20px;
     margin: 10px;
-    background-color: #28A745; /* Green */
+    background-color: #007BFF; /* Bright blue */
     color: white;
     font-size: 24px;
     border: none;
@@ -63,14 +65,13 @@
 }
 
 .btn:hover {
-    background: #218838; /* Darker green on hover */
+    background: #0056b3; /* Darker blue on hover */
     transform: scale(1.05); /* Slight scale effect */
 }
 
 .footer {
-    background: #007BFF; /* Bright blue */
+    background: rgba(0, 0, 0, 0.5); /* Semi-transparent black */
     padding: 20px;
     text-align: center;
     color: white;
-    position: relative;
 }
