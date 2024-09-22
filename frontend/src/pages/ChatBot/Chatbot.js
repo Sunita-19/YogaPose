@@ -1,69 +1,65 @@
 import React, { useState } from 'react';
 import './Chatbot.css';
 
-const responses = {
-    greeting: "Hello! How can I assist you today?",
-    help: "I can help you with Yoga poses, tips, and more!",
-    goodbye: "Goodbye! Have a great day!",
-    default: "I'm not sure how to respond to that. Could you please clarify?",
-};
-
-const getBotResponse = (input) => {
-    const lowerCaseInput = input.toLowerCase();
-
-    if (lowerCaseInput.includes('hi') || lowerCaseInput.includes('hello')) {
-        return responses.greeting;
-    } else if (lowerCaseInput.includes('help')) {
-        return responses.help;
-    } else if (lowerCaseInput.includes('bye')) {
-        return responses.goodbye;
-    } else {
-        return responses.default;
-    }
-};
-
-const Chatbot = () => {
-    const [messages, setMessages] = useState([]);
+export default function Chatbot() {
     const [input, setInput] = useState('');
+    const [messages, setMessages] = useState([]);
 
-    const handleSend = () => {
-        if (input.trim()) {
-            const newMessage = { text: input, sender: 'user' };
-            setMessages([...messages, newMessage]);
-            setInput('');
+    const handleSend = async () => {
+        if (!input) return;
 
-            // Simulate bot response
-            setTimeout(() => {
-                const botResponse = { text: getBotResponse(input), sender: 'bot' };
-                setMessages((prevMessages) => [...prevMessages, botResponse]);
-            }, 1000);
+        const userMessage = { role: 'user', content: input };
+        setMessages(prevMessages => [...prevMessages, userMessage]);
+        setInput('');
+
+        const responseMessage = await getAIResponse(input);
+        setMessages(prevMessages => [...prevMessages, responseMessage]);
+    };
+
+    const getAIResponse = async (userInput) => {
+        try {
+            const response = await fetch('https://api.openai.com/v1/chat/completions', {
+                method: 'POST',
+                headers: {
+                    'Authorization': `Bearer YOUR_API_KEY`, // Replace with your OpenAI API key
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    model: 'gpt-3.5-turbo',
+                    messages: [{ role: 'user', content: userInput }],
+                }),
+            });
+
+            const data = await response.json();
+            const aiMessage = { role: 'assistant', content: data.choices[0].message.content };
+            return aiMessage;
+        } catch (error) {
+            console.error("Error fetching AI response:", error);
+            return { role: 'assistant', content: "Sorry, I couldn't respond at the moment." };
         }
     };
 
     return (
         <div className="chatbot-container">
-            <h2 className="chatbot-heading">Chat with Us!</h2>
-            <div className="chatbox">
-                <div className="messages">
-                    {messages.map((msg, index) => (
-                        <div key={index} className={`message ${msg.sender}`}>
-                            {msg.text}
-                        </div>
-                    ))}
-                </div>
-                <div className="input-container">
-                    <input 
-                        type="text" 
-                        value={input} 
-                        onChange={(e) => setInput(e.target.value)} 
-                        placeholder="Type your message..." 
-                        className="chat-input"
-                    />
-                    <button onClick={handleSend} className="send-button">Send</button>
-                </div>
+            <div className="chatbot-header">
+                <h2>Chat with AI</h2>
+            </div>
+            <div className="chatbot-messages">
+                {messages.map((msg, index) => (
+                    <div key={index} className={`message ${msg.role}`}>
+                        <span>{msg.content}</span>
+                    </div>
+                ))}
+            </div>
+            <div className="chatbot-input">
+                <input
+                    type="text"
+                    value={input}
+                    onChange={(e) => setInput(e.target.value)}
+                    placeholder="Type your message..."
+                />
+                <button onClick={handleSend}>Send</button>
             </div>
         </div>
     );
-};
-
-export default Chatbot;
+}

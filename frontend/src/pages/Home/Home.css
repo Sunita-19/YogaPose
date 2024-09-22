@@ -1,16 +1,15 @@
-
 .home-container {
-    background: #00695C; /* Match the yoga theme */
-    color: #FFFFFF; /* White text for contrast */
+    background: #00695C;
+    color: #FFFFFF;
     font-family: 'Raleway', sans-serif;
-    min-height: 100vh; /* Full height */
-    position: relative; /* To position chatbot properly */
+    min-height: 100vh;
+    position: relative;
 }
 
 .home-header {
-    background: #004d40; /* Darker green */
+    background: #004d40;
     width: 100%;
-    height: 80px; /* Reduced height */
+    height: 80px;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -19,7 +18,7 @@
 
 .home-heading {
     font-size: 30px;
-    color: #FFA500; /* Bright orange */
+    color: #FFA500;
 }
 
 .header-buttons {
@@ -27,31 +26,54 @@
 }
 
 .header-buttons .btn {
-    margin-left: 10px; /* Space between buttons */
+    margin-left: 10px;
 }
 
 .home-main {
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: flex-end; /* Align text to the right */
     justify-content: center;
-    margin-top: 20px; /* Offset for fixed header */
-    height: calc(100vh - 80px); /* Adjust height */
-    background: url('../../utils/images/yoga_pose.png') no-repeat center center/cover; /* Background image */
+    margin-top: 20px;
+    height: calc(100vh - 80px);
+    background: url('../../utils/images/yoga_pose.png') no-repeat center left;
+    background-size: 700px;
     position: relative;
-    overflow: hidden;
-    opacity: 0.9; /* Make the background slightly transparent */
+    opacity: 0.9;
+    padding-right: 20px; /* Add padding to right */
+}
+
+
+
+.heading {
+    font-size: 70px; /* Larger font for heading */
+    color: #FFFFFF; /* White text */
+    margin-right: 0;
+    margin-left: 30px;
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.8); /* Shadow for visibility */
+    text-align:center;
+}
+
+.subheading {
+    font-size: 20px; /* Smaller font for subheading */
+    color: #FFFFFF; /* White text */
+    margin-top: 30px;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.6); /* Shadow for visibility */
+    text-align: left;
 }
 
 .btn-section {
+
     display: flex;
     justify-content: center;
+    margin-top: 20px; /* Space above buttons */
+    margin-right:545px;
 }
 
 .btn {
     padding: 10px 20px;
     margin: 10px;
-    background-color: #007BFF; /* Bright blue */
+    background-color: #007BFF;
     color: white;
     font-size: 24px;
     border: none;
@@ -61,58 +83,14 @@
 }
 
 .btn:hover {
-    background: #0056b3; /* Darker blue on hover */
-    transform: scale(1.05); /* Slight scale effect */
-}
-
-.chatbot {
-    position: absolute;
-    bottom: 20px; /* Position above footer */
-    right: 20px; /* Position from right */
-    background: white;
-    color: #263238; /* Dark charcoal */
-    padding: 15px;
-    border-radius: 10px; /* Rounded corners */
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
-    width: 300px; /* Fixed width */
-    z-index: 100; /* Ensure it appears above other content */
+    background: #0056b3;
+    transform: scale(1.05);
 }
 
 .footer {
-    background: rgba(0, 0, 0, 0.5); /* Semi-transparent black */
+    background: rgba(0, 0, 0, 0.5);
     padding: 20px;
     text-align: center;
     color: white;
     position: relative;
-}
-
-
-/* Add these styles to your existing Home.css */
-.chatbot {
-    position: absolute;
-    bottom: 20px; /* Position above footer */
-    right: 20px; /* Position from right */
-    background: white;
-    color: #263238; /* Dark charcoal */
-    padding: 15px;
-    border-radius: 10px; /* Rounded corners */
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
-    width: 300px; /* Fixed width */
-    z-index: 100; /* Ensure it appears above other content */
-}
-
-.chat-messages {
-    max-height: 200px; /* Limit height for scrolling */
-    overflow-y: auto; /* Allow scrolling */
-    margin-bottom: 10px; /* Space above input */
-}
-
-.user {
-    text-align: right;
-    margin: 5px 0;
-}
-
-.bot {
-    text-align: left;
-    margin: 5px 0;
 }

@@ -22,6 +22,10 @@ export default function Home() {
             </header>
 
             <div className="home-main">
+                <div className="text-section">
+                    <h2 className="heading">Make yoga part<br></br> of your life.</h2>
+                    <p className="subheading">Sharing the love of yoga to create positive change in the world.</p>
+                </div>
                 <div className="btn-section">
                     <Link to='/start'>
                         <button className="btn start-btn">Let's Start</button>
