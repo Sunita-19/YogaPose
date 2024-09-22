@@ -8,18 +8,23 @@ export default function Home() {
             <header className='home-header'>
                 <h1 className='home-heading'>SuMaY</h1>
                 <h1 className="description">A Yoga AI Trainer</h1>
-                <Link to='/about'>
-                    <button className="btn btn-secondary" id="about-btn">About</button>
-                </Link>
+                <div className="header-buttons">
+                    <Link to='/about'>
+                        <button className="btn btn-secondary" id="about-btn">About</button>
+                    </Link>
+                    <Link to='/tutorials'>
+                        <button className="btn btn-secondary" id="tutorial-btn">Tutorials</button>
+                    </Link>
+                    <Link to='/chatbot'>
+                        <button className="btn btn-secondary">Chatbot</button>
+                    </Link>
+                </div>
             </header>
 
             <div className="home-main">
                 <div className="btn-section">
                     <Link to='/start'>
                         <button className="btn start-btn">Let's Start</button>
-                    </Link>
-                    <Link to='/tutorials'>
-                        <button className="btn start-btn">Tutorials</button>
                     </Link>
                 </div>
             </div>
