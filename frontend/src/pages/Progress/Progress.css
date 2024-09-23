@@ -1,0 +1,46 @@
+.progress-container {
+    background: #00695C; /* Main background color */
+    color: #FFFFFF; /* Text color */
+    font-family: 'Raleway', sans-serif;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 20px;
+}
+
+.progress-header {
+    background: #004d40;
+    width: 100%;
+    padding: 20px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+}
+
+.progress-heading {
+    font-size: 36px;
+    color: #FFA500; /* Heading color */
+}
+
+.progress-content {
+    font-size: 18px;
+    margin: 20px 0;
+}
+
+.btn {
+    padding: 10px 20px;
+    background-color: #007BFF; /* Button background color */
+    color: white;
+    font-size: 18px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s, transform 0.3s;
+}
+
+.btn:hover {
+    background: #0056b3; /* Hover color */
+    transform: scale(1.05);
+}

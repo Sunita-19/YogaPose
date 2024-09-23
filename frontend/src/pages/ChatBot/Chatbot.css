@@ -1,72 +1,83 @@
-.chatbot-container {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    height: 100vh; /* Full height for the viewport */
-    background-color: rgba(224, 247, 250, 0.8); /* Light teal */
-    border-radius: 10px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    overflow: hidden;
+.diet-container {
+    background: rgba(224, 247, 250, 0.8); /* Updated background color */
+    color: #333; /* Text color */
     font-family: 'Raleway', sans-serif;
-}
-
-.chatbot-header {
-    background-color: #00695C; /* Deep teal */
-    color: white;
-    text-align: center;
-    padding: 20px; /* More padding for a larger header */
-    font-size: 24px; /* Larger text for a more prominent header */
-}
-
-.chatbot-messages {
-    flex-grow: 1;
-    padding: 20px;
-    overflow-y: auto;
+    min-height: 100vh;
     display: flex;
     flex-direction: column;
-    background-color: rgba(224, 247, 250, 0.8); /* White background for message area */
-}
-
-.message {
-    margin: 10px 0;
-    padding: 15px;
-    border-radius: 8px;
-    max-width: 50%;
-    word-wrap: break-word; /* Allow words to wrap */
-    overflow-wrap: break-word; /* Ensure long words are broken */
-}
-
-.message.user {
-    align-self: flex-end;
-    background-color: #1381f7; /* Blue */
-    color: white;
-    white-space: pre-wrap; /* Preserve whitespace and wrap long text */
-}
-.message.assistant {
-    align-self: flex-start;
-    background-color:  #3ab657; /* Yellow */
-    color: white;
-}
-
-.chatbot-input {
-    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
     padding: 20px;
-    background-color:  rgba(224, 247, 250, 0.8); 
 }
 
-.chatbot-input input {
-    flex-grow: 1;
-    padding: 15px;
-    border: 1px solid #ccc;
+.diet-header {
+    background: #004d40;
+    width: 100%;
+    padding: 20px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+}
+
+.diet-heading {
+    font-size: 36px;
+    color: #FFA500; /* Heading color */
+}
+
+.diet-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.diet-form input {
+    margin: 10px;
+    padding: 10px;
+    width: 200px;
+    border: none;
     border-radius: 5px;
 }
 
-.chatbot-input button {
-    padding: 15px 20px;
-    margin-left: 10px;
-    border: none;
-    background-color:  #00695C; /* Green */
+.diet-form label {
+    color: #333;
+    margin: 10px;
+}
+
+.radio-group {
+    display: flex;
+    justify-content: center;
+    margin: 10px;
+}
+
+.radio-group label {
+    margin: 0 10px;
+}
+
+.btn {
+    padding: 10px 20px;
+    background-color: #007BFF; /* Button background color */
     color: white;
+    font-size: 18px;
+    border: none;
     border-radius: 5px;
     cursor: pointer;
+    transition: background 0.3s, transform 0.3s;
+}
+
+.btn:hover {
+    background: #0056b3; /* Hover color */
+    transform: scale(1.05);
+}
+
+.diet-plan {
+    margin-top: 20px;
+    background: rgba(0, 0, 0, 0.5);
+    padding: 20px;
+    border-radius: 5px;
+    color: #FFA500; /* Plan text color */
+}
+
+.error-message {
+    color: red;
+    margin-top: 10px;
 }

@@ -18,12 +18,18 @@ export default function Home() {
                     <Link to='/chatbot'>
                         <button className="btn btn-secondary">Chatbot</button>
                     </Link>
+                    <Link to='/diet'>
+                        <button className="btn btn-secondary">Diet Chart</button>
+                    </Link>
+                    <Link to='/progress'>
+                        <button className="btn btn-secondary">Progress</button>
+                    </Link>
                 </div>
             </header>
 
             <div className="home-main">
                 <div className="text-section">
-                    <h2 className="heading">Make yoga part<br></br> of your life</h2>
+                    <h2 className="heading">Make yoga part<br /> of your life</h2>
                     <p className="subheading">Sharing the love of yoga to create positive change in the world</p>
                 </div>
                 <div className="btn-section">
