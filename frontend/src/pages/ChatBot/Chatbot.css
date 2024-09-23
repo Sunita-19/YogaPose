@@ -2,9 +2,8 @@
     display: flex;
     flex-direction: column;
     width: 100%;
-    max-width: 500px;
-    height: 70vh;
-    background-color: #E0F7FA; /* Light teal */
+    height: 100vh; /* Full height for the viewport */
+    background-color: rgba(224, 247, 250, 0.8); /* Light teal */
     border-radius: 10px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     overflow: hidden;
@@ -15,53 +14,58 @@
     background-color: #00695C; /* Deep teal */
     color: white;
     text-align: center;
-    padding: 10px;
+    padding: 20px; /* More padding for a larger header */
+    font-size: 24px; /* Larger text for a more prominent header */
 }
 
 .chatbot-messages {
     flex-grow: 1;
-    padding: 10px;
+    padding: 20px;
     overflow-y: auto;
     display: flex;
     flex-direction: column;
+    background-color: rgba(224, 247, 250, 0.8); /* White background for message area */
 }
 
 .message {
-    margin: 5px 0;
-    padding: 10px;
-    border-radius: 5px;
-    max-width: 80%;
+    margin: 10px 0;
+    padding: 15px;
+    border-radius: 8px;
+    max-width: 50%;
+    word-wrap: break-word; /* Allow words to wrap */
+    overflow-wrap: break-word; /* Ensure long words are broken */
 }
 
 .message.user {
     align-self: flex-end;
-    background-color: #007BFF; /* Blue */
+    background-color: #1381f7; /* Blue */
     color: white;
+    white-space: pre-wrap; /* Preserve whitespace and wrap long text */
 }
-
 .message.assistant {
     align-self: flex-start;
-    background-color: #FFC107; /* Yellow */
-    color: black;
+    background-color:  #3ab657; /* Yellow */
+    color: white;
 }
 
 .chatbot-input {
     display: flex;
-    padding: 10px;
+    padding: 20px;
+    background-color:  rgba(224, 247, 250, 0.8); 
 }
 
 .chatbot-input input {
     flex-grow: 1;
-    padding: 10px;
+    padding: 15px;
     border: 1px solid #ccc;
     border-radius: 5px;
 }
 
 .chatbot-input button {
-    padding: 10px 15px;
+    padding: 15px 20px;
     margin-left: 10px;
     border: none;
-    background-color: #28A745; /* Green */
+    background-color:  #00695C; /* Green */
     color: white;
     border-radius: 5px;
     cursor: pointer;

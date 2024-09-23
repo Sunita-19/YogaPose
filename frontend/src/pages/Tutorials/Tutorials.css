@@ -1,43 +1,43 @@
-/* Ensures the gradient background covers the entire height and remains consistent */
+/* Tutorials page with chatbot color scheme */
 .tutorials-container {
-    min-height: 100vh; /* Use min-height to ensure it covers the full viewport */
-    background: linear-gradient(145deg, #3a7bd5, #3a6073); /* Full-height background gradient */
+    min-height: 100vh; /* Full height to cover the viewport */
+    background-color: #E0F7FA; /* Light teal for background */
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: flex-start; /* Adjusts the content to the top */
+    justify-content: flex-start;
     padding: 40px;
 }
 
 .tutorials-heading {
     font-size: 48px;
     padding-bottom: 20px;
-    color: #ffffff; /* Bright white for contrast */
-    font-family: 'Poppins', sans-serif; /* Professional and modern font */
+    color: #00695C; /* Deep teal for heading */
+    font-family: 'Raleway', sans-serif;
     text-align: center;
     letter-spacing: 1.5px;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4); /* More prominent shadow for better visibility */
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4); /* Subtle shadow for text */
 }
 
 .tutorials-content-container {
     width: 80%;
-    background-color: rgba(255, 255, 255, 0.8); /* Lighter, opaque background for content */
+    background-color: rgba(255, 255, 255, 0.9); /* White background with slight opacity */
     border-radius: 10px;
     padding: 20px;
     margin-bottom: 30px;
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Soft shadow for depth */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Light shadow for depth */
 }
 
 .tutorials-content {
-    color: #333333; /* Darker text for clear contrast */
+    color: #333333; /* Dark text for readability */
     font-size: 20px;
-    font-family: 'Open Sans', sans-serif; /* Clean and legible font */
+    font-family: 'Raleway', sans-serif;
     line-height: 1.6;
     margin-top: 10px;
     margin-bottom: 10px;
     padding: 10px 20px;
     border-radius: 8px;
-    background-color: rgba(255, 255, 255, 0.9); /* Solid background for better readability */
+    background-color: white; /* Light teal background matching the overall theme */
 }
 
 @media (max-width: 768px) {

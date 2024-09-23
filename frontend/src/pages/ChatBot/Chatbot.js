@@ -21,7 +21,7 @@ export default function Chatbot() {
             const response = await fetch('https://api.openai.com/v1/chat/completions', {
                 method: 'POST',
                 headers: {
-                    'Authorization': `Bearer YOUR_API_KEY`, // Replace with your OpenAI API key
+                    'Authorization': `Bearer ${process.env.REACT_APP_OPENAI_API_KEY}`, // Use your API key from .env
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({
@@ -31,8 +31,14 @@ export default function Chatbot() {
             });
 
             const data = await response.json();
-            const aiMessage = { role: 'assistant', content: data.choices[0].message.content };
-            return aiMessage;
+            console.log("API Response:", data); // Log the API response
+
+            if (data.choices && data.choices.length > 0) {
+                const aiMessage = { role: 'assistant', content: data.choices[0].message.content };
+                return aiMessage;
+            } else {
+                return { role: 'assistant', content: "I couldn't get a response." };
+            }
         } catch (error) {
             console.error("Error fetching AI response:", error);
             return { role: 'assistant', content: "Sorry, I couldn't respond at the moment." };

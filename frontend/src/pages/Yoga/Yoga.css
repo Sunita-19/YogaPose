@@ -1,5 +1,5 @@
 .yoga-container {
-    background: linear-gradient(100deg, #3a7bd5, #3a6073);
+    background-color: #00695C;
     min-width: 100vw;
     min-height: 100vh;
 }
@@ -66,4 +66,3 @@
 #my-canvas {
     transform: rotateY(180deg);
 }
-
