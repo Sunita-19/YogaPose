@@ -10,7 +10,7 @@ import Chatbot from './pages/ChatBot/Chatbot';
 import Diet from './pages/Diet/Diet'; 
 import DietPlan from './pages/DietPlan/DietPlan'; 
 import Progress from './pages/Progress/Progress';
-
+import Feedback from './pages/Feedback/Feedback'; // Importing the Feedback page
 import Layout from './components/Layout';  // Import the Layout component
 
 import './App.css';  // Global styles if needed
@@ -27,6 +27,7 @@ export default function App() {
         <Route path='/diet' element={<Layout><Diet /></Layout>} /> 
         <Route path='/dietplan' element={<Layout><DietPlan /></Layout>} /> 
         <Route path='/progress' element={<Layout><Progress /></Layout>} /> 
+        <Route path='/feedback' element={<Layout><Feedback /></Layout>} /> 
       </Routes>
     </Router>
   );

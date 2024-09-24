@@ -1,5 +1,5 @@
 .progress-container {
-    background: #00695C; /* Main background color */
+    background: rgba(224, 247, 250, 0.8);/* Main background color */
     color: #FFFFFF; /* Text color */
     font-family: 'Raleway', sans-serif;
     min-height: 100vh;
