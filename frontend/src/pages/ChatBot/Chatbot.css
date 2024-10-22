@@ -12,12 +12,13 @@
 }
 
 .chatbot-header {
-    background-color: #00695C; /* Deep teal */
-    color: white;
+    /* background-color: #0b9e8d;  */
     text-align: center;
-    padding: 20px; /* More padding for a larger header */
-    font-size: 24px; /* Larger text for a more prominent header */
+    padding: 20px;
+    font-size: 24px;
+    color: black; /* Text color set to white for contrast */
 }
+
 
 .chatbot-messages {
     flex-grow: 1;
@@ -39,7 +40,7 @@
 
 .message.user {
     align-self: flex-end;
-    background-color: #1381f7; /* Blue */
+    background-color: #1381f7; 
     color: white;
     white-space: pre-wrap; /* Preserve whitespace and wrap long text */
 }

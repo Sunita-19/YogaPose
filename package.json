@@ -1,6 +1,8 @@
 {
   "dependencies": {
     "axios": "^1.7.7",
-    "openai": "^4.63.0"
+    "openai": "^4.63.0",
+    "react-slick": "^0.30.2",
+    "slick-carousel": "^1.8.1"
   }
 }
