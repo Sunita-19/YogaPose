@@ -1,0 +1,120 @@
+.signup-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Full height */
+    background: linear-gradient(135deg,  #2cb8a7,#0d8a7b,#00695C); /* Light background color */
+}
+
+.signup-form {
+    background: white;
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    width: 450px; /* Fixed width */
+}
+
+.signup-logo {
+    font-family: 'Instagram', sans-serif; /* Use a similar font style */
+    font-size: 40px;
+    color: #00695C; /* Instagram blue color */
+    margin-bottom: 20px;
+}
+
+.signup-input {
+    width: 100%; /* Full width to match the signup form */
+    padding: 12px;
+    margin: 10px 0;
+    border: 1px solid #DBDBDB; /* Light gray border */
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+.signup-input:focus {
+    outline: none;
+    border-color: #405DE6; /* Instagram blue on focus */
+}
+
+.signup-button {
+    width: 100%;
+    padding: 12px;
+    background-color: #405DE6; /* Instagram blue */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.signup-button:hover {
+    background-color:#00695C; /* Darker blue on hover */
+}
+
+.message {
+    color: #FF6F61; /* Coral color for error/success messages */
+    margin: 10px 0;
+}
+
+.switch-login {
+    margin-top: 20px;
+}
+
+.switch-login p {
+    font-size: 14px;
+}
+
+.switch-login a {
+    color: #405DE6; /* Instagram blue */
+    text-decoration: none;
+}
+
+.switch-login a:hover {
+    text-decoration: underline; /* Underline on hover */
+}
+
+.signup-input {
+    width: 100%; /* Full width to match the signup form */
+    padding: 12px;
+    margin: 10px 0;
+    border: 1px solid #DBDBDB; /* Light gray border */
+    border-radius: 5px;
+    font-size: 16px;
+    box-sizing: border-box; /* Ensure padding is included in width */
+}
+
+.signup-input[type="text"],
+.signup-input[type="email"] {
+    max-width: 100%; /* Set a max width for username and email */
+    border: 1px solid #DBDBDB; /* Light gray border */
+    border-radius: 5px;
+    padding: 12px;
+    margin: 10px 0;
+    font-size: 16px;
+}
+.signup-input {
+    width: 100%; /* Full width to match the signup form */
+    padding: 12px;
+    margin: 10px 0;
+    border: 1px solid #DBDBDB; /* Light gray border */
+    border-radius: 5px;
+    font-size: 16px;
+    box-sizing: border-box; /* Ensure padding is included in width */
+}
+
+.signup-input:focus {
+    outline: none;
+    border-color: #405DE6; /* Instagram blue on focus */
+}
+.success-message {
+    color: green; /* Green for success */
+    font-size: 16px;
+    margin-top: 20px;
+}
+
+.error-message {
+    color: red; /* Red for errors */
+    font-size: 16px;
+    margin-top: 20px;
+}

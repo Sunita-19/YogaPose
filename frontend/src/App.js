@@ -10,25 +10,30 @@ import Chatbot from './pages/ChatBot/Chatbot';
 import Diet from './pages/Diet/Diet'; 
 import DietPlan from './pages/DietPlan/DietPlan'; 
 import Progress from './pages/Progress/Progress';
-import Feedback from './pages/Feedback/Feedback'; // Importing the Feedback page
-import Layout from './components/Layout';  // Import the Layout component
+import Feedback from './pages/Feedback/Feedback'; 
+import LoginPage from './components/Login/LoginPage';
+import SignupPage from './components/Login/SignUpPage'; // Correctly spelled
 
-import './App.css';  // Global styles if needed
+
+import './App.css';
 
 export default function App() {
-  return (
-    <Router>
-      <Routes>
-        <Route path='/' element={<Home />} />
-        <Route path='/start' element={<Layout><Yoga /></Layout>} />
-        <Route path='/about' element={<Layout><About /></Layout>} />
-        <Route path='/tutorials' element={<Layout><Tutorials /></Layout>} />
-        <Route path='/chatbot' element={<Layout><Chatbot /></Layout>} />
-        <Route path='/diet' element={<Layout><Diet /></Layout>} /> 
-        <Route path='/dietplan' element={<Layout><DietPlan /></Layout>} /> 
-        <Route path='/progress' element={<Layout><Progress /></Layout>} /> 
-        <Route path='/feedback' element={<Layout><Feedback /></Layout>} /> 
-      </Routes>
-    </Router>
-  );
+    return (
+        <Router>
+            <Routes>
+            <Route path='/login' element={<LoginPage />} />
+            <Route path='/signup' element={<SignupPage />} /> {/* Add Signup route */}
+                <Route path='/' element={<Home />} />
+               
+                <Route path='/start' element={<Yoga />} />
+                <Route path='/about' element={<About />} />
+                <Route path='/tutorials' element={<Tutorials />} />
+                <Route path='/chatbot' element={<Chatbot />} />
+                <Route path='/diet' element={<Diet />} /> 
+                <Route path='/dietplan' element={<DietPlan />} /> 
+                <Route path='/progress' element={<Progress />} /> 
+                <Route path='/feedback' element={<Feedback />} /> 
+            </Routes>
+        </Router>
+    );
 }
