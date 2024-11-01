@@ -1,10 +1,15 @@
 /* src/components/Login/LoginPage.css */
 
+html, body {
+    height: auto; /* Allow body to grow with content */
+    overflow-x: hidden; /* Prevent horizontal scroll */
+}
+
 .container {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
+    min-height: 100vh; /* Allow container to grow with content */
     background: linear-gradient(135deg, #2cb8a7, #0d8a7b, #00695C);
 }
 
@@ -96,7 +101,6 @@
     margin-bottom: 10px;
     font-size: 14px;
 }
-/* src/components/Login/LoginPage.css */
 
 .forgot-password-link {
     display: block;

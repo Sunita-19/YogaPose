@@ -24,12 +24,15 @@ const LoginPage = () => {
             const data = await response.json();
 
             if (response.ok) {
+                // Store the token in local storage
+                localStorage.setItem('token', data.token);
                 setErrorMessage('');
-                navigate('/'); // Redirect to home page
+                navigate('/home'); // Redirect to home page
             } else {
-                setErrorMessage(data.error);
+                setErrorMessage(data.message || 'Login failed.');
             }
         } catch (error) {
+            console.error('Error during login:', error);
             setErrorMessage('An error occurred. Please try again later.');
         }
     };
@@ -58,17 +61,13 @@ const LoginPage = () => {
                     />
                     <button type="submit" className="auth-button">Log In</button>
                 </form>
-                <Link to="/forgot-password" className="forgot-password-link">
-                    Forgot Password?
-                </Link>
+                <Link to="/forgot-password" className="forgot-password-link">Forgot Password?</Link>
                 <div className="or-separator">
                     <div className="or-line"></div>
                     <div className="or-text">OR</div>
                     <div className="or-line"></div>
                 </div>
-                <p className="auth-text">
-                    Don't have an account? <Link to="/signup" className="auth-link">Sign up</Link>
-                </p>
+                <p className="auth-text">Don't have an account? <Link to="/signup" className="auth-link">Sign up</Link></p>
             </div>
         </div>
     );
