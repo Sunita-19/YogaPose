@@ -53,7 +53,7 @@ const ResetPassword = () => {
                     <button type="submit" className="auth-button">Reset Password</button>
                 </form>
                 {message && <p className="message">{message}</p>}
-                <p className="auth-text">Remember your password? <a href="/login" className="auth-link">Log in</a></p>
+                <p className="auth-text">Remember your password? <a href="/login" className="auth-link">Back to Login</a></p>
             </div>
         </div>
     );
