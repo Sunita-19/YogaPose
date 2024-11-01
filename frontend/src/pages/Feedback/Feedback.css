@@ -1,41 +1,42 @@
 /* src/pages/Feedback/Feedback.css */
+
 .feedback-container {
     max-width: 650px; /* Limit the maximum width */
     margin: 0 auto; /* Center the container */
-    padding: 20px; /* Add more padding around the container */
-    background-color:  rgba(224, 247, 250, 0.8); /* Set the background color of the form to white */
-    border-radius: 10px; /* Rounded corners */
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); /* Enhanced shadow for depth */
-    transition: transform 0.2s; /* Animation for #00695Chover effect */
-   color: #00695C;
+    padding: 30px; /* Add more padding around the container */
+    background-color: rgba(224, 247, 250, 0.9); /* Set the background color of the form */
+    border-radius: 15px; /* Rounded corners */
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2); /* Enhanced shadow for depth */
+    transition: transform 0.2s; /* Animation for hover effect */
+    color:#01423b;
 }
 
 .feedback-container:hover {
     transform: scale(1.02); /* Slightly scale up on hover for effect */
 }
 
+
 h2 {
     text-align: center; /* Center the heading */
-    color: #00695C; /* Set heading color */
-    font-size: 35px; /* Increase font size */
-    margin-bottom: 20px; /* Space below heading */
-    text-shadow: #050404;
+    color: #01423b; /* Set heading color */
+    font-size: 40px; /* Increase font size */
+    margin-bottom: 25px; /* Space below heading */
+    text-shadow: 0 1px 3px rgba(202, 17, 17, 0.1); /* Subtle text shadow */
 }
 
 .feedback-form {
     display: flex;
     flex-direction: column; /* Stack children vertically */
-    
 }
 
 .form-group {
-    margin-bottom: 20px; /* Space between each form group */
-    color:#00695C;
+    margin-bottom: 25px; /* Space between each form group */
+    color: #070707;
 }
 
 .label {
     display: block; /* Each label takes full width */
-    margin-bottom: 5px; /* Space below the label */
+    margin-bottom: 8px; /* Space below the label */
     font-weight: bold; /* Make labels bold */
     color: #00695C; /* Label text color */
 }
@@ -44,29 +45,29 @@ input[type="text"],
 input[type="email"],
 textarea {
     width: 100%; /* Full width */
-    padding: 12px; /* Inner padding */
-    border: 1px solid #050404; /* Lighter border style */
+    padding: 15px; /* Inner padding */
+    border: 1px solid #00695C; /* Set border color to main theme color */
     border-radius: 5px; /* Rounded corners */
     box-sizing: border-box; /* Include padding in width */
-    color: #00695C; /* Text color inside input fields */
+    color: #000000; /* Text color inside input fields */
+    font-size: 16px; /* Font size for input text */
     transition: border-color 0.3s; /* Smooth border color transition */
 }
 
 input[type="text"]:focus,
 input[type="email"]:focus,
 textarea:focus {
-    border-color: #00695C; /* Change border color on focus */
+    border-color: #139898; /* Change border color on focus */
     outline: none; /* Remove outline */
 }
 
 input[type="text"],
 input[type="email"] {
-    height: 40px; /* Fixed height for text boxes */
-    width: 600px;
+    height: 45px; /* Fixed height for text boxes */
 }
 
 textarea {
-    height: 120px; /* Increased height for comments */
+    height: 150px; /* Increased height for comments */
     resize: vertical; /* Allow vertical resizing */
 }
 
@@ -84,11 +85,11 @@ textarea {
 .submit-btn {
     background-color: #00695C; /* Button background color */
     color: white; /* Text color for button */
-    padding: 12px; /* Inner padding */
+    padding: 15px; /* Inner padding */
     border: none; /* No border */
     border-radius: 5px; /* Rounded corners */
     cursor: pointer; /* Pointer cursor on hover */
-    font-size: 16px; /* Button text size */
+    font-size: 18px; /* Button text size */
     transition: background-color 0.3s, transform 0.2s; /* Animation for button effects */
 }
 

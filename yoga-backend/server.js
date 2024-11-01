@@ -117,6 +117,26 @@ app.post('/api/login', async (req, res) => {
     });
 });
 
+// Feedback submission endpoint
+app.post('/api/feedback', (req, res) => {
+    const { user_id, name, email, satisfaction, comments } = req.body;
+
+    // Validate input
+    if (!user_id || !name || !email || !satisfaction || !comments) {
+        return res.status(400).json({ message: 'All fields are required!' });
+    }
+
+    // Insert feedback into the database
+    db.query('INSERT INTO feedback (user_id, name, email, satisfaction, comments) VALUES (?, ?, ?, ?, ?)', 
+    [user_id, name, email, satisfaction, comments], (err, results) => {
+        if (err) {
+            console.error('Database error:', err);
+            return res.status(500).json({ error: 'Database error' });
+        }
+        res.status(201).json({ message: 'Feedback submitted successfully' });
+    });
+});
+
 
 // Start the server
 app.listen(port, () => {

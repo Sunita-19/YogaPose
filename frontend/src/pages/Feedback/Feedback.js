@@ -1,109 +1,106 @@
-// src/pages/Feedback/Feedback.js
-import React, { useState } from 'react';
-import './Feedback.css'; // Import the CSS file
+import React, { useState, useContext } from 'react';
+import axios from 'axios';
+import UserContext from '../../context/UserContext';
+import './Feedback.css';
+
 
 const Feedback = () => {
+    const { user } = useContext(UserContext) || {}; // Fallback to an empty object
+    const userId = user ? user.id : null; // Get the user's ID
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [satisfaction, setSatisfaction] = useState('');
     const [comments, setComments] = useState('');
     const [error, setError] = useState('');
+    const [success, setSuccess] = useState('');
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         setError('');
+        setSuccess('');
 
-        // Email validation regex
-        const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        // Validate input
         if (!name || !email || !satisfaction || !comments) {
-            setError('Please fill in all fields.');
-            return;
-        }
-        if (!emailPattern.test(email)) {
-            setError('Please enter a valid email address.');
+            setError('All fields are required!');
             return;
         }
 
-        // Handle successful submission (e.g., send data to an API)
-        console.log({ name, email, satisfaction, comments });
+        // Submit feedback to the server
+        try {
+            const response = await axios.post('http://localhost:5000/api/feedback', {
+                user_id: userId,
+                name,
+                email,
+                satisfaction,
+                comments,
+            });
+            setSuccess(response.data.message);
+            setName('');
+            setEmail('');
+            setSatisfaction('');
+            setComments('');
+        } catch (error) {
+            if (error.response) {
+                setError(error.response.data.error || 'An error occurred while submitting feedback');
+            } else {
+                setError('An unexpected error occurred');
+            }
+        }
     };
 
     return (
         <div className="feedback-container">
             <h2>Feedback Form</h2>
-            <p>Your feedback is highly valuable for our Fun Yoga. Kindly take a few moments to share your thoughts on your experience with the portal. Please provide ratings indicating your satisfaction levels with the content, features, and services. Thank you!</p>
-            <form className="feedback-form" onSubmit={handleSubmit}>
-                {error && <div className="error-message">{error}</div>}
-
+            <form onSubmit={handleSubmit}>
                 <div className="form-group">
-                    <label>
-                        Name: 
-                        <input 
-                            type="text" 
-                            value={name} 
-                            onChange={(e) => setName(e.target.value)} 
-                            required
-                        />
-                    </label>
-                   <br></br>
-                    <label>
-                        Email: 
-                        <input 
-                            type="email" 
-                            value={email} 
-                            onChange={(e) => setEmail(e.target.value)} 
-                            required 
-                        />
-                    </label>
+                    <label htmlFor="name">Name:</label>
+                    <input
+                        type="text"
+                        id="name"
+                        value={name}
+                        onChange={(e) => setName(e.target.value)}
+                        required
+                    />
                 </div>
-
                 <div className="form-group">
-                    <label>How satisfied are you with the portal content?</label>
-                    <div className="radio-group">
-                        <label className="radio-option">
-                            <input 
-                                type="radio" 
-                                value="Very-Satisfied" 
-                                checked={satisfaction === 'Very-Satisfied'} 
-                                onChange={(e) => setSatisfaction(e.target.value)} 
-                                required 
-                            />
-                            Very Satisfied
-                        </label>
-                        <label className="radio-option">
-                            <input 
-                                type="radio" 
-                                value="Satisfied" 
-                                checked={satisfaction === 'Satisfied'} 
-                                onChange={(e) => setSatisfaction(e.target.value)} 
-                                required 
-                            />
-                            Satisfied
-                        </label>
-                        <label className="radio-option">
-                            <input 
-                                type="radio" 
-                                value="Neutral" 
-                                checked={satisfaction === 'Neutral'} 
-                                onChange={(e) => setSatisfaction(e.target.value)} 
-                                required 
-                            />
-                            Neutral
-                        </label>
-                    </div>
+                    <label htmlFor="email">Email:</label>
+                    <input
+                        type="email"
+                        id="email"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        required
+                    />
                 </div>
-
                 <div className="form-group">
-                    <label>Comments and Suggestions:</label>
-                    <textarea 
-                        value={comments} 
-                        onChange={(e) => setComments(e.target.value)} 
-                        required 
+                    <label htmlFor="satisfaction">Satisfaction Level:</label>
+                    <select
+                        id="satisfaction"
+                        value={satisfaction}
+                        onChange={(e) => setSatisfaction(e.target.value)}
+                        required
+                    >
+                        <option value="">Select...</option>
+                        <option value="1">1 - Very Dissatisfied</option>
+                        <option value="2">2 - Dissatisfied</option>
+                        <option value="3">3 - Neutral</option>
+                        <option value="4">4 - Satisfied</option>
+                        <option value="5">5 - Very Satisfied</option>
+                    </select>
+                </div>
+                <div className="form-group">
+                    <label htmlFor="comments">Comments:</label>
+                    <textarea
+                        id="comments"
+                        value={comments}
+                        onChange={(e) => setComments(e.target.value)}
+                        required
                     ></textarea>
                 </div>
-
-                <button type="submit" className="submit-btn">Submit</button>
+                <button type="submit">Submit Feedback</button>
             </form>
+            {error && <p className="error">{error}</p>}
+            {success && <p className="success">{success}</p>}
         </div>
     );
 };

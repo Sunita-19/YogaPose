@@ -1,4 +1,5 @@
 // src/App.js
+
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
 
@@ -13,9 +14,9 @@ import DietPlan from './pages/DietPlan/DietPlan';
 import Progress from './pages/Progress/Progress';
 import Feedback from './pages/Feedback/Feedback';
 import LoginPage from './components/Login/LoginPage';
-import SignUpPage from './components/Login/SignUpPage';  // Adjusted case to match the filename
-import ForgotPassword from './components/ForgotPassword/ForgotPassword'; // Corrected file name
-import ResetPassword from './components/ResetPassword';
+import SignUpPage from './components/Login/SignUpPage';  
+import ForgotPassword from './components/ForgotPassword/ForgotPassword'; 
+import ResetPassword from './components/ResetPassword'; // Corrected import path
 
 import './App.css';
 
@@ -28,7 +29,7 @@ export default function App() {
                 
                 {/* Public Routes */}
                 <Route path='/login' element={<LoginPage />} />
-                <Route path='/signup' element={<SignUpPage />} />  {/* Adjusted case to match the filename */}
+                <Route path='/signup' element={<SignUpPage />} />  
                 <Route path='/forgot-password' element={<ForgotPassword />} />
                 <Route path='/reset-password' element={<ResetPassword />} />
 
