@@ -8,7 +8,7 @@ export default function Header() {
             <h1 className='home-heading'>SuMaY</h1>
             <h1 className="description">A Yoga AI Trainer</h1>
             <div className="header-buttons">
-                <Link to='/'>
+                <Link to='/home'>
                     <button className="btn btn-secondary" id="home-btn">Home</button>
                 </Link>
                 <Link to='/about'>
