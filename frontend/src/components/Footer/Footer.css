@@ -4,7 +4,6 @@ footer {
     padding: 40px 20px;
     text-align: center;
 }
-
 .footer-container {
     display: flex;
     justify-content: space-between;
@@ -55,7 +54,7 @@ footer {
 }
 
 .footer-section ul li a:hover {
-    color: #FFA500;
+    color: #0056b3;
 }
 
 .social-icons {

@@ -13,8 +13,6 @@
     padding-right: 20px; /* Add padding to right */
 }
 
-
-
 .heading {
     font-size: 70px; /* Larger font for heading */
     color: #FFFFFF; /* White text */
@@ -31,8 +29,25 @@
     text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.6); /* Shadow for visibility */
     text-align: left;
 }
+
 .btn-section {
     display: flex;
     justify-content: center;
+    align-items: center; 
     margin-top: 20px; /* Space above buttons */
+}
+.start-btn {
+    padding: 15px 30px; /* Increased padding for a larger button */
+    font-size: 30px; /* Larger font size for the button */
+    background-color: #555; /* Button background color */
+    color: #fff; /* White text color */
+    border: none; /* No border */
+    border-radius: 5px; /* Slightly rounded corners */
+    cursor: pointer; /* Pointer cursor */
+    transition: background-color 0.3s; /* Transition effect */
+    align-items: center; 
+}
+
+.start-btn:hover {
+    background-color: #777; /* Change color on hover */
 }

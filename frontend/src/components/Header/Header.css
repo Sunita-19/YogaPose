@@ -32,7 +32,7 @@
     margin: 10px;
     background-color: #007BFF;
     color: white;
-    font-size: 22px;
+    font-size: 20px;
     border: none;
     border-radius: 5px;
     cursor: pointer;
@@ -50,24 +50,11 @@
 }
 /* src/components/Header.css */
 .home-header {
-    background: #004d40;
+    background: #004d40;;
     width: 100%;
     height: 80px;
     display: flex;
     align-items: center;
     justify-content: space-between;
     padding: 0 20px;
-}
-
-.home-heading {
-    font-size: 30px;
-    color: #FFA500;
-}
-
-.header-buttons {
-    display: flex;
-}
-
-.header-buttons .btn {
-    margin-left: 10px;
 }
