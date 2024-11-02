@@ -1,33 +1,3 @@
-.home-container {
-    background: #00695C;
-    color: #FFFFFF;
-    font-family: 'Raleway', sans-serif;
-    min-height: 100vh;
-    position: relative;
-}
-
-.home-header {
-    background: #004d40;
-    width: 100%;
-    height: 80px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0 20px;
-}
-
-.home-heading {
-    font-size: 30px;
-    color: #FFA500;
-}
-
-.header-buttons {
-    display: flex;
-}
-
-.header-buttons .btn {
-    margin-left: 10px;
-}
 
 .home-main {
     display: flex;
@@ -61,30 +31,8 @@
     text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.6); /* Shadow for visibility */
     text-align: left;
 }
-
 .btn-section {
-
     display: flex;
     justify-content: center;
     margin-top: 20px; /* Space above buttons */
-    margin-right:545px;
 }
-
-.btn {
-    padding: 10px 20px;
-    margin: 10px;
-    background-color: #007BFF;
-    color: white;
-    font-size: 24px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background 0.3s, transform 0.3s;
-}
-
-.btn:hover {
-    background: #0056b3;
-    transform: scale(1.05);
-}
-
-

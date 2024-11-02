@@ -8,7 +8,6 @@ import './Home.css';
 export default function Home() {
     return (
         <div className='home-container'>
-            {/* <Header /> */}
 
             <div className="home-main">
                 <div className="text-section">
@@ -22,7 +21,7 @@ export default function Home() {
                 </div>
             </div>
 
-            {/* <Footer /> */}
+        
         </div>
     );
 }

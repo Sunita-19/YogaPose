@@ -1,8 +1,10 @@
+/* src/App.css */
 body, html {
   margin: 0;
   padding: 0;
+  height: 100%; /* Ensures the body takes up full height */
 }
-/* src/App.css */
+
 .layout-container {
   display: flex;
   flex-direction: column;
@@ -12,7 +14,7 @@ body, html {
 .header {
   background-color: #333;
   color: #fff;
-  padding: 1rem;
+  padding: 0; /* Remove padding */
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -28,13 +30,15 @@ body, html {
 
 .main-content {
   flex: 1;
-  padding: 2rem;
+  padding: 0; /* Remove padding */
+  margin: 0; /* Ensure there's no margin */
+  background-color: #00695C; /* Set background color directly */
 }
 
 .footer {
   background-color: #333;
   color: #fff;
-  padding: 1rem;
+  padding: 0; /* Remove padding */
 }
 
 .footer-content {
@@ -45,4 +49,18 @@ body, html {
 .footer-bottom {
   text-align: center;
   margin-top: 1rem;
+}
+
+/* General body styling */
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
 }
