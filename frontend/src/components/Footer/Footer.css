@@ -1,0 +1,92 @@
+footer {
+    background-color: rgba(0, 0, 0, 0.8);
+    color: white;
+    padding: 40px 20px;
+    text-align: center;
+}
+
+.footer-container {
+    display: flex;
+    justify-content: space-between;
+    justify-items: left;
+    flex-wrap: wrap;
+    align-items: left;
+    max-width: 1200px; /* Keeps content centered */
+    margin: 0 auto;
+}
+
+.footer-section {
+    flex: 1; /* Make each section take equal width */
+    margin: 20px;
+}
+
+.footer-section h4 {
+    margin-bottom: 20px;
+    color: #FFA500;
+    margin-left:0px;
+}
+
+.footer-section p
+{
+    margin: 20px;
+    margin-left: 0;
+    padding: 0;
+    list-style: none;
+    color: #FFFFFF;
+    font-size: 16px;
+    text-align:center;
+}
+.footer-section ul {
+    margin: 20px;
+    padding: 0;
+    list-style: none;
+    color: #FFFFFF;
+    font-size: 16px;
+    text-align: center;
+}
+
+.footer-section ul li {
+    margin-bottom: 8px;
+}
+
+.footer-section ul li a {
+    color: #FFFFFF;
+    text-decoration: none;
+}
+
+.footer-section ul li a:hover {
+    color: #FFA500;
+}
+
+.social-icons {
+    display: flex;
+    justify-content: center;
+    gap: 30px; /* Increase gap between icons */
+}
+
+.social-icons a img {
+    width: 30px;
+    height: 30px;
+    transition: transform 0.3s ease;
+}
+
+.social-icons a:hover img {
+    transform: scale(1.1);
+}
+
+.footer-bottom {
+    margin-top: 30px;
+    border-top: 1px solid #333;
+    padding-top: 10px;
+    color: #FFFFFF;
+    font-size: 14px;
+}
+
+/* Align the footer vertically and horizontally in the middle of the screen */
+.footer {
+    display: flex;
+    flex-direction: column;
+    justify-content: left;
+    align-items: left;
+    text-align: center;
+}
