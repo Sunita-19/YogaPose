@@ -1,7 +1,7 @@
-// Feedback.js
 import React, { useState } from 'react';
 import axios from 'axios';
 import './Feedback.css';
+
 const Feedback = () => {
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');

@@ -1,15 +1,15 @@
 /* src/pages/Feedback/Feedback.css */
-
 .feedback-container {
     max-width: 600px; /* Limit the maximum width */
-    margin: 0 auto; /* Center the container */
+    margin: 50px auto; /* Center the container and add vertical space above and below */
     padding: 30px; /* Add more padding around the container */
     background-color: rgba(224, 247, 250, 0.9); /* Set the background color of the form */
     border-radius: 15px; /* Rounded corners */
     box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2); /* Enhanced shadow for depth */
     transition: transform 0.2s; /* Animation for hover effect */
-    color:#01423b;
+    color: #01423b;
 }
+
 
 .feedback-container:hover {
     transform: scale(1.02); /* Slightly scale up on hover for effect */

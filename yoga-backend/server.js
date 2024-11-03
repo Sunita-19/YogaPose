@@ -38,7 +38,7 @@ function authenticateToken(req, res, next) {
     jwt.verify(token.split(' ')[1], process.env.JWT_SECRET, (err, user) => {
         if (err) return res.status(403).json({ message: 'Invalid token' });
         req.user = user;
-        console.log('Authenticated user:', req.user); // Log the user information for debugging
+        // console.log('Authenticated user:', req.user); // Log the user information for debugging
         next();
     });
 }
