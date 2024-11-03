@@ -48,13 +48,9 @@
 .header-buttons .btn:first-child {
     margin-left: 0; /* No margin for the first button */
 }
-/* src/components/Header.css */
-.home-header {
-    background: #004d40;;
-    width: 100%;
-    height: 80px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0 20px;
+
+.menu-icon {
+    font-size: 1.5rem;
+    cursor: pointer;
+    margin-right: 20px; /* Space between icon and heading */
 }

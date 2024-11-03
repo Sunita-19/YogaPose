@@ -51,7 +51,8 @@ export default function Footer() {
             </div>
 
             <div className="footer-bottom">
-                <p>© 2024 Fun Yoga AI Trainer. All rights reserved.</p>
+            <p>© {new Date().getFullYear()} Fun Yoga AI Trainer. All rights reserved.</p>
+
             </div>
         </footer>
     );

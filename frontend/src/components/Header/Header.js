@@ -2,9 +2,12 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import './Header.css';
 
-export default function Header() {
+export default function Header({ toggleSidebar }) {
     return (
         <header className='home-header'>
+            <div className="menu-icon" onClick={toggleSidebar}>
+                ☰
+            </div>
             <h1 className='home-heading'>SuMaY</h1>
             <h1 className="description">A Yoga AI Trainer</h1>
             <div className="header-buttons">

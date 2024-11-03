@@ -1,0 +1,29 @@
+.tabs {
+    display: flex;
+    margin-bottom: 10px;
+}
+
+.tab-button {
+    padding: 10px 15px;
+    border: none;
+    cursor: pointer;
+    background-color: #007BFF; /* Primary color */
+    color: white;
+    margin-right: 5px;
+    transition: background 0.3s;
+}
+
+.tab-button.active {
+    background-color: #0056b3; /* Active tab color */
+}
+
+.tab-button:hover {
+    background-color: #0056b3; /* Hover color */
+}
+
+.tab-content {
+    padding: 15px;
+    border: 1px solid #ccc;
+    background-color: white;
+    border-radius: 5px;
+}
