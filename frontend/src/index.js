@@ -4,7 +4,7 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-
+import { AccuracyProvider } from './context/AccuracyContext'; // Adjusted to singular "context"
 ReactDOM.render(
   <React.StrictMode>
     <App />
@@ -14,3 +14,10 @@ ReactDOM.render(
 
 // Optional: Log performance metrics
 reportWebVitals(console.log);
+
+ReactDOM.render(
+  <AccuracyProvider>
+    <App />
+  </AccuracyProvider>,
+  document.getElementById('root')
+);

@@ -1,81 +1,74 @@
-import React, { useState, useContext } from 'react';
+// Feedback.js
+import React, { useState } from 'react';
 import axios from 'axios';
-import UserContext from '../../context/UserContext';
 import './Feedback.css';
-
-
 const Feedback = () => {
-    const { user } = useContext(UserContext) || {}; // Fallback to an empty object
-    const userId = user ? user.id : null; // Get the user's ID
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [satisfaction, setSatisfaction] = useState('');
     const [comments, setComments] = useState('');
-    const [error, setError] = useState('');
-    const [success, setSuccess] = useState('');
+    const [message, setMessage] = useState('');
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        setError('');
-        setSuccess('');
+        setMessage('');
 
-        // Validate input
-        if (!name || !email || !satisfaction || !comments) {
-            setError('All fields are required!');
+        // Ensure satisfaction level is selected
+        if (!satisfaction) {
+            setMessage('Please select a satisfaction level.');
             return;
         }
 
-        // Submit feedback to the server
         try {
+            const token = localStorage.getItem('token'); // Assume token is stored in local storage
             const response = await axios.post('http://localhost:5000/api/feedback', {
-                user_id: userId,
                 name,
                 email,
                 satisfaction,
                 comments,
+            }, {
+                headers: {
+                    Authorization: `Bearer ${token}`, // Include the token in the request header
+                },
             });
-            setSuccess(response.data.message);
+
+            setMessage(response.data.message);
+            // Clear form after submission
             setName('');
             setEmail('');
             setSatisfaction('');
             setComments('');
         } catch (error) {
-            if (error.response) {
-                setError(error.response.data.error || 'An error occurred while submitting feedback');
-            } else {
-                setError('An unexpected error occurred');
-            }
+            console.error('Error submitting feedback:', error);
+            setMessage(error.response?.data?.message || 'Failed to submit feedback. Please try again.');
         }
     };
 
     return (
         <div className="feedback-container">
-            <h2>Feedback Form</h2>
+            <h2>Feedback</h2>
             <form onSubmit={handleSubmit}>
-                <div className="form-group">
-                    <label htmlFor="name">Name:</label>
+                <div>
+                    <label>Name:</label>
                     <input
                         type="text"
-                        id="name"
                         value={name}
                         onChange={(e) => setName(e.target.value)}
                         required
                     />
                 </div>
-                <div className="form-group">
-                    <label htmlFor="email">Email:</label>
+                <div>
+                    <label>Email:</label>
                     <input
                         type="email"
-                        id="email"
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                         required
                     />
                 </div>
-                <div className="form-group">
-                    <label htmlFor="satisfaction">Satisfaction Level:</label>
+                <div>
+                    <label>Satisfaction Level:</label>
                     <select
-                        id="satisfaction"
                         value={satisfaction}
                         onChange={(e) => setSatisfaction(e.target.value)}
                         required
@@ -88,19 +81,17 @@ const Feedback = () => {
                         <option value="5">5 - Very Satisfied</option>
                     </select>
                 </div>
-                <div className="form-group">
-                    <label htmlFor="comments">Comments:</label>
+                <div>
+                    <label>Comments:</label>
                     <textarea
-                        id="comments"
                         value={comments}
                         onChange={(e) => setComments(e.target.value)}
                         required
-                    ></textarea>
+                    />
                 </div>
                 <button type="submit">Submit Feedback</button>
             </form>
-            {error && <p className="error">{error}</p>}
-            {success && <p className="success">{success}</p>}
+            {message && <p>{message}</p>}
         </div>
     );
 };

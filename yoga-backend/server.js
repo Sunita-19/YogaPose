@@ -15,10 +15,10 @@ app.use(bodyParser.json());
 
 // MySQL database connection
 const db = mysql.createConnection({
-    host: 'localhost',
-    user: 'root',
-    password: 'Sunita', // Replace with your MySQL password
-    database: 'YogaPose' // Your database name
+    host: process.env.DB_HOST,
+    user: process.env.DB_USER,
+    password: process.env.DB_PASSWORD,
+    database: process.env.DB_NAME
 });
 
 // Connect to the database
@@ -29,6 +29,19 @@ db.connect((err) => {
     }
     console.log('Connected to the database.');
 });
+
+// Middleware for verifying JWT
+function authenticateToken(req, res, next) {
+    const token = req.headers['authorization'];
+    if (!token) return res.status(401).json({ message: 'Access denied, no token provided' });
+
+    jwt.verify(token.split(' ')[1], process.env.JWT_SECRET, (err, user) => {
+        if (err) return res.status(403).json({ message: 'Invalid token' });
+        req.user = user;
+        console.log('Authenticated user:', req.user); // Log the user information for debugging
+        next();
+    });
+}
 
 // User registration endpoint
 app.post('/api/register', async (req, res) => {
@@ -78,36 +91,29 @@ app.post('/api/register', async (req, res) => {
 app.post('/api/login', async (req, res) => {
     const { username, password } = req.body;
 
-    // Validate input
     if (!username || !password) {
         return res.status(400).json({ message: 'Username and password are required!' });
     }
 
-    // Find user in the database
     db.query('SELECT * FROM users WHERE username = ?', [username], async (err, results) => {
         if (err) {
             console.error('Database error:', err);
             return res.status(500).json({ error: 'Database error' });
         }
         
-        // Check if user exists
         if (results.length === 0) {
-            console.log(`Login failed: User with username "${username}" not found.`);
             return res.status(401).json({ message: 'Invalid username or password' });
         }
 
         const user = results[0];
 
-        // Compare password with hashed password
         try {
             const isMatch = await bcrypt.compare(password, user.password);
             if (!isMatch) {
-                console.log(`Login failed: Incorrect password for user "${username}".`);
                 return res.status(401).json({ message: 'Invalid username or password' });
             }
 
-            // Generate JWT token
-            const token = jwt.sign({ id: user.id, username: user.username }, 'a542a514d22883fcde61769d3ed74301984ce993cb021a3560194e298176516712fcb2bbf17e63c6af548a1a745621a96c825221bbfa1c54445f974de8dc46e5', { expiresIn: '1h' });
+            const token = jwt.sign({ id: user.id, username: user.username }, process.env.JWT_SECRET, { expiresIn: '1h' });
 
             res.status(200).json({ message: 'Login successful', token });
         } catch (error) {
@@ -118,27 +124,129 @@ app.post('/api/login', async (req, res) => {
 });
 
 // Feedback submission endpoint
-app.post('/api/feedback', (req, res) => {
-    const { user_id, name, email, satisfaction, comments } = req.body;
+app.post('/api/feedback', authenticateToken, (req, res) => {
+    const { name, email, satisfaction, comments } = req.body;
 
-    // Validate input
-    if (!user_id || !name || !email || !satisfaction || !comments) {
+    // Ensure all required fields are provided
+    if (!name || !email || !satisfaction || !comments) {
         return res.status(400).json({ message: 'All fields are required!' });
     }
 
-    // Insert feedback into the database
+    // Insert feedback into the database including user_id from the authenticated user
     db.query('INSERT INTO feedback (user_id, name, email, satisfaction, comments) VALUES (?, ?, ?, ?, ?)', 
-    [user_id, name, email, satisfaction, comments], (err, results) => {
+    [req.user.id, name, email, satisfaction, comments], (err, results) => {
         if (err) {
-            console.error('Database error:', err);
-            return res.status(500).json({ error: 'Database error' });
+            console.error('Database error while submitting feedback:', err.message); // Log error message
+            return res.status(500).json({ error: 'Database error', details: err }); // Include error details
         }
         res.status(201).json({ message: 'Feedback submitted successfully' });
     });
 });
 
+// Get achievements for a user
+app.get('/api/achievements', authenticateToken, (req, res) => {
+    db.query('SELECT * FROM achievements WHERE user_id = ?', [req.user.id], (err, results) => {
+        if (err) {
+            console.error('Database error:', err);
+            return res.status(500).json({ error: 'Database error' });
+        }
+        res.status(200).json(results);
+    });
+});
+
+// Get all articles
+app.get('/api/articles', authenticateToken, (req, res) => {
+    db.query('SELECT * FROM articles', (err, results) => {
+        if (err) {
+            console.error('Database error:', err);
+            return res.status(500).json({ error: 'Database error' });
+        }
+        res.status(200).json(results);
+    });
+});
+
+// Get notifications for a user
+app.get('/api/notifications', authenticateToken, (req, res) => {
+    db.query('SELECT * FROM notifications WHERE user_id = ?', [req.user.id], (err, results) => {
+        if (err) {
+            console.error('Database error:', err);
+            return res.status(500).json({ error: 'Database error' });
+        }
+        res.status(200).json(results);
+    });
+});
+
+// Mark notification as read
+app.put('/api/notifications/:id/read', authenticateToken, (req, res) => {
+    const notificationId = req.params.id;
+
+    db.query('UPDATE notifications SET read_status = 1 WHERE id = ? AND user_id = ?', [notificationId, req.user.id], (err, results) => {
+        if (err) {
+            console.error('Database error:', err);
+            return res.status(500).json({ error: 'Database error' });
+        }
+        if (results.affectedRows === 0) {
+            return res.status(404).json({ message: 'Notification not found' });
+        }
+        res.status(200).json({ message: 'Notification marked as read' });
+    });
+});
+
+// Endpoint to add a new environmental activity
+app.post('/api/activities', authenticateToken, (req, res) => {
+    const { title, description, date, location } = req.body;
+
+    if (!title || !description || !date || !location) {
+        return res.status(400).json({ message: 'All fields are required!' });
+    }
+
+    db.query('INSERT INTO activities (user_id, title, description, date, location) VALUES (?, ?, ?, ?, ?)', 
+    [req.user.id, title, description, date, location], (err, results) => {
+        if (err) {
+            console.error('Database error:', err);
+            return res.status(500).json({ error: 'Database error' });
+        }
+        res.status(201).json({ message: 'Activity added successfully' });
+    });
+});
+
+// Endpoint to add a new reward
+app.post('/api/rewards', authenticateToken, (req, res) => {
+    const { points, description } = req.body;
+
+    if (!points || !description) {
+        return res.status(400).json({ message: 'All fields are required!' });
+    }
+
+    db.query('INSERT INTO rewards (user_id, points, description) VALUES (?, ?, ?)', 
+    [req.user.id, points, description], (err, results) => {
+        if (err) {
+            console.error('Database error:', err);
+            return res.status(500).json({ error: 'Database error' });
+        }
+        res.status(201).json({ message: 'Reward added successfully' });
+    });
+});
+
+// Endpoint to update user profile information
+app.put('/api/profile', authenticateToken, (req, res) => {
+    const { name, bio, profile_image } = req.body;
+
+    if (!name && !bio && !profile_image) {
+        return res.status(400).json({ message: 'At least one field must be updated!' });
+    }
+
+    db.query('UPDATE users SET name = COALESCE(?, name), bio = COALESCE(?, bio), profile_image = COALESCE(?, profile_image) WHERE id = ?', 
+    [name, bio, profile_image, req.user.id], (err, results) => {
+        if (err) {
+            console.error('Database error:', err);
+            return res.status(500).json({ error: 'Database error' });
+        }
+        res.status(200).json({ message: 'Profile updated successfully' });
+    });
+});
 
 // Start the server
 app.listen(port, () => {
-    console.log(`Server running on http://localhost:${port}`);
+    console.log(`Server is running on http://localhost:${port}`);
 });

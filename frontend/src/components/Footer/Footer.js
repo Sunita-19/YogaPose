@@ -13,7 +13,7 @@ export default function Footer() {
             <div className="footer-container">
                 <div className="footer-section contact-us">
                     <h4>Contact Us</h4>
-                    <p>Email: info@funyogatrainer.com</p>
+                    <p>Email: FunYoga@gmail.com</p>
                     <p>Phone: +123 456 7890</p>
                     <p>Address: 123 Yoga Street, Wellness City, YG 78900</p>
                 </div>
@@ -43,7 +43,7 @@ export default function Footer() {
                         <a href="https://instagram.com" target="_blank" rel="noopener noreferrer">
                             <img src={instaIcon} alt="Instagram" />
                         </a>
-                        <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer">
+                        <a href="https://www.linkedin.com/in/sunita-yadav-057a75300" target="_blank" rel="noopener noreferrer">
                             <img src={linkedinIcon} alt="LinkedIn" />
                         </a>
                     </div>

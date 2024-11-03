@@ -3,7 +3,7 @@
     flex-direction: column;
     width: 100%;
     height: 100vh; /* Full height for the viewport */
-    background-color: rgba(224, 247, 250, 0.8); /* Light teal */
+    background-color:  #00695C; /* Light teal */
     border-radius: 10px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     overflow: hidden;
@@ -16,7 +16,8 @@
     text-align: center;
     padding: 20px;
     font-size: 24px;
-    color: black; /* Text color set to white for contrast */
+    color: rgb(255, 255, 255); /* Text color set to white for contrast */
+
 }
 
 
@@ -71,4 +72,7 @@
     color: white;
     border-radius: 5px;
     cursor: pointer;
+}
+.h2{
+    color:white;
 }

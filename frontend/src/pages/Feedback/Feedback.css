@@ -1,7 +1,7 @@
 /* src/pages/Feedback/Feedback.css */
 
 .feedback-container {
-    max-width: 650px; /* Limit the maximum width */
+    max-width: 600px; /* Limit the maximum width */
     margin: 0 auto; /* Center the container */
     padding: 30px; /* Add more padding around the container */
     background-color: rgba(224, 247, 250, 0.9); /* Set the background color of the form */
