@@ -1,8 +1,8 @@
-// src/App.js
 import React, { useState } from 'react';
 import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
 import Header from './components/Header/Header';
 import Sidebar from './components/Sidebar/Sidebar';
+import Footer from './components/Footer/Footer'; // Import Footer component
 
 // Import page components
 import Home from './pages/Home/Home';
@@ -22,7 +22,7 @@ import ResetPassword from './components/ResetPassword';
 export default function App() {
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
-    // Toggle the sidebar
+    // Toggle the sidebar visibility
     const toggleSidebar = () => {
         setIsSidebarOpen(!isSidebarOpen);
     };
@@ -53,6 +53,7 @@ export default function App() {
                     </Routes>
                 </main>
             </div>
+            <Footer /> {/* Make sure Footer is outside the main content */}
         </Router>
     );
 }

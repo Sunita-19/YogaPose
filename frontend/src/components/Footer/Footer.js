@@ -1,4 +1,3 @@
-// src/components/Footer.js
 import React from 'react';
 import { Link } from 'react-router-dom';
 import './Footer.css';
@@ -13,7 +12,7 @@ export default function Footer() {
             <div className="footer-container">
                 <div className="footer-section contact-us">
                     <h4>Contact Us</h4>
-                    <p>Email: FunYoga@gmail.com</p>
+                    <p>Email: info@funyogatrainer.com</p>
                     <p>Phone: +123 456 7890</p>
                     <p>Address: 123 Yoga Street, Wellness City, YG 78900</p>
                 </div>
@@ -43,7 +42,7 @@ export default function Footer() {
                         <a href="https://instagram.com" target="_blank" rel="noopener noreferrer">
                             <img src={instaIcon} alt="Instagram" />
                         </a>
-                        <a href="https://www.linkedin.com/in/sunita-yadav-057a75300" target="_blank" rel="noopener noreferrer">
+                        <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer">
                             <img src={linkedinIcon} alt="LinkedIn" />
                         </a>
                     </div>
@@ -51,8 +50,7 @@ export default function Footer() {
             </div>
 
             <div className="footer-bottom">
-            <p>© {new Date().getFullYear()} Fun Yoga AI Trainer. All rights reserved.</p>
-
+                <p>© 2024 Fun Yoga AI Trainer. All rights reserved.</p>
             </div>
         </footer>
     );

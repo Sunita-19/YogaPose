@@ -1,4 +1,3 @@
-/* src/App.css */
 body, html {
   margin: 0;
   padding: 0;
@@ -8,7 +7,7 @@ body, html {
 .layout-container {
   display: flex;
   flex-direction: column;
-  min-height: 100vh;
+  min-height: 100vh; /* Ensures layout covers full viewport height */
 }
 
 .header {
@@ -29,16 +28,18 @@ body, html {
 }
 
 .main-content {
-  flex: 1;
+  flex: 1; /* Allow main content to grow and fill space */
   padding: 0; /* Remove padding */
   margin: 0; /* Ensure there's no margin */
   background-color: #00695C; /* Set background color directly */
+  overflow: auto; /* Allow scrolling if content overflows */
 }
 
 .footer {
   background-color: #333;
   color: #fff;
-  padding: 0; /* Remove padding */
+  padding: 20px; /* Add padding to footer for better spacing */
+  text-align: center; /* Center align footer text */
 }
 
 .footer-content {
@@ -54,13 +55,67 @@ body, html {
 /* General body styling */
 body {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+      'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+      sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+      monospace;
+}
+
+/* Home Main Specific Styles */
+.home-main {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end; /* Align text to the right */
+  justify-content: center;
+  margin-top: 20px;
+  height: calc(100vh - 80px); /* Adjust this if needed */
+  background: url('../../utils/images/yoga_pose.png') no-repeat center left;
+  background-size: 700px;
+  position: relative;
+  opacity: 0.9;
+  padding-right: 20px; /* Add padding to right */
+}
+
+.heading {
+  font-size: 70px; /* Larger font for heading */
+  color: #FFFFFF; /* White text */
+  margin-right: 0;
+  margin-left: 30px;
+  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.8); /* Shadow for visibility */
+  text-align: center;
+}
+
+.subheading {
+  font-size: 20px; /* Smaller font for subheading */
+  color: #FFFFFF; /* White text */
+  margin-top: 30px;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.6); /* Shadow for visibility */
+  text-align: left;
+}
+
+.btn-section {
+  display: flex;
+  justify-content: center;
+  align-items: center; 
+  margin-top: 20px; /* Space above buttons */
+}
+
+.start-btn {
+  padding: 15px 30px; /* Increased padding for a larger button */
+  font-size: 30px; /* Larger font size for the button */
+  background-color: #555; /* Button background color */
+  color: #fff; /* White text color */
+  border: none; /* No border */
+  border-radius: 5px; /* Slightly rounded corners */
+  cursor: pointer; /* Pointer cursor */
+  transition: background-color 0.3s; /* Transition effect */
+}
+
+.start-btn:hover {
+  background-color: #777; /* Change color on hover */
 }
