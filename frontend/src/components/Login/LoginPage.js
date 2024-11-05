@@ -1,9 +1,8 @@
-// src/components/Login/LoginPage.js
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import './LoginPage.css';
 
-const LoginPage = () => {
+const LoginPage = ({ onLogin }) => { // Accepting onLogin prop
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
@@ -27,6 +26,7 @@ const LoginPage = () => {
                 // Store the token in local storage
                 localStorage.setItem('token', data.token);
                 setErrorMessage('');
+                onLogin(); // Call onLogin to update authentication state
                 navigate('/home'); // Redirect to home page
             } else {
                 setErrorMessage(data.message || 'Login failed.');

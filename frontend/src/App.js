@@ -21,39 +21,50 @@ import ResetPassword from './components/ResetPassword';
 
 export default function App() {
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+    const [isAuthenticated, setIsAuthenticated] = useState(false); // Authentication state
 
     // Toggle the sidebar visibility
     const toggleSidebar = () => {
         setIsSidebarOpen(!isSidebarOpen);
     };
 
+    const handleLogin = () => {
+        setIsAuthenticated(true); // Set authenticated to true on successful login
+    };
+
     return (
         <Router>
             <div className="layout-container">
-                <Header toggleSidebar={toggleSidebar} />
-                <Sidebar isOpen={isSidebarOpen} toggleSidebar={toggleSidebar} />
+                {isAuthenticated && <Header toggleSidebar={toggleSidebar} />} {/* Render Header only if authenticated */}
+                {isAuthenticated && <Sidebar isOpen={isSidebarOpen} toggleSidebar={toggleSidebar} />} {/* Render Sidebar only if authenticated */}
                 <main className="main-content">
                     <Routes>
                         <Route path='/' element={<Navigate to="/login" replace />} />
-                        <Route path='/login' element={<LoginPage />} />
+                        <Route path='/login' element={<LoginPage onLogin={handleLogin} />} /> {/* Pass onLogin to LoginPage */}
                         <Route path='/signup' element={<SignUpPage />} />
                         <Route path='/forgot-password' element={<ForgotPassword />} />
                         <Route path='/reset-password' element={<ResetPassword />} />
 
                         {/* Protected Routes with Layout */}
-                        <Route path='/home' element={<Home />} />
-                        <Route path='/start' element={<Yoga />} />
-                        <Route path='/about' element={<About />} />
-                        <Route path='/tutorials' element={<Tutorials />} />
-                        <Route path='/chatbot' element={<Chatbot />} />
-                        <Route path='/diet' element={<Diet />} />
-                        <Route path='/dietplan' element={<DietPlan />} />
-                        <Route path='/progress' element={<Progress />} />
-                        <Route path='/feedback' element={<Feedback />} />
+                        {isAuthenticated ? (
+                            <>
+                                <Route path='/home' element={<Home />} />
+                                <Route path='/start' element={<Yoga />} />
+                                <Route path='/about' element={<About />} />
+                                <Route path='/tutorials' element={<Tutorials />} />
+                                <Route path='/chatbot' element={<Chatbot />} />
+                                <Route path='/diet' element={<Diet />} />
+                                <Route path='/dietplan' element={<DietPlan />} />
+                                <Route path='/progress' element={<Progress />} />
+                                <Route path='/feedback' element={<Feedback />} />
+                            </>
+                        ) : (
+                            <Route path='/home' element={<Navigate to="/login" replace />} />
+                        )}
                     </Routes>
                 </main>
             </div>
-            <Footer /> {/* Make sure Footer is outside the main content */}
+            {isAuthenticated && <Footer />} {/* Render Footer only if authenticated */}
         </Router>
     );
 }
