@@ -6,15 +6,16 @@
     min-height: 100vh;
     position: relative;
 }
+
 .home-header {
     background: #004d40; /* Darker shade for the header */
     width: 100%;
     height: 80px;
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: space-around; /* Use space-around for equal spacing */
     padding: 0 20px;
-    color:#FFFFFF
+    color: #FFFFFF;
 }
 
 .home-heading {
@@ -22,35 +23,33 @@
     color: #FFA500; /* Orange color for the logo text */
 }
 
-.header-buttons {
-    display: flex;
+/* Header links styles */
+.header-links {
+    display: flex; /* Align links in a row */
+    gap: 15px; /* Space between links */
 }
 
-.header-buttons .btn {
-    margin-left: 10px; /* Space between buttons */
-    padding: 10px 20px;
-    margin: 10px;
-    background-color: #007BFF;
-    color: white;
-    font-size: 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background 0.3s, transform 0.3s;
+.header-link {
+    color: white; /* Link color */
+    text-decoration: none; /* Remove underline */
+    font-size: 18px; /* Font size */
+    transition: color 0.3s; /* Smooth color transition */
 }
 
-.header-buttons .btn:hover {
-    background: #0056b3; /* Darker shade on hover */
-    transform: scale(1.05); /* Slightly enlarge on hover */
+.header-link:hover {
+    color: #FFA500; /* Change color on hover */
+    text-decoration: underline; /* Optional: underline on hover */
 }
 
-/* Adjusts button styles for better spacing and alignment */
-.header-buttons .btn:first-child {
-    margin-left: 0; /* No margin for the first button */
+/* Back icon styles */
+.back-icon {
+    font-size: 1.5rem; /* Increase size for better visibility */
+    cursor: pointer; /* Pointer cursor on hover */
+    color: white; /* Set color to white */
 }
 
+/* Menu icon styles */
 .menu-icon {
     font-size: 1.5rem;
     cursor: pointer;
-    margin-right: 20px; /* Space between icon and heading */
 }
