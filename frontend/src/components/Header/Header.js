@@ -42,6 +42,7 @@ export default function Header({ toggleSidebar }) {
                         <div className="dropdown-menu">
                             <Link to='/diet' className="dropdown-link">Diet Chart</Link>
                             <Link to='/progress' className="dropdown-link">Progress</Link>
+                            <Link to='/start' className="dropdown-link">Yoga Poses</Link>
                         </div>
                     )}
                 </div>
