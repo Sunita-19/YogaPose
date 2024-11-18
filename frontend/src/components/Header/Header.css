@@ -1,5 +1,6 @@
+/* Main container styles */
 .home-container {
-    background: #00695C; /* Consistent green background */
+    background: #00695C; /* Green background remains consistent */
     color: #FFFFFF;
     font-family: 'Raleway', sans-serif;
     min-height: 100vh;
@@ -8,20 +9,21 @@
 
 /* Header styles */
 .home-header {
-    background: #004d40; /* Darker shade for the header */
+    background: #004d40; /* Dark blue for the header */
     width: 100%;
-    height: 80px;
+    height: 100px; /* Increased height for better spacing */
     display: flex;
     align-items: center;
-    justify-content: space-between; /* Space out elements in the header */
+    justify-content: space-between; /* Space out elements */
     padding: 0 20px;
     color: #FFFFFF;
 }
 
 /* Main heading styles */
 .main-heading {
-    font-size: 24px;
-    color: #FFA500;
+    font-size: 36px; /* Larger font size for visibility */
+    color: #FFA500; /* Orange color for contrast */
+    font-weight: bold;
     transition: transform 0.3s, color 0.3s; /* Smooth scaling and color changes */
 }
 
@@ -33,9 +35,9 @@
 
 /* Menu icon styles */
 .menu-icon {
-    font-size: 1.5rem;
-    cursor: pointer; /* Hand icon on hover */
-    color: white;
+    font-size: 2rem; /* Larger icon size */
+    cursor: pointer; /* Hand cursor on hover */
+    color: #FFFFFF;
     transition: color 0.3s; /* Smooth color transition */
 }
 
@@ -53,7 +55,7 @@
 }
 
 .header-link {
-    color: white;
+    color: #FFFFFF; /* White for visibility */
     text-decoration: none;
     font-size: 18px;
     padding: 10px 15px;
@@ -66,16 +68,12 @@
     color: #FFA500; /* Change link color on hover */
 }
 
-.dropdown-parent {
-    position: relative;
-}
-
 /* Dropdown menu styles */
 .dropdown-menu {
     position: absolute;
     top: 100%;
     left: 0;
-    background: #004d40; /* Dark green background for dropdown */
+    background: #0379ee; /* Lighter blue for dropdowns */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     display: flex;
     flex-direction: column;
@@ -86,7 +84,7 @@
 }
 
 .dropdown-link {
-    color: white;
+    color: #FFFFFF; /* White text for visibility */
     text-decoration: none;
     font-size: 16px;
     padding: 5px 10px;
@@ -95,6 +93,6 @@
 }
 
 .dropdown-link:hover {
-    background: #FFA500;
-    color: #004d40; /* Text changes to dark green on hover */
+    background: #FFA500; /* Orange background on hover */
+    color: #003366; /* Dark blue text on hover */
 }
