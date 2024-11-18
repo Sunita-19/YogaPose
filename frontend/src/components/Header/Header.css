@@ -1,55 +1,100 @@
-/* Header Styles */
 .home-container {
-    background: #00695C;
+    background: #00695C; /* Consistent green background */
     color: #FFFFFF;
     font-family: 'Raleway', sans-serif;
     min-height: 100vh;
     position: relative;
 }
 
+/* Header styles */
 .home-header {
     background: #004d40; /* Darker shade for the header */
     width: 100%;
     height: 80px;
     display: flex;
     align-items: center;
-    justify-content: space-around; /* Use space-around for equal spacing */
+    justify-content: space-between; /* Space out elements in the header */
     padding: 0 20px;
     color: #FFFFFF;
 }
 
-.home-heading {
-    font-size: 30px; /* Larger font for the logo */
-    color: #FFA500; /* Orange color for the logo text */
+/* Main heading styles */
+.main-heading {
+    font-size: 24px;
+    color: #FFA500;
+    transition: transform 0.3s, color 0.3s; /* Smooth scaling and color changes */
 }
 
-/* Header links styles */
-.header-links {
-    display: flex; /* Align links in a row */
-    gap: 15px; /* Space between links */
-}
-
-.header-link {
-    color: white; /* Link color */
-    text-decoration: none; /* Remove underline */
-    font-size: 18px; /* Font size */
-    transition: color 0.3s; /* Smooth color transition */
-}
-
-.header-link:hover {
-    color: #FFA500; /* Change color on hover */
-    text-decoration: underline; /* Optional: underline on hover */
-}
-
-/* Back icon styles */
-.back-icon {
-    font-size: 1.5rem; /* Increase size for better visibility */
-    cursor: pointer; /* Pointer cursor on hover */
-    color: white; /* Set color to white */
+/* Hover effect for the main heading */
+.main-heading:hover {
+    transform: scale(1.1); /* Slight scaling effect */
+    color: #FFD700; /* Gold color on hover */
 }
 
 /* Menu icon styles */
 .menu-icon {
     font-size: 1.5rem;
+    cursor: pointer; /* Hand icon on hover */
+    color: white;
+    transition: color 0.3s; /* Smooth color transition */
+}
+
+/* Hover effect for the menu icon */
+.menu-icon:hover {
+    color: #FFA500; /* Change to orange on hover */
+}
+
+/* Navigation styles */
+.header-nav {
+    display: flex;
+    gap: 20px; /* Space between links */
+    align-items: center;
+    position: relative;
+}
+
+.header-link {
+    color: white;
+    text-decoration: none;
+    font-size: 18px;
+    padding: 10px 15px;
     cursor: pointer;
+    position: relative;
+    transition: color 0.3s;
+}
+
+.header-link:hover {
+    color: #FFA500; /* Change link color on hover */
+}
+
+.dropdown-parent {
+    position: relative;
+}
+
+/* Dropdown menu styles */
+.dropdown-menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background: #004d40; /* Dark green background for dropdown */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    padding: 10px;
+    border-radius: 4px;
+    z-index: 1000;
+}
+
+.dropdown-link {
+    color: white;
+    text-decoration: none;
+    font-size: 16px;
+    padding: 5px 10px;
+    border-radius: 4px;
+    transition: background 0.3s, color 0.3s;
+}
+
+.dropdown-link:hover {
+    background: #FFA500;
+    color: #004d40; /* Text changes to dark green on hover */
 }

@@ -16,9 +16,13 @@ export default function Header({ toggleSidebar }) {
             <h1 className='main-heading'>Fun Yoga AI Trainer</h1>
 
             <nav className="header-nav">
-                <Link to='/home' className="header-link" onClick={() => setDropdown(null)}>Home</Link>
+                <Link to='/home' className="header-link">Home</Link>
 
-                <div className="header-link" onMouseEnter={() => toggleDropdown("about")} onMouseLeave={() => setDropdown(null)}>
+                <div
+                    className="header-link dropdown-parent"
+                    onMouseEnter={() => toggleDropdown("about")}
+                    onMouseLeave={() => setDropdown(null)}
+                >
                     About Us
                     {dropdown === "about" && (
                         <div className="dropdown-menu">
@@ -28,7 +32,11 @@ export default function Header({ toggleSidebar }) {
                     )}
                 </div>
 
-                <div className="header-link" onMouseEnter={() => toggleDropdown("offer")} onMouseLeave={() => setDropdown(null)}>
+                <div
+                    className="header-link dropdown-parent"
+                    onMouseEnter={() => toggleDropdown("offer")}
+                    onMouseLeave={() => setDropdown(null)}
+                >
                     What We Offer
                     {dropdown === "offer" && (
                         <div className="dropdown-menu">
@@ -38,7 +46,11 @@ export default function Header({ toggleSidebar }) {
                     )}
                 </div>
 
-                <div className="header-link" onMouseEnter={() => toggleDropdown("use")} onMouseLeave={() => setDropdown(null)}>
+                <div
+                    className="header-link dropdown-parent"
+                    onMouseEnter={() => toggleDropdown("use")}
+                    onMouseLeave={() => setDropdown(null)}
+                >
                     How to Use
                     {dropdown === "use" && (
                         <div className="dropdown-menu">
@@ -47,7 +59,11 @@ export default function Header({ toggleSidebar }) {
                     )}
                 </div>
 
-                <div className="header-link" onMouseEnter={() => toggleDropdown("volunteer")} onMouseLeave={() => setDropdown(null)}>
+                <div
+                    className="header-link dropdown-parent"
+                    onMouseEnter={() => toggleDropdown("volunteer")}
+                    onMouseLeave={() => setDropdown(null)}
+                >
                     Volunteer
                     {dropdown === "volunteer" && (
                         <div className="dropdown-menu">
