@@ -30,7 +30,7 @@
 /* Hover effect for the main heading */
 .main-heading:hover {
     transform: scale(1.1); /* Slight scaling effect */
-    color: #FFD700; /* Gold color on hover */
+    color: #0379ee; /* Gold color on hover */
 }
 
 /* Menu icon styles */
@@ -43,7 +43,7 @@
 
 /* Hover effect for the menu icon */
 .menu-icon:hover {
-    color: #FFA500; /* Change to orange on hover */
+    color: #0379ee; /* Change to orange on hover */
 }
 
 /* Navigation styles */
@@ -65,7 +65,7 @@
 }
 
 .header-link:hover {
-    color: #FFA500; /* Change link color on hover */
+    color: #0379ee; /* Change link color on hover */
 }
 
 /* Dropdown menu styles */
