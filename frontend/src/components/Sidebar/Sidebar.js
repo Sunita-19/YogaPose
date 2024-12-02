@@ -27,7 +27,6 @@ export default function Sidebar({ isOpen, toggleSidebar }) {
 
                 {/* Categories */}
                 <div className="categories">
-                    <h4>Yoga Categories</h4>
                     <Link to="/start" onClick={toggleSidebar}>Yoga Poses</Link>
                     <Link to="/yoga/techniques" onClick={toggleSidebar}>Yoga Techniques</Link>
                     <Link to="/yoga/meditations" onClick={toggleSidebar}>Meditations</Link>
@@ -35,7 +34,6 @@ export default function Sidebar({ isOpen, toggleSidebar }) {
 
                 {/* Help Section */}
                 <div className="contact-help">
-                    <h4>Need Help?</h4>
                     <Link to="/contact" onClick={toggleSidebar}>Contact Us</Link>
                     <Link to="/faq" onClick={toggleSidebar}>FAQ</Link>
                 </div>

@@ -161,3 +161,55 @@
     font-size: 1.2rem;
     color: #FFFFFF; /* White for profile name */
 }
+/* Social Icons */
+.footer-section.follow-us {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start; /* Align icons below the text */
+}
+
+.footer-section.follow-us h4 {
+    margin-bottom: 10px; /* Space below "Follow Us" text */
+}
+
+.social-icons {
+    margin-top: 15px; /* Add spacing below the "Follow Us" text */
+    display: flex;
+    gap: 20px; /* Adjust spacing for a neat layout */
+}
+
+.social-icons a img {
+    width: 32px;
+    height: 32px;
+    transition: transform 0.3s ease, filter 0.3s ease;
+}
+
+.social-icons a:hover img {
+    transform: scale(1.1);
+    filter: grayscale(0); /* Remove grayscale on hover */
+}
+
+/* Footer Bottom Section */
+.footer-bottom {
+    margin-top: 30px;
+    border-top: 1px solid #333;
+    padding-top: 10px;
+    color: #FFFFFF;
+    font-size: 14px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .footer-container {
+        flex-direction: column; /* Stack sections on smaller screens */
+        text-align: center; /* Center-align content */
+    }
+
+    .footer-section.follow-us {
+        align-items: center; /* Center-align social icons on smaller screens */
+    }
+
+    .social-icons {
+        justify-content: center; /* Center social icons */
+    }
+}

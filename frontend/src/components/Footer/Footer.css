@@ -1,91 +1,77 @@
-footer {
-    background-color: rgba(0, 0, 0, 0.8);
+/* General Footer Styles */
+.footer {
+    background-color: #004d40; /* Match the dark green of the header */
     color: white;
     padding: 40px 20px;
     text-align: center;
+    font-family: 'Raleway', sans-serif;
+    position: relative;
+    bottom: 0;
+    width: 100%;
+    box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.2);
 }
+
+/* Footer Container */
 .footer-container {
     display: flex;
     justify-content: space-between;
-    justify-items: left;
     flex-wrap: wrap;
-    align-items: left;
-    max-width: 1200px; /* Keeps content centered */
+    align-items: flex-start; /* Align items at the top for consistency */
+    max-width: 1200px;
     margin: 0 auto;
 }
 
+/* Footer Sections */
 .footer-section {
-    flex: 1; /* Make each section take equal width */
+    flex: 1; /* Equal width for sections */
     margin: 20px;
+    min-width: 250px; /* Minimum width to avoid squishing on smaller screens */
 }
 
 .footer-section h4 {
-    margin-bottom: 20px;
-    color: #FFA500;
-    margin-left:0px;
+    font-size: 22px;
+    margin-bottom: 15px;
+    color: #FFA500; /* Orange for headers */
+    text-transform: uppercase;
+    border-bottom: 2px solid #FFA500; /* Adds a visual separator */
+    display: inline-block;
+    padding-bottom: 5px;
 }
 
-.footer-section p
-{
-    margin: 20px;
-    margin-left: 0;
-    padding: 0;
-    list-style: none;
+/* Contact Information */
+.footer-section p {
+    margin: 10px 0;
     color: #FFFFFF;
     font-size: 16px;
-    text-align:center;
+    line-height: 1.6;
+    text-align: left;
 }
+
+/* Quick Links */
 .footer-section ul {
-    margin: 20px;
-    padding: 0;
     list-style: none;
-    color: #FFFFFF;
-    font-size: 16px;
-    text-align: center;
+    padding: 0;
+    margin: 10px 0;
 }
 
 .footer-section ul li {
-    margin-bottom: 8px;
+    margin: 10px 0;
 }
 
 .footer-section ul li a {
     color: #FFFFFF;
     text-decoration: none;
+    font-size: 16px;
+    transition: color 0.3s ease;
+    outline: none; /* Removes focus outline */
+    border: none; /* Ensures no border is visible */
+    background: none; /* Removes background if any */
 }
 
-.footer-section ul li a:hover {
-    color: #0056b3;
-}
-
-.social-icons {
-    display: flex;
-    justify-content: center;
-    gap: 30px; /* Increase gap between icons */
-}
-
-.social-icons a img {
-    width: 30px;
-    height: 30px;
-    transition: transform 0.3s ease;
-}
-
-.social-icons a:hover img {
-    transform: scale(1.1);
-}
-
-.footer-bottom {
-    margin-top: 30px;
-    border-top: 1px solid #333;
-    padding-top: 10px;
-    color: #FFFFFF;
-    font-size: 14px;
-}
-
-/* Align the footer vertically and horizontally in the middle of the screen */
-.footer {
-    display: flex;
-    flex-direction: column;
-    justify-content: left;
-    align-items: left;
-    text-align: center;
+.footer-section ul li a:hover,
+.footer-section ul li a:focus {
+    color: #0969df; /* Change text color on hover */
+    outline: none; /* Ensures no outline appears */
+    border: none; /* Ensures no border appears */
+    background: none; /* Ensures no background appears */
 }
