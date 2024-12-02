@@ -1,61 +1,71 @@
-/* Main container styles */
-.home-container {
-    background: #00695C; /* Green background remains consistent */
-    color: #FFFFFF;
+/* General Styles */
+body {
+    margin: 0;
+    padding: 0;
     font-family: 'Raleway', sans-serif;
+    background: #f4f4f4;
+}
+
+/* Main Container */
+.home-container {
+    background: #00695C; /* Green background */
+    color: #FFFFFF;
     min-height: 100vh;
     position: relative;
 }
 
-/* Header styles */
+/* Header Styles */
 .home-header {
-    background: #004d40; /* Dark blue for the header */
+    background: #004d40; /* Dark green for header */
     width: 100%;
-    height: 100px; /* Increased height for better spacing */
+    height: 100px; /* Larger height for better spacing */
     display: flex;
     align-items: center;
     justify-content: space-between; /* Space out elements */
     padding: 0 20px;
     color: #FFFFFF;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    z-index: 10; /* Ensures it stays on top */
+    position: sticky;
+    top: 0;
 }
 
-/* Main heading styles */
+/* Main Heading */
 .main-heading {
     font-size: 36px; /* Larger font size for visibility */
-    color: #FFA500; /* Orange color for contrast */
+    color: #FFA500; /* Orange for contrast */
     font-weight: bold;
-    transition: transform 0.3s, color 0.3s; /* Smooth scaling and color changes */
+    transition: transform 0.3s, color 0.3s; /* Smooth hover effect */
 }
 
-/* Hover effect for the main heading */
 .main-heading:hover {
-    transform: scale(1.1); /* Slight scaling effect */
-    color: #0379ee; /* Gold color on hover */
+    transform: scale(1.1); /* Slight zoom effect */
+    color: #0379ee; /* Blue on hover */
 }
 
-/* Menu icon styles */
+/* Menu Icon */
 .menu-icon {
-    font-size: 2rem; /* Larger icon size */
-    cursor: pointer; /* Hand cursor on hover */
+    font-size: 2rem;
+    cursor: pointer;
     color: #FFFFFF;
-    transition: color 0.3s; /* Smooth color transition */
+    transition: color 0.3s;
 }
 
-/* Hover effect for the menu icon */
 .menu-icon:hover {
-    color: #0379ee; /* Change to orange on hover */
+    color: #0379ee; /* Blue on hover */
 }
 
-/* Navigation styles */
+/* Navigation Styles */
 .header-nav {
     display: flex;
-    gap: 20px; /* Space between links */
+    gap: 30px; /* Space between links */
     align-items: center;
     position: relative;
 }
 
+/* Header Links */
 .header-link {
-    color: #FFFFFF; /* White for visibility */
+    color: #FFFFFF;
     text-decoration: none;
     font-size: 18px;
     padding: 10px 15px;
@@ -65,34 +75,79 @@
 }
 
 .header-link:hover {
-    color: #0379ee; /* Change link color on hover */
+    color: #0379ee; /* Blue on hover */
 }
 
-/* Dropdown menu styles */
-.dropdown-menu {
-    position: absolute;
-    top: 100%;
+/* Dropdown Menu */
+.header-dropdown-parent {
+    position: relative; /* Positions dropdown relative to parent */
+}
+
+.header-dropdown-menu {
+    position: absolute; /* Positions dropdown within parent */
+    top: 100%; /* Dropdown appears below the parent */
     left: 0;
-    background: #0379ee; /* Lighter blue for dropdowns */
+    background: #0379ee; /* Lighter blue background */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    display: flex;
+    display: none; /* Hidden by default */
     flex-direction: column;
     gap: 5px;
     padding: 10px;
     border-radius: 4px;
-    z-index: 1000;
+    z-index: 1000; /* Ensures dropdown appears above other elements */
+    min-width: 150px; /* Minimum width for dropdown */
 }
 
-.dropdown-link {
-    color: #FFFFFF; /* White text for visibility */
+.header-dropdown-parent:hover > .header-dropdown-menu {
+    display: flex; /* Show dropdown on hover */
+}
+
+/* Dropdown Links */
+.header-dropdown-link {
+    color: #FFFFFF;
     text-decoration: none;
     font-size: 16px;
     padding: 5px 10px;
     border-radius: 4px;
     transition: background 0.3s, color 0.3s;
+    white-space: nowrap; /* Prevents wrapping */
 }
 
-.dropdown-link:hover {
+.header-dropdown-link:hover {
     background: #FFA500; /* Orange background on hover */
     color: #003366; /* Dark blue text on hover */
+}
+
+/* Ensure Links and Dropdowns Don't Overlap */
+.header-link, .header-dropdown-parent {
+    z-index: 1;
+}
+
+/* Extra Spacing Between Dropdown Sections */
+.dropdown-section {
+    margin-top: 10px;
+    padding: 10px;
+    background-color: #004d40;
+    border-radius: 4px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .header-nav {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .header-link {
+        padding: 10px;
+    }
+
+    .main-heading {
+        font-size: 24px; /* Adjust heading size for smaller screens */
+    }
+
+    .menu-icon {
+        font-size: 1.5rem; /* Adjust menu icon size */
+    }
 }

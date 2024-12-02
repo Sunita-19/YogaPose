@@ -10,66 +10,66 @@ export default function Header({ toggleSidebar }) {
     };
 
     return (
-        <header className='home-header'>
+        <header className="home-header">
             <div className="menu-icon" onClick={toggleSidebar}>☰</div>
             
-            <h1 className='main-heading'>Fun Yoga AI Trainer</h1>
+            <h1 className="main-heading">Fun Yoga AI Trainer</h1>
 
             <nav className="header-nav">
-                <Link to='/home' className="header-link">Home</Link>
+                <Link to="/home" className="header-link">Home</Link>
 
                 <div
-                    className="header-link dropdown-parent"
+                    className="header-link header-dropdown-parent"
                     onMouseEnter={() => toggleDropdown("about")}
                     onMouseLeave={() => setDropdown(null)}
                 >
                     About Us
                     {dropdown === "about" && (
-                        <div className="dropdown-menu">
-                            <Link to='/about' className="dropdown-link">Our Mission</Link>
-                            <Link to='/team' className="dropdown-link">Meet the Team</Link>
+                        <div className="header-dropdown-menu">
+                            <Link to="/about" className="header-dropdown-link">Our Mission</Link>
+                            <Link to="/team" className="header-dropdown-link">Meet the Team</Link>
                         </div>
                     )}
                 </div>
 
                 <div
-                    className="header-link dropdown-parent"
+                    className="header-link header-dropdown-parent"
                     onMouseEnter={() => toggleDropdown("offer")}
                     onMouseLeave={() => setDropdown(null)}
                 >
                     What We Offer
                     {dropdown === "offer" && (
-                        <div className="dropdown-menu">
-                            <Link to='/diet' className="dropdown-link">Diet Chart</Link>
-                            <Link to='/progress' className="dropdown-link">Progress</Link>
-                            <Link to='/start' className="dropdown-link">Yoga Poses</Link>
+                        <div className="header-dropdown-menu">
+                            <Link to="/diet" className="header-dropdown-link">Diet Chart</Link>
+                            <Link to="/progress" className="header-dropdown-link">Progress</Link>
+                            <Link to="/start" className="header-dropdown-link">Yoga Poses</Link>
                         </div>
                     )}
                 </div>
 
                 <div
-                    className="header-link dropdown-parent"
+                    className="header-link header-dropdown-parent"
                     onMouseEnter={() => toggleDropdown("use")}
                     onMouseLeave={() => setDropdown(null)}
                 >
                     How to Use
                     {dropdown === "use" && (
-                        <div className="dropdown-menu">
-                            <Link to='/tutorials' className="dropdown-link">Tutorial</Link>
+                        <div className="header-dropdown-menu">
+                            <Link to="/tutorials" className="header-dropdown-link">Tutorial</Link>
                         </div>
                     )}
                 </div>
 
                 <div
-                    className="header-link dropdown-parent"
+                    className="header-link header-dropdown-parent"
                     onMouseEnter={() => toggleDropdown("volunteer")}
                     onMouseLeave={() => setDropdown(null)}
                 >
                     Volunteer
                     {dropdown === "volunteer" && (
-                        <div className="dropdown-menu">
-                            <Link to='/volunteer-info' className="dropdown-link">Volunteer Info</Link>
-                            <Link to='/apply' className="dropdown-link">Apply Now</Link>
+                        <div className="header-dropdown-menu">
+                            <Link to="/volunteer-info" className="header-dropdown-link">Volunteer Info</Link>
+                            <Link to="/apply" className="header-dropdown-link">Apply Now</Link>
                         </div>
                     )}
                 </div>
