@@ -18,6 +18,7 @@ import LoginPage from './components/Login/LoginPage';
 import SignUpPage from './components/Login/SignUpPage';
 import ForgotPassword from './components/ForgotPassword/ForgotPassword';
 import ResetPassword from './components/ResetPassword';
+import YogaHistory from './pages/YogaHistory/YogaHistory';
 
 export default function App() {
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
