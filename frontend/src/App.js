@@ -58,6 +58,7 @@ export default function App() {
                                 <Route path='/dietplan' element={<DietPlan />} />
                                 <Route path='/progress' element={<Progress />} />
                                 <Route path='/feedback' element={<Feedback />} />
+                                <Route path='/YogaHistory' element={<YogaHistory />} />
                             </>
                         ) : (
                             <Route path='/home' element={<Navigate to="/login" replace />} />
