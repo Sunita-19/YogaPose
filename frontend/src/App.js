@@ -19,6 +19,7 @@ import SignUpPage from './components/Login/SignUpPage';
 import ForgotPassword from './components/ForgotPassword/ForgotPassword';
 import ResetPassword from './components/ResetPassword';
 import YogaHistory from './pages/YogaHistory/YogaHistory';
+import YogaPosesVideos from './pages/YogaPosesVideos/YogaPosesVideos';
 
 export default function App() {
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -59,6 +60,7 @@ export default function App() {
                                 <Route path='/progress' element={<Progress />} />
                                 <Route path='/feedback' element={<Feedback />} />
                                 <Route path='/YogaHistory' element={<YogaHistory />} />
+                                <Route path='/YogaPosesVideos' element={<YogaPosesVideos />} />
                             </>
                         ) : (
                             <Route path='/home' element={<Navigate to="/login" replace />} />
