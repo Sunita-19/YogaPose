@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes, Navigate, Switch } from 'react-router-dom';
 import Header from './components/Header/Header';
 import Sidebar from './components/Sidebar/Sidebar';
 import Footer from './components/Footer/Footer'; // Import Footer component
@@ -20,7 +20,7 @@ import ForgotPassword from './components/ForgotPassword/ForgotPassword';
 import ResetPassword from './components/ResetPassword';
 import YogaHistory from './pages/YogaHistory/YogaHistory';
 import YogaPosesVideos from './pages/YogaPosesVideos/YogaPosesVideos';
-
+import AsanaDetailPage from './pages/AsanaDetailPage/AsanaDetailPage';
 export default function App() {
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
     const [isAuthenticated, setIsAuthenticated] = useState(false); // Authentication state
@@ -61,6 +61,7 @@ export default function App() {
                                 <Route path='/feedback' element={<Feedback />} />
                                 <Route path='/YogaHistory' element={<YogaHistory />} />
                                 <Route path='/YogaPosesVideos' element={<YogaPosesVideos />} />
+                                <Route path="/AsanaDetailPage" element={<AsanaDetailPage />} />
                             </>
                         ) : (
                             <Route path='/home' element={<Navigate to="/login" replace />} />
