@@ -27,7 +27,7 @@ export default function Header({ toggleSidebar }) {
                     {dropdown === "about" && (
                         <div className="header-dropdown-menu">
                             <Link to="/about" className="header-dropdown-link">Our Mission</Link>
-                            <Link to="/team" className="header-dropdown-link">Meet the Team</Link>
+                            <Link to="/MeetTheTeam" className="header-dropdown-link">Meet the Team</Link>
                         </div>
                     )}
                 </div>
@@ -45,7 +45,6 @@ export default function Header({ toggleSidebar }) {
                             <Link to="/start" className="header-dropdown-link">Yoga Poses</Link>
                             <Link to="/YogaHistory" className="header-dropdown-link">Yoga History</Link>
                             <Link to="/YogaPosesVideos" className="header-dropdown-link">Different Levels</Link>
-
                         </div>
                     )}
                 </div>
@@ -73,7 +72,6 @@ export default function Header({ toggleSidebar }) {
                         <div className="header-dropdown-menu">
                             <Link to="/volunteer-info" className="header-dropdown-link">Volunteer Info</Link>
                             <Link to="/apply" className="header-dropdown-link">Apply Now</Link>
-                            
                         </div>
                     )}
                 </div>

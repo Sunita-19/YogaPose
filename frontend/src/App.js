@@ -22,7 +22,9 @@ import YogaHistory from './pages/YogaHistory/YogaHistory';
 import YogaPosesVideos from './pages/YogaPosesVideos/YogaPosesVideos';
 import AsanaDetailPage from './pages/AsanaDetailPage/AsanaDetailPage';
 import PoseDetails from './pages/PoseDetails/PoseDetails'; // Import PoseDetails component
-
+import ApplyNow from './pages/ApplyNow/ApplyNow';
+import VolunteerInfo from './pages/VolunteerInfo/VolunteerInfo';
+import MeetTheTeam from './pages/MeetTheTeam/MeetTheTeam';
 
 export default function App() {
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -67,7 +69,9 @@ export default function App() {
                                 <Route path="/AsanaDetailPage" element={<AsanaDetailPage />} />
                                 <Route path="/" element={<YogaPosesVideos />} />
                                 <Route path="/pose/:id" element={<PoseDetails />} />
-
+                                <Route path="/volunteer-info" element={<VolunteerInfo />} />
+                                <Route path="/apply" element={<ApplyNow />} />
+                                <Route path="/MeetTheTeam" element={<MeetTheTeam/>} />
                             </>
                         ) : (
                             <Route path='/home' element={<Navigate to="/login" replace />} />

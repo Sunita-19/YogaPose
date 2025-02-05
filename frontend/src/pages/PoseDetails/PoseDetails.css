@@ -64,7 +64,7 @@
 
     .pose-image,
     .pose-video {
-        width: 90%;
+        width: 100%;
         max-width: 100%;
         height: auto;
     }
