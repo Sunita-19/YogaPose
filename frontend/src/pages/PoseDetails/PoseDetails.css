@@ -1,3 +1,4 @@
+/* General container styling */
 .pose-details-container {
     max-width: 900px;
     margin: auto;
@@ -5,57 +6,66 @@
     text-align: center;
 }
 
+/* Heading Styles */
 .pose-details-container h1 {
     font-size: 28px;
     font-weight: bold;
     margin-bottom: 10px;
+    color: #333;
 }
 
+/* Paragraph Styles */
 .pose-details-container p {
     font-size: 16px;
     color: #444;
     text-align: justify;
     line-height: 1.6;
+    margin-bottom: 20px;
 }
 
+/* Content Wrapper */
 .pose-content {
     display: flex;
     flex-direction: row;
     align-items: center;
-    justify-content: space-around;
-    gap: 20px;
+    justify-content: center;
+    gap: 30px;
     flex-wrap: wrap;
 }
 
-.pose-image {
-    width: 40%;
-    max-width: 350px;
+/* Common styles for image and video */
+.pose-image,
+.pose-video {
+    flex: 1;
+    max-width: 400px;
     height: auto;
     border-radius: 10px;
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease-in-out;
 }
 
+.pose-image:hover,
+.pose-video:hover {
+    transform: scale(1.05);
+}
+
+/* Video Styling */
 .pose-video {
-    width: 50%;
-    max-width: 450px;
-    height: 300px;
-    border-radius: 10px;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    height: 250px;
+    border: none;
 }
 
 /* Responsive Design */
 @media (max-width: 768px) {
     .pose-content {
         flex-direction: column;
-        align-items: center;
+        gap: 20px;
     }
 
-    .pose-image, .pose-video {
+    .pose-image,
+    .pose-video {
         width: 90%;
         max-width: 100%;
-    }
-
-    .pose-video {
         height: auto;
     }
 }
