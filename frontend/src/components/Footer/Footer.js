@@ -20,10 +20,6 @@ export default function Footer() {
                 <div className="footer-section quick-links">
                     <h4>Quick Links</h4>
                     <ul>
-                        <li><Link to='/'>Home</Link></li>
-                        <li><Link to='/about'>About</Link></li>
-                        <li><Link to='/tutorials'>Tutorials</Link></li>
-                        <li><Link to='/chatbot'>Chatbot</Link></li>
                         <li><Link to='/diet'>Diet Chart</Link></li>
                         <li><Link to='/progress'>Progress</Link></li>
                         <li><Link to="/feedback">Feedback</Link></li>
@@ -48,10 +44,8 @@ export default function Footer() {
                     </div>
                 </div>
             </div>
-
-            <div className="footer-bottom">
-                <p>© 2024 Fun Yoga AI Trainer. All rights reserved.</p>
-            </div>
+                <p>© 2025 Fun Yoga AI Trainer. All rights reserved.</p>
+        
         </footer>
     );
 }
