@@ -21,6 +21,9 @@ import ResetPassword from './components/ResetPassword';
 import YogaHistory from './pages/YogaHistory/YogaHistory';
 import YogaPosesVideos from './pages/YogaPosesVideos/YogaPosesVideos';
 import AsanaDetailPage from './pages/AsanaDetailPage/AsanaDetailPage';
+import PoseDetails from './pages/PoseDetails/PoseDetails'; // Import PoseDetails component
+
+
 export default function App() {
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
     const [isAuthenticated, setIsAuthenticated] = useState(false); // Authentication state
@@ -62,6 +65,9 @@ export default function App() {
                                 <Route path='/YogaHistory' element={<YogaHistory />} />
                                 <Route path='/YogaPosesVideos' element={<YogaPosesVideos />} />
                                 <Route path="/AsanaDetailPage" element={<AsanaDetailPage />} />
+                                <Route path="/" element={<YogaPosesVideos />} />
+                                <Route path="/pose/:id" element={<PoseDetails />} />
+
                             </>
                         ) : (
                             <Route path='/home' element={<Navigate to="/login" replace />} />

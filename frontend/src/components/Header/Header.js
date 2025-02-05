@@ -73,6 +73,7 @@ export default function Header({ toggleSidebar }) {
                         <div className="header-dropdown-menu">
                             <Link to="/volunteer-info" className="header-dropdown-link">Volunteer Info</Link>
                             <Link to="/apply" className="header-dropdown-link">Apply Now</Link>
+                            
                         </div>
                     )}
                 </div>

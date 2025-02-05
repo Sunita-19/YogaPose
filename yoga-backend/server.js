@@ -246,6 +246,22 @@ app.put('/api/profile', authenticateToken, (req, res) => {
     });
 });
 
+// Endpoint to get details of a specific yoga pose
+app.get('/api/yoga_poses/:id', (req, res) => {
+    const poseId = req.params.id;
+
+    db.query('SELECT * FROM yoga_poses WHERE id = ?', [poseId], (err, result) => {
+        if (err) {
+            console.error('Database error:', err);
+            return res.status(500).json({ error: 'Database error' });
+        }
+        if (result.length === 0) {
+            return res.status(404).json({ message: 'Yoga pose not found' });
+        }
+        res.status(200).json(result[0]);
+    });
+});
+
 // Start the server
 app.listen(port, () => {
     console.log(`Server is running on http://localhost:${port}`);
