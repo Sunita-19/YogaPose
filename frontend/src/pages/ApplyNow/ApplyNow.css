@@ -1,49 +1,48 @@
-.apply-now {
-    min-height: 100vh; /* Full height to cover the viewport */
-    background-color: #E0F7FA; /* Light teal background */
+.apply-now-container {
+    min-height: 100vh;
+    background-color: #E0F7FA;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: flex-start;
-    padding: 50px;
+    padding: 40px;
 }
 
 .apply-now-heading {
-    font-size: 48px;
-    color: #00695C; /* Deep teal for heading */
+    font-size: 36px;
+    padding-bottom: 20px;
+    color: #00695C;
     font-family: 'Raleway', sans-serif;
     text-align: center;
-    letter-spacing: 2px;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2); /* Subtle shadow for text */
-    margin-bottom: 40px;
+    letter-spacing: 1.5px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);
 }
 
-.apply-now-content-container {
+.apply-now-box {
     width: 80%;
-    max-width: 1000px;
-    background-color: rgba(255, 255, 255, 0.9); /* Slight opacity for background */
+    background-color: rgba(255, 255, 255, 0.9);
     border-radius: 10px;
-    padding: 40px;
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1); /* Enhanced shadow for depth */
+    padding: 30px;
+    margin-bottom: 30px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
 .apply-now-content {
-    color: #333333; /* Dark text for readability */
-    font-size: 20px;
+    color: #333333;
+    font-size: 18px;
     font-family: 'Raleway', sans-serif;
-    line-height: 1.8;
+    line-height: 1.6;
     margin-top: 10px;
-    padding: 20px;
-    background-color: #ffffff; /* White background for content area */
+    margin-bottom: 20px;
+    padding: 10px 20px;
     border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Light shadow for content */
+    background-color: white;
 }
 
-.apply-now-btn {
-    margin-top: 40px;
-    padding: 18px 28px;
-    background-color: #3ab657; /* Green button */
-    color: #ffffff;
+.apply-now-box button {
+    background-color: #3ab657;
+    color: white;
+    padding: 15px 30px;
     font-size: 1.3em;
     border: none;
     border-radius: 5px;
@@ -51,23 +50,23 @@
     transition: background-color 0.3s ease, transform 0.3s ease;
 }
 
-.apply-now-btn:hover {
-    background-color: #1381f7; /* Blue hover effect */
-    transform: translateY(-3px); /* Slight lift effect on hover */
+.apply-now-box button:hover {
+    background-color: #1381f7;
+    transform: translateY(-3px);
 }
 
 @media (max-width: 768px) {
     .apply-now-heading {
-        font-size: 36px;
+        font-size: 30px;
     }
 
-    .apply-now-content-container {
+    .apply-now-box {
         width: 90%;
-        padding: 30px;
+        padding: 20px;
     }
 
     .apply-now-content {
-        font-size: 18px;
-        padding: 15px;
+        font-size: 16px;
+        padding: 10px;
     }
 }
