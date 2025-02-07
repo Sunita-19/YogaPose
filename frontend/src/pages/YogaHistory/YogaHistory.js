@@ -6,7 +6,7 @@ import SageImg from '../../utils/images/SageImg.png';
 const YogaHistory = () => {
   return (
     <div className="yoga-history-container">
-      <h1>Yoga: A Journey Through Time</h1>
+      <h1>Yoga : A Journey Through Time</h1>
            
 <p></p>
       <section className="introduction">

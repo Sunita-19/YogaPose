@@ -11,17 +11,16 @@
     padding: 20px;
 }
 
-.progress-header {
-    background: #004d40;
-    width: 100%;
-    padding: 20px;
-    border-radius: 5px;
-    margin-bottom: 20px;
-}
+
 
 .progress-heading {
-    font-size: 36px;
-    color: #FFA500; /* Heading color */
+    font-size: 48px;
+    text-align: center;
+    padding: 20px 0;
+    color: #00695C; /* Deep teal */
+    font-family: 'Raleway', sans-serif;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+
 }
 
 .progress-content {
