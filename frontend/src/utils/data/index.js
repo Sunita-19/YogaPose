@@ -4,7 +4,62 @@ export const poseInstructions = {
         'Bend one leg at the knee. Choose the leg you are going to fold in first. If your left leg is your standing leg, keep your left foot planted on the ground, and slowly bend in your right leg at the right knee so that the sole of your right foot rests against your left inner thigh (known as the half-lotus position in Bikram yoga). Point the knee of your bent leg outward, away from your body.',
         'Lengthen your body. Clasp your hands together in Anjali Mudra (also called the “prayer position”)',
         'Hold and repeat. Hold the pose for as long as necessary, making sure to breathe properly. When you’re ready to switch legs, exhale, and return to mountain pose to start again.'
-        ],
+    ],
+    Utkatasana: [
+        'Stand with your feet together and arms at your sides.',
+        'Inhale and raise your arms overhead, keeping them shoulder-width apart.',
+        'Exhale and bend your knees, lowering your hips as if sitting in a chair.',
+        'Keep your back straight and chest lifted, holding the pose for several breaths.'
+    ],
+    Paschimottanasana: [
+        'Sit on the floor with your legs extended straight in front of you.',
+        'Inhale and lengthen your spine, reaching your arms overhead.',
+        'Exhale and hinge at your hips, reaching for your feet or shins.',
+        'Hold the pose, breathing deeply and relaxing into the stretch.'
+    ],
+    Setu_Bandhasana: [
+        'Lie on your back with your knees bent and feet flat on the floor, hip-width apart.',
+        'Inhale and lift your hips towards the ceiling, pressing your feet into the ground.',
+        'Clasp your hands under your back and hold the pose for several breaths.'
+    ],
+    Marjaryasana_Bitilasana: [
+        'Start on your hands and knees in a tabletop position.',
+        'Inhale and arch your back, lifting your head and tailbone (cow pose).',
+        'Exhale and round your back, tucking your chin to your chest (cat pose).',
+        'Repeat the sequence several times.'
+    ],
+    Tadasana: [
+        'Stand tall with your feet together and arms at your sides.',
+        'Distribute your weight evenly on both feet and engage your thighs.',
+        'Inhale and raise your arms overhead, reaching towards the sky.',
+        'Hold the pose, breathing deeply and maintaining your balance.'
+    ],
+    Adho_Mukha_Svanasana: [
+        'Start on your hands and knees in a tabletop position.',
+        'Exhale and lift your hips, straightening your legs to form an inverted V shape.',
+        'Press your heels towards the floor and relax your head between your arms.'
+    ],
+    VirabhadrasanaI: [
+        'Stand tall and step one foot back, bending your front knee.',
+        'Raise your arms overhead, keeping your shoulders relaxed.',
+        'Hold the pose, breathing deeply and focusing on your front knee.'
+    ],
+    Vrikshasana: [
+        'Stand tall and shift your weight onto one leg.',
+        'Bend the opposite knee and place the foot on the inner thigh or calf of the standing leg.',
+        'Bring your hands together at your heart or raise them overhead.',
+        'Hold the pose, focusing on your balance.'
+    ],
+    Balasana: [
+        'Kneel on the floor and sit back on your heels.',
+        'Inhale and lengthen your spine, then exhale and fold forward, resting your forehead on the ground.',
+        'Extend your arms in front of you or alongside your body, relaxing into the pose.'
+    ],
+    Bhujangasana: [
+        'Lie face down on the floor with your hands under your shoulders.',
+        'Inhale and lift your chest off the ground, using your back muscles.',
+        'Keep your elbows close to your body and hold the pose for several breaths.'
+    ],
     Cobra: [
         'Lie prone on the floor. Stretch your legs back, tops of the feet on the floor. Spread your hands on the floor under your shoulders. Hug the elbows back into your body.',
         'On an inhalation, begin to straighten the arms to lift the chest off the floor, going only to the height at which you can maintain a connection through your pubis to your legs. Press the tailbone toward the pubis and lift the pubis toward the navel. Narrow the hip points. Firm but don’t harden the buttocks.',
@@ -19,12 +74,12 @@ export const poseInstructions = {
         'Firm your outer arms and press the bases of your index fingers actively into the floor. Lift along your inner arms from the wrists to the tops of the shoulders. Firm your shoulder blades against your back, then widen them and draw them toward your tailbone. Keep your head between your upper arms.',
         'Stay in the pose for 10 or more breaths, then bend your knees on an exhalation and lower yourself into Child’s Pose',
         'Source: Yoga Journal - https://www.yogajournal.com/poses/types/downward-facing-dog/'
-    
     ],
     Chair: [
-        'Stand straight and tall with your feet slightly wider than hip­-width apart and your arms at your sides.',
-        'Inhale and lift your arms next to your ears, stretching them straight and parallel with wrists and fingers long. Keep your shoulders down and spine neutral.',
-        'Exhale as you bend your knees, keeping your thighs and knees parallel. Lean your torso forward to create a right angle with the tops of your thighs. Keep your neck and head in line with your torso and arms. Hold for 30 seconds to 1 minute.',
+        'Stand with feet together, bend knees and lower hips as if sitting in a chair, arms raised overhead.',
+        'Strengthens thighs and calves.',
+        'Improves posture and balance.',
+        'Stimulates the heart and diaphragm.',
         'Source: classpass - https://classpass.com/movements/chair-pose'
     ],
     Warrior: [
@@ -48,9 +103,7 @@ export const poseInstructions = {
         "Stay in the pose for up to 10 breaths",
         'Source: verywellfit - https://www.verywellfit.com/shoulderstand-salamba-sarvangasana-3567115'
     ]
-    
 }
-
 
 export const tutorials = [
     '1. When App ask for permission of camera, allow it to access to capture pose.',
