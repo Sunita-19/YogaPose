@@ -12,9 +12,9 @@ export default function Footer() {
             <div className="footer-container">
                 <div className="footer-section contact-us">
                     <h4>Contact Us</h4>
-                    <p>Email: info@funyogatrainer.com</p>
-                    <p>Phone: +123 456 7890</p>
-                    <p>Address: 123 Yoga Street, Wellness City, YG 78900</p>
+                    <p>Email: funyoga@gmail.com</p>
+                    <p>Phone: +91 9234567890</p>
+                    <p>Address: 123 Yoga Street, Wellness City, Healthy Place 78900</p>
                 </div>
 
                 <div className="footer-section quick-links">
