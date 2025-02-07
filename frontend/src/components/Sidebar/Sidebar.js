@@ -22,7 +22,6 @@ export default function Sidebar({ isOpen, toggleSidebar }) {
                 <div className="quick-links">
                     <Link to="/progress" onClick={toggleSidebar}>My Progress</Link>
                     <Link to="/achievements" onClick={toggleSidebar}>Achievements</Link>
-                    <Link to="/settings" onClick={toggleSidebar}>Settings</Link>
                 </div>
 
                 {/* Categories */}
