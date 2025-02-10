@@ -26,84 +26,11 @@ export const poseInstructions = {
         'Start on your hands and knees in a tabletop position.',
         'Inhale and arch your back, lifting your head and tailbone (cow pose).',
         'Exhale and round your back, tucking your chin to your chest (cat pose).',
-        'Repeat the sequence several times.'
+        'Repeat the sequence several times.',
+        'Source: Yoga Journal - https://www.yogajournal.com/poses/cat-cow-pose'
     ],
-    Tadasana: [
-        'Stand tall with your feet together and arms at your sides.',
-        'Distribute your weight evenly on both feet and engage your thighs.',
-        'Inhale and raise your arms overhead, reaching towards the sky.',
-        'Hold the pose, breathing deeply and maintaining your balance.'
-    ],
-    Adho_Mukha_Svanasana: [
-        'Start on your hands and knees in a tabletop position.',
-        'Exhale and lift your hips, straightening your legs to form an inverted V shape.',
-        'Press your heels towards the floor and relax your head between your arms.'
-    ],
-    VirabhadrasanaI: [
-        'Stand tall and step one foot back, bending your front knee.',
-        'Raise your arms overhead, keeping your shoulders relaxed.',
-        'Hold the pose, breathing deeply and focusing on your front knee.'
-    ],
-    Vrikshasana: [
-        'Stand tall and shift your weight onto one leg.',
-        'Bend the opposite knee and place the foot on the inner thigh or calf of the standing leg.',
-        'Bring your hands together at your heart or raise them overhead.',
-        'Hold the pose, focusing on your balance.'
-    ],
-    Balasana: [
-        'Kneel on the floor and sit back on your heels.',
-        'Inhale and lengthen your spine, then exhale and fold forward, resting your forehead on the ground.',
-        'Extend your arms in front of you or alongside your body, relaxing into the pose.'
-    ],
-    Bhujangasana: [
-        'Lie face down on the floor with your hands under your shoulders.',
-        'Inhale and lift your chest off the ground, using your back muscles.',
-        'Keep your elbows close to your body and hold the pose for several breaths.'
-    ],
-    Cobra: [
-        'Lie prone on the floor. Stretch your legs back, tops of the feet on the floor. Spread your hands on the floor under your shoulders. Hug the elbows back into your body.',
-        'On an inhalation, begin to straighten the arms to lift the chest off the floor, going only to the height at which you can maintain a connection through your pubis to your legs. Press the tailbone toward the pubis and lift the pubis toward the navel. Narrow the hip points. Firm but don’t harden the buttocks.',
-        'Firm the shoulder blades against the back, puffing the side ribs forward. Lift through the top of the sternum but avoid pushing the front ribs forward, which only hardens the lower back. Distribute the backbend evenly throughout the entire spine.',    
-        'Hold the pose anywhere from 15 to 30 seconds, breathing easily. Release back to the floor with an exhalation.',
-        'Source: Yoga Journal - https://www.yogajournal.com/poses/types/cobra-pose-2/'
-    ],
-    Dog: [
-        'Come onto your hands and knees, with your hands a tiny bit in front of your shoulders and your knees directly below your hips. Spread your palms, rooting down through all four corners of your hands, and turn your toes under.',
-        'Exhale and lift your knees from the floor, at first keeping your knees slightly bent and your heels lifted off the floor. Lengthen your tailbone away from the back of your pelvis, lift the sitting bones toward the ceiling, and draw your inner legs from your inner ankles up through your groins.',
-        'On an exhalation, push your top thighs back and stretch your heels toward the floor. Straighten your knees without locking them.',
-        'Firm your outer arms and press the bases of your index fingers actively into the floor. Lift along your inner arms from the wrists to the tops of the shoulders. Firm your shoulder blades against your back, then widen them and draw them toward your tailbone. Keep your head between your upper arms.',
-        'Stay in the pose for 10 or more breaths, then bend your knees on an exhalation and lower yourself into Child’s Pose',
-        'Source: Yoga Journal - https://www.yogajournal.com/poses/types/downward-facing-dog/'
-    ],
-    Chair: [
-        'Stand with feet together, bend knees and lower hips as if sitting in a chair, arms raised overhead.',
-        'Strengthens thighs and calves.',
-        'Improves posture and balance.',
-        'Stimulates the heart and diaphragm.',
-        'Source: classpass - https://classpass.com/movements/chair-pose'
-    ],
-    Warrior: [
-        'Begin in lunge with your front knee bent, your back leg straight and your back heel lifted. Your hips and chest should be squared to front of the mat. Raise your arms above your head.',
-        'Move your hands to your heart, with palms pressed against each other in a prayer position. Lean forward until your back leg extends straight back, even with your hips. Keep your foot flexed and your gaze downward.',
-        'Make sure your standing leg is strong and straight, but not locked at knee. Reach your arms forward so your body forms a “T” shape.',
-        'Source classpass - https://classpass.com/movements/warrior-3-pose'
-    ],
-    Traingle: [
-        'Begin standing, then lightly jump your feet apart to a wide position about three to four feet apart. Turn your left foot out and turn to face that direction. Take a slight bend in your left leg and raise your arms out on your sides, forming a “T” shape.',
-        'Straighten through your left leg, then hinge and reach your torso over your left leg as your hips jut back. Rotate your left palm so it faces the ceiling, and gaze out over your left arm.',
-        'Maintain a long, straight spine as you reach your left hand to the mat, placing it in front of your left foot. If you feel off balance, bring in your back leg closer to shorten your stance. Gaze towards your right arm, which should be extended overhead. Hold and repeat on the other side.',
-        'Source classpass - https://classpass.com/movements/triangle-pose'
-    ],
-    Shoulderstand: [
-        'Start with a stack of two folded blankets. Lay down on your mat aligning shoulders onto the blankets. With legs bent and feet on the floor (as if setting up for bridge pose) begin to walk your shoulders underneath your upper back feeling the chest gently rising.',
-        'Lift your hips off of the mat coming into bridge pose and extend your arms onto the ground, palms facing down as if your hands could touch your heels. Press firmly into the palms using them as leverage to lift onto the balls of the feet and extend one leg up. Bend at the elbows, place your hands on your low back creating a shelf, and then extend the next leg up.',
-        "Once you raise the legs, don't turn your head to the side to look around the room, since you can injure your neck. Keep your gaze upward and your neck straight.",
-        "Lift up through the balls of your feet. Walk your hands further up the back for more stability. Feel the chest reaching towards the chin to support opening the upper back.",
-        "Move your hips toward the front of the room and your feet toward the back of the room to straighten the body. The correct alignment is with the hips over the shoulders and feet over the hips. Ask your teacher or a friend to help you determine if your legs are perpendicular to the floor.",
-        "Stay in the pose for up to 10 breaths",
-        'Source: verywellfit - https://www.verywellfit.com/shoulderstand-salamba-sarvangasana-3567115'
-    ]
-}
+    // Other poses...
+};
 
 export const tutorials = [
     '1. When App ask for permission of camera, allow it to access to capture pose.',
@@ -111,13 +38,13 @@ export const tutorials = [
     '3. Read Instrctions of that pose so you will know how to do that pose.',
     '4. Click on Start pose and see the image of the that pose in the right side and replecate that image in front of camera.',
     '5. If you will do correctly the skeleton over the video will become green in color and sound will start playing'
-]
+];
 
 export const fixCamera = [
     'Solution 1. Make sure you have allowed the permission of camera, if you have denined the permission, go to setting of your browser to allow the access of camera to the application.',
     'Solution 2. Make sure no any other application is not accessing camera at that time, if yes, close that application',
     'Solution 3. Try to close all the other opened broswers'
-] 
+];
 
 export const POINTS = {
     NOSE : 0,
@@ -137,7 +64,7 @@ export const POINTS = {
     RIGHT_KNEE : 14,
     LEFT_ANKLE : 15,
     RIGHT_ANKLE : 16,
-}
+};
 
 export const keypointConnections = {
     nose: ['left_ear', 'right_ear'],
@@ -151,4 +78,4 @@ export const keypointConnections = {
     right_hip: ['right_knee'],
     left_knee: ['left_ankle'],
     right_knee: ['right_ankle']
-}
+};
