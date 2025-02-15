@@ -25,6 +25,7 @@ import PoseDetails from './pages/PoseDetails/PoseDetails'; // Import PoseDetails
 import ApplyNow from './pages/ApplyNow/ApplyNow';
 import VolunteerInfo from './pages/VolunteerInfo/VolunteerInfo';
 import MeetTheTeam from './pages/MeetTheTeam/MeetTheTeam';
+import UserInput from './pages/UserInput/UserInput';
 
 export default function App() {
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -72,6 +73,7 @@ export default function App() {
                                 <Route path="/volunteer-info" element={<VolunteerInfo />} />
                                 <Route path="/apply" element={<ApplyNow />} />
                                 <Route path="/MeetTheTeam" element={<MeetTheTeam/>} />
+                                <Route path="/" element={<UserInput />} />
                             </>
                         ) : (
                             <Route path='/home' element={<Navigate to="/login" replace />} />
