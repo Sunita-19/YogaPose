@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import ChatbotIcon from '../../components/ChatbotIcon/ChatbotIcon';
 import './Home.css';
 
 export default function Home() {
@@ -12,10 +13,11 @@ export default function Home() {
                 </div>
             </div>
             <div className="btn-section">
-                    <Link to='/start'>
-                        <button className="btn start-btn">Let's Start</button>
-                    </Link>
-                </div>
+                <Link to='/start'>
+                    <button className="btn start-btn">Let's Start</button>
+                </Link>
+            </div>
+            <ChatbotIcon /> {/* Add ChatbotIcon component */}
         </div>
     );
 }

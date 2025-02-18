@@ -45,6 +45,7 @@ export default function Header({ toggleSidebar }) {
                             <Link to="/start" className="header-dropdown-link">Yoga Poses</Link>
                             <Link to="/YogaHistory" className="header-dropdown-link">Yoga History</Link>
                             <Link to="/YogaPosesVideos" className="header-dropdown-link">Different Levels</Link>
+                            <Link to="/recommended-poses" className="header-dropdown-link">Recommend Poses</Link>
                         </div>
                     )}
                 </div>

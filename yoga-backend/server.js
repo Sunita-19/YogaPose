@@ -257,8 +257,50 @@ app.get('/api/poses', (req, res) => {
     });
 });
 
+// Endpoint to get pose recommendations based on user input
+app.post('/api/recommended-poses', authenticateToken, async (req, res) => {
+  try {
+    const { age, weight, gender, fitnessLevel, healthConditions, activityLevel, specificGoals, timeCommitment, preferredStyle } = req.body;
+
+    // Basic validation
+    if (!age || !weight || !preferredStyle) {
+      return res.status(400).json({ message: 'Missing required fields' });
+    }
+
+    // Get all poses from the database
+    db.query('SELECT * FROM yoga_poses', async (err, results) => {
+      if (err) {
+        console.error('Database error:', err);
+        return res.status(500).json({ error: 'Database error' });
+      }
+
+      // Filter poses based on user input
+      const filteredPoses = results.filter(pose => {
+        // Example filtering logic - can be expanded based on requirements
+        return pose.difficulty_level === fitnessLevel &&
+               pose.style === preferredStyle &&
+               pose.duration <= (timeCommitment === 'short' ? 15 : 
+                               timeCommitment === 'medium' ? 30 : 60);
+      });
+
+      // Categorize poses by difficulty
+      const recommendedPoses = {
+        beginner: filteredPoses.filter(pose => pose.difficulty_level === 'beginner'),
+        intermediate: filteredPoses.filter(pose => pose.difficulty_level === 'intermediate'),
+        advanced: filteredPoses.filter(pose => pose.difficulty_level === 'advanced')
+      };
+
+      res.status(200).json(recommendedPoses);
+    });
+  } catch (error) {
+    console.error('Error in pose recommendation:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
 // Endpoint to get details of a specific yoga pose
 app.get('/api/yoga_poses/:id', (req, res) => {
+
     const poseId = req.params.id;
 
     db.query('SELECT * FROM yoga_poses WHERE id = ?', [poseId], (err, result) => {

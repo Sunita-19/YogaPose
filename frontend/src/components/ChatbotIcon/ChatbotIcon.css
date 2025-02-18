@@ -1,0 +1,20 @@
+.chatbot-icon-container {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 1000;
+}
+
+.chatbot-icon {
+    background-color: #e65100; /* Orange */
+    color: white;
+    padding: 10px;
+    border-radius: 50%;
+    cursor: pointer;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    font-size: 24px;
+}
+
+.chatbot-icon:hover {
+    background-color: #4f60fa; /* Darker Orange */
+}

@@ -13,6 +13,7 @@ export const UserProvider = ({ children }) => {
     activityLevel: "low",
     specificGoals: "flexibility",
     timeCommitment: "short",
+    preferredStyle: "hatha", // Add preferredStyle to userInput
   });
   const [recommendedPoses, setRecommendedPoses] = useState({
     beginner: [],
@@ -24,8 +25,12 @@ export const UserProvider = ({ children }) => {
     setUserInput(input);
   };
 
+  const updateRecommendedPoses = (poses) => {
+    setRecommendedPoses(poses);
+  };
+
   return (
-    <UserContext.Provider value={{ userInput, recommendedPoses, setRecommendedPoses, updateUserInput }}>
+    <UserContext.Provider value={{ userInput, recommendedPoses, setRecommendedPoses: updateRecommendedPoses, updateUserInput }}>
       {children}
     </UserContext.Provider>
   );

@@ -1,12 +1,13 @@
 // UserInput.js
 import React, { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 import UserContext from "../../context/UserContext";
 import "./UserInput.css";
 
 const UserInput = ({ setUserData }) => {
   const navigate = useNavigate();
-  const { updateUserInput } = useContext(UserContext);
+  const { updateUserInput, setRecommendedPoses: updateRecommendedPoses } = useContext(UserContext);
   const [formData, setFormData] = useState({
     age: "",
     weight: "",
@@ -16,6 +17,7 @@ const UserInput = ({ setUserData }) => {
     activityLevel: "low",
     specificGoals: "flexibility",
     timeCommitment: "short",
+    preferredStyle: "hatha", // Add preferredStyle to formData
   });
   const [error, setError] = useState("");
 
@@ -23,18 +25,30 @@ const UserInput = ({ setUserData }) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (formData.age < 0 || formData.weight < 0) {
       setError("Age and weight cannot be negative");
       return;
     }
-    if (!formData.age || !formData.weight) {
+    if (!formData.age || !formData.weight || !formData.preferredStyle) { // Add preferredStyle validation
       setError("Please fill all required fields");
       return;
     }
-    updateUserInput(formData); // Update user input in context
-    navigate("/recommended-poses");
+
+    try {
+      const response = await axios.post('/api/recommended-poses', formData, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('token')}`
+        }
+      });
+      updateUserInput(formData); // Update user input in context
+      updateRecommendedPoses(response.data); // Store recommended poses in context
+      navigate("/recommended-poses");
+    } catch (error) {
+      console.error('Error fetching recommended poses:', error);
+      setError('Failed to fetch recommended poses');
+    }
   };
 
   return (
@@ -103,6 +117,15 @@ const UserInput = ({ setUserData }) => {
           <option value="short">Short (5-15 min)</option>
           <option value="medium">Medium (15-30 min)</option>
           <option value="long">Long (30+ min)</option>
+        </select>
+
+        <label>Preferred Yoga Style:</label> {/* Add new input field */}
+        <select name="preferredStyle" value={formData.preferredStyle} onChange={handleChange}>
+          <option value="hatha">Hatha</option>
+          <option value="vinyasa">Vinyasa</option>
+          <option value="ashtanga">Ashtanga</option>
+          <option value="yin">Yin</option>
+          <option value="restorative">Restorative</option>
         </select>
 
         {error && <div className="error-message">{error}</div>}
