@@ -22,14 +22,21 @@ const Chatbot = () => {
     setInput("");
 
     try {
-      const response = await fetch("https://api.openai.com/v1/chat/completions", {
+      const response = await fetch("https://api.openai.com/v1/chat/completions", { // Actual OpenAI API link
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer YOUR_OPENAI_API_KEY`,
+          Authorization: `Bearer YOUR_OPENAI_API_KEY`, // Replace with your actual API key
         },
-        body: JSON.stringify({ messages: [{ role: "user", content: input }] }),
+        body: JSON.stringify({
+          model: "gpt-3.5-turbo", // Specify the model you want to use
+          messages: [{ role: "user", content: input }],
+        }),
       });
+
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
 
       const data = await response.json();
       const botMessage = {
@@ -39,7 +46,16 @@ const Chatbot = () => {
       setMessages((prevMessages) => [...prevMessages, botMessage]);
     } catch (error) {
       console.error("Error fetching response: ", error);
-      setMessages((prevMessages) => [...prevMessages, { text: "Error fetching response.", sender: "assistant" }]);
+      setMessages((prevMessages) => [
+        ...prevMessages,
+        { text: "Error fetching response. Please try again later.", sender: "assistant" },
+      ]);
+    }
+  };
+
+  const handleKeyPress = (event) => {
+    if (event.key === "Enter") {
+      handleSendMessage();
     }
   };
 
@@ -70,6 +86,7 @@ const Chatbot = () => {
               placeholder="Type your message..."
               value={input}
               onChange={(e) => setInput(e.target.value)}
+              onKeyPress={handleKeyPress}
             />
             <button onClick={handleSendMessage}>Send</button>
           </div>
