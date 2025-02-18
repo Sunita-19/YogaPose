@@ -1,18 +1,23 @@
 // UserInput.js
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
+import UserContext from "../../context/UserContext";
 import "./UserInput.css";
 
 const UserInput = ({ setUserData }) => {
   const navigate = useNavigate();
+  const { updateUserInput } = useContext(UserContext);
   const [formData, setFormData] = useState({
     age: "",
+    weight: "",
+    gender: "female",
     fitnessLevel: "beginner",
     healthConditions: "none",
     activityLevel: "low",
-    goals: "flexibility",
+    specificGoals: "flexibility",
     timeCommitment: "short",
   });
+  const [error, setError] = useState("");
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -20,7 +25,15 @@ const UserInput = ({ setUserData }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setUserData(formData);
+    if (formData.age < 0 || formData.weight < 0) {
+      setError("Age and weight cannot be negative");
+      return;
+    }
+    if (!formData.age || !formData.weight) {
+      setError("Please fill all required fields");
+      return;
+    }
+    updateUserInput(formData); // Update user input in context
     navigate("/recommended-poses");
   };
 
@@ -29,7 +42,31 @@ const UserInput = ({ setUserData }) => {
       <h2>Personalized Yoga Recommendation</h2>
       <form onSubmit={handleSubmit}>
         <label>Age:</label>
-        <input type="number" name="age" value={formData.age} onChange={handleChange} required />
+        <input 
+          type="number" 
+          name="age" 
+          value={formData.age} 
+          onChange={handleChange} 
+          min="0"
+          required 
+        />
+        
+        <label>Weight (kg):</label>
+        <input 
+          type="number" 
+          name="weight" 
+          value={formData.weight} 
+          onChange={handleChange} 
+          min="0"
+          required 
+        />
+
+        <label>Gender:</label>
+        <select name="gender" value={formData.gender} onChange={handleChange}>
+          <option value="female">Female</option>
+          <option value="male">Male</option>
+          <option value="other">Other</option>
+        </select>
 
         <label>Fitness Level:</label>
         <select name="fitnessLevel" value={formData.fitnessLevel} onChange={handleChange}>
@@ -53,8 +90,8 @@ const UserInput = ({ setUserData }) => {
           <option value="high">High</option>
         </select>
 
-        <label>Yoga Goals:</label>
-        <select name="goals" value={formData.goals} onChange={handleChange}>
+        <label>Specific Goals:</label>
+        <select name="specificGoals" value={formData.specificGoals} onChange={handleChange}>
           <option value="flexibility">Flexibility</option>
           <option value="strength">Strength</option>
           <option value="stress relief">Stress Relief</option>
@@ -68,6 +105,7 @@ const UserInput = ({ setUserData }) => {
           <option value="long">Long (30+ min)</option>
         </select>
 
+        {error && <div className="error-message">{error}</div>}
         <button type="submit">Get Recommendations</button>
       </form>
     </div>

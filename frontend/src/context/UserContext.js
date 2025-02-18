@@ -3,15 +3,32 @@ import React, { createContext, useState } from 'react';
 
 const UserContext = createContext();
 
-const UserProvider = ({ children }) => {
-    const [user, setUser] = useState(null); // Default value for user can be null
+export const UserProvider = ({ children }) => {
+  const [userInput, setUserInput] = useState({
+    age: "",
+    weight: "",
+    gender: "female",
+    fitnessLevel: "beginner",
+    healthConditions: "none",
+    activityLevel: "low",
+    specificGoals: "flexibility",
+    timeCommitment: "short",
+  });
+  const [recommendedPoses, setRecommendedPoses] = useState({
+    beginner: [],
+    intermediate: [],
+    advanced: []
+  });
 
-    return (
-        <UserContext.Provider value={{ user, setUser }}>
-            {children}
-        </UserContext.Provider>
-    );
+  const updateUserInput = (input) => {
+    setUserInput(input);
+  };
+
+  return (
+    <UserContext.Provider value={{ userInput, recommendedPoses, setRecommendedPoses, updateUserInput }}>
+      {children}
+    </UserContext.Provider>
+  );
 };
 
-export { UserProvider };
 export default UserContext;
