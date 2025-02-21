@@ -298,8 +298,31 @@ app.post('/api/recommended-poses', authenticateToken, async (req, res) => {
   }
 });
 
+// Chatbot endpoint
+app.post('/api/chatbot', authenticateToken, async (req, res) => {
+    try {
+        const { message } = req.body;
+        
+        if (!message || typeof message !== 'string') {
+            return res.status(400).json({ error: 'Invalid message format' });
+        }
+
+        // TODO: Add chatbot logic here
+        const response = {
+            text: `You said: ${message}`,
+            timestamp: new Date().toISOString()
+        };
+
+        res.status(200).json(response);
+    } catch (error) {
+        console.error('Chatbot error:', error);
+        res.status(500).json({ error: 'Error processing chatbot request' });
+    }
+});
+
 // Endpoint to get details of a specific yoga pose
 app.get('/api/yoga_poses/:id', (req, res) => {
+
 
     const poseId = req.params.id;
 

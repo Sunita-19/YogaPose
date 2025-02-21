@@ -30,7 +30,12 @@ const PoseDetails = () => {
   return (
     <div className="pose-details-container">
       <h1>{poseDetails.name}</h1>
-      <p>{poseDetails.description}</p>
+      {/* Modified description rendering */}
+      <ul className="pose-steps">
+        {poseDetails.description.split('\n').map((point, index) => (
+          <li key={index}>{point}</li>
+        ))}
+      </ul>
       <div className="pose-content">
         <img className="pose-image" src={poseDetails.image_url} alt={poseDetails.name} />
         

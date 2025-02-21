@@ -4,7 +4,6 @@ import axios from 'axios';
 import UserContext from '../../context/UserContext';
 import './RecommendedPoses.css';
 
-
 const RecommendedPoses = () => {
   const navigate = useNavigate();
   const { recommendedPoses, setRecommendedPoses: updateRecommendedPoses } = useContext(UserContext);
@@ -21,21 +20,18 @@ const RecommendedPoses = () => {
   });
   const [error, setError] = useState("");
 
-
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  // Fetch recommended poses from the backend
   const fetchPoses = async () => {
     try {
       const response = await axios.post('/api/recommended-poses', formData, {
-
         headers: {
           Authorization: `Bearer ${localStorage.getItem('token')}`
         }
       });
-      updateRecommendedPoses(response.data); // Update recommendedPoses state
+      updateRecommendedPoses(response.data);
     } catch (error) {
       console.error('Error fetching poses:', error);
     }
@@ -43,6 +39,7 @@ const RecommendedPoses = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    console.log("Submitting form with data:", formData); // debug log
     if (formData.age < 0 || formData.weight < 0) {
       setError("Age and weight cannot be negative");
       return;
@@ -53,7 +50,6 @@ const RecommendedPoses = () => {
     }
     await fetchPoses();
   };
-
 
   const handleAsanaClick = (asanaId) => {
     navigate(`/pose/${asanaId}`);
@@ -68,90 +64,107 @@ const RecommendedPoses = () => {
       <div className="user-input-form">
         <h2>Personalized Yoga Recommendation</h2>
         <form onSubmit={handleSubmit}>
-          <label>Age:</label>
-          <input 
-            type="number" 
-            name="age" 
-            value={formData.age} 
-            onChange={handleChange} 
-            min="0"
-            required 
-          />
+          <div className="form-group">
+            <label>Age:</label>
+            <input 
+              type="number" 
+              name="age" 
+              value={formData.age} 
+              onChange={handleChange} 
+              min="0"
+              required 
+            />
+          </div>
           
-          <label>Weight (kg):</label>
-          <input 
-            type="number" 
-            name="weight" 
-            value={formData.weight} 
-            onChange={handleChange} 
-            min="0"
-            required 
-          />
+          <div className="form-group">
+            <label>Weight (kg):</label>
+            <input 
+              type="number" 
+              name="weight" 
+              value={formData.weight} 
+              onChange={handleChange} 
+              min="0"
+              required 
+            />
+          </div>
 
-          <label>Gender:</label>
-          <select name="gender" value={formData.gender} onChange={handleChange}>
-            <option value="female">Female</option>
-            <option value="male">Male</option>
-            <option value="other">Other</option>
-          </select>
+          <div className="form-group">
+            <label>Gender:</label>
+            <select name="gender" value={formData.gender} onChange={handleChange}>
+              <option value="female">Female</option>
+              <option value="male">Male</option>
+              <option value="other">Other</option>
+            </select>
+          </div>
 
-          <label>Fitness Level:</label>
-          <select name="fitnessLevel" value={formData.fitnessLevel} onChange={handleChange}>
-            <option value="beginner">Beginner</option>
-            <option value="intermediate">Intermediate</option>
-            <option value="advanced">Advanced</option>
-          </select>
+          <div className="form-group">
+            <label>Fitness Level:</label>
+            <select name="fitnessLevel" value={formData.fitnessLevel} onChange={handleChange}>
+              <option value="beginner">Beginner</option>
+              <option value="intermediate">Intermediate</option>
+              <option value="advanced">Advanced</option>
+            </select>
+          </div>
 
-          <label>Health Conditions:</label>
-          <select name="healthConditions" value={formData.healthConditions} onChange={handleChange}>
-            <option value="none">None</option>
-            <option value="back pain">Back Pain</option>
-            <option value="high blood pressure">High Blood Pressure</option>
-            <option value="joint pain">Joint Pain</option>
-          </select>
+          <div className="form-group">
+            <label>Health Conditions:</label>
+            <select name="healthConditions" value={formData.healthConditions} onChange={handleChange}>
+              <option value="none">None</option>
+              <option value="back pain">Back Pain</option>
+              <option value="high blood pressure">High Blood Pressure</option>
+              <option value="joint pain">Joint Pain</option>
+            </select>
+          </div>
 
-          <label>Activity Level:</label>
-          <select name="activityLevel" value={formData.activityLevel} onChange={handleChange}>
-            <option value="low">Low</option>
-            <option value="moderate">Moderate</option>
-            <option value="high">High</option>
-          </select>
+          <div className="form-group">
+            <label>Activity Level:</label>
+            <select name="activityLevel" value={formData.activityLevel} onChange={handleChange}>
+              <option value="low">Low</option>
+              <option value="moderate">Moderate</option>
+              <option value="high">High</option>
+            </select>
+          </div>
 
-          <label>Specific Goals:</label>
-          <select name="specificGoals" value={formData.specificGoals} onChange={handleChange}>
-            <option value="flexibility">Flexibility</option>
-            <option value="strength">Strength</option>
-            <option value="stress relief">Stress Relief</option>
-            <option value="balance">Balance</option>
-          </select>
+          <div className="form-group">
+            <label>Specific Goals:</label>
+            <select name="specificGoals" value={formData.specificGoals} onChange={handleChange}>
+              <option value="flexibility">Flexibility</option>
+              <option value="strength">Strength</option>
+              <option value="stress relief">Stress Relief</option>
+              <option value="balance">Balance</option>
+            </select>
+          </div>
 
-          <label>Time Commitment:</label>
-          <select name="timeCommitment" value={formData.timeCommitment} onChange={handleChange}>
-            <option value="short">Short (5-15 min)</option>
-            <option value="medium">Medium (15-30 min)</option>
-            <option value="long">Long (30+ min)</option>
-          </select>
+          <div className="form-group">
+            <label>Time Commitment:</label>
+            <select name="timeCommitment" value={formData.timeCommitment} onChange={handleChange}>
+              <option value="short">Short (5-15 min)</option>
+              <option value="medium">Medium (15-30 min)</option>
+              <option value="long">Long (30+ min)</option>
+            </select>
+          </div>
 
-          <label>Preferred Yoga Style:</label>
-          <select name="preferredStyle" value={formData.preferredStyle} onChange={handleChange}>
-            <option value="hatha">Hatha</option>
-            <option value="vinyasa">Vinyasa</option>
-            <option value="ashtanga">Ashtanga</option>
-            <option value="yin">Yin</option>
-            <option value="restorative">Restorative</option>
-          </select>
+          <div className="form-group">
+            <label>Preferred Yoga Style:</label>
+            <select name="preferredStyle" value={formData.preferredStyle} onChange={handleChange}>
+              <option value="hatha">Hatha</option>
+              <option value="vinyasa">Vinyasa</option>
+              <option value="ashtanga">Ashtanga</option>
+              <option value="yin">Yin</option>
+              <option value="restorative">Restorative</option>
+            </select>
+          </div>
 
           {error && <div className="error-message">{error}</div>}
           <button type="submit">Get Recommendations</button>
         </form>
       </div>
 
-
       <section className="yoga-levels">
         <div className="level-box">
           <h3>Beginner</h3>
           <ul>
-            {recommendedPoses.beginner.length > 0 ? (
+            {recommendedPoses.beginner && recommendedPoses.beginner.length > 0 ? (
               recommendedPoses.beginner.map((asana, index) => (
                 <li key={index} onClick={() => handleAsanaClick(asana.id)}>
                   {asana.name}
@@ -166,7 +179,7 @@ const RecommendedPoses = () => {
         <div className="level-box">
           <h3>Intermediate</h3>
           <ul>
-            {recommendedPoses.intermediate.length > 0 ? (
+            {recommendedPoses.intermediate && recommendedPoses.intermediate.length > 0 ? (
               recommendedPoses.intermediate.map((asana, index) => (
                 <li key={index} onClick={() => handleAsanaClick(asana.id)}>
                   {asana.name}
@@ -181,7 +194,7 @@ const RecommendedPoses = () => {
         <div className="level-box">
           <h3>Advanced</h3>
           <ul>
-            {recommendedPoses.advanced.length > 0 ? (
+            {recommendedPoses.advanced && recommendedPoses.advanced.length > 0 ? (
               recommendedPoses.advanced.map((asana, index) => (
                 <li key={index} onClick={() => handleAsanaClick(asana.id)}>
                   {asana.name}

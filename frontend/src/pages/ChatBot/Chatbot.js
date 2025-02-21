@@ -1,5 +1,8 @@
 import React, { useState } from "react";
 import "./Chatbot.css";
+import API_URL from "../../config";
+
+
 
 const Chatbot = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -22,35 +25,37 @@ const Chatbot = () => {
     setInput("");
 
     try {
-      const response = await fetch("https://api.openai.com/v1/chat/completions", { // Actual OpenAI API link
-        method: "POST",
+      const token = localStorage.getItem('token');
+      const response = await fetch(`${API_URL}/chatbot`, {
+        method: 'POST',
         headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer YOUR_OPENAI_API_KEY`, // Replace with your actual API key
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
         },
-        body: JSON.stringify({
-          model: "gpt-3.5-turbo", // Specify the model you want to use
-          messages: [{ role: "user", content: input }],
-        }),
+        body: JSON.stringify({ message: input })
       });
 
       if (!response.ok) {
-        throw new Error("Network response was not ok");
+        throw new Error('Failed to get chatbot response');
       }
 
       const data = await response.json();
       const botMessage = {
-        text: data.choices?.[0]?.message?.content || "Sorry, I couldn't process that.",
+        text: data.text,
         sender: "assistant",
       };
+      
       setMessages((prevMessages) => [...prevMessages, botMessage]);
     } catch (error) {
-      console.error("Error fetching response: ", error);
-      setMessages((prevMessages) => [
-        ...prevMessages,
-        { text: "Error fetching response. Please try again later.", sender: "assistant" },
-      ]);
+      console.error('Chatbot error:', error);
+      const errorMessage = {
+        text: "Sorry, I'm having trouble responding. Please try again later.",
+        sender: "assistant",
+      };
+      setMessages((prevMessages) => [...prevMessages, errorMessage]);
     }
+
+
   };
 
   const handleKeyPress = (event) => {

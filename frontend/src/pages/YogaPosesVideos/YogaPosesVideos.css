@@ -32,19 +32,18 @@ body {
 
 /* Yoga Levels Section */
 .yoga-levels {
-  display: flex;
-  justify-content: space-between;
-  gap: 20px;
+  display: block;
   margin-bottom: 40px;
 }
 
 .level-box {
   background-color: #fff;
-  width: 32%;
+  width: 100%;
   padding: 20px;
   border-radius: 8px;
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
+  margin-bottom: 20px;
 }
 
 .level-box:hover {
@@ -63,17 +62,20 @@ body {
 .level-box ul {
   list-style-type: none;
   padding-left: 0;
-  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 
 .level-box ul li {
   font-size: 18px;
   color: #34495e;
   cursor: pointer;
-  margin: 15px 0;
   padding: 10px;
   border-radius: 5px;
   transition: background-color 0.3s ease, color 0.3s ease;
+  width: 100%;
+  text-align: left;
 }
 
 .level-box ul li:hover {

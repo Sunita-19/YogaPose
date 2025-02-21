@@ -55,8 +55,30 @@
     border: none;
 }
 
+/* Pose Steps Styling */
+.pose-steps {
+  list-style-type: none;
+  padding-left: 0;
+  text-align: left;
+  margin: 20px 0;
+}
+
+.pose-steps li {
+  font-size: 16px;
+  color: #444;
+  padding: 10px 0;
+  border-bottom: 1px solid #eee;
+  display: block; /* ensure each point is on a separate line */
+  margin-bottom: 10px;
+}
+
+.pose-steps li:last-child {
+  border-bottom: none;
+}
+
 /* Responsive Design */
 @media (max-width: 768px) {
+
     .pose-content {
         flex-direction: column;
         gap: 20px;
