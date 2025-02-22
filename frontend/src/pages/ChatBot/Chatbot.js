@@ -1,8 +1,5 @@
 import React, { useState } from "react";
 import "./Chatbot.css";
-import API_URL from "../../config";
-
-
 
 const Chatbot = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -10,7 +7,7 @@ const Chatbot = () => {
   const [input, setInput] = useState("");
 
   const toggleChatbot = () => {
-    setIsOpen(true); // Ensures chatbot opens on first click
+    setIsOpen(true);
   };
 
   const closeChatbot = () => {
@@ -25,37 +22,34 @@ const Chatbot = () => {
     setInput("");
 
     try {
-      const token = localStorage.getItem('token');
-      const response = await fetch(`${API_URL}/chatbot`, {
-        method: 'POST',
+      const secretKey = localStorage.getItem('token');
+      alert(secretKey);
+      if (!secretKey) throw new Error("Missing secret key");
+
+      console.log("Sending message to server:", input); // Log the message being sent
+
+      const response = await fetch("/api/chatbot", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${secretKey}`,
         },
-        body: JSON.stringify({ message: input })
+        body: JSON.stringify({ message: input }),
       });
 
-      if (!response.ok) {
-        throw new Error('Failed to get chatbot response');
-      }
+      console.log("Server response status:", response.status); // Log the response status
+
+      if (!response.ok) throw new Error("Failed to get response from server");
 
       const data = await response.json();
-      const botMessage = {
-        text: data.text,
-        sender: "assistant",
-      };
-      
+      console.log("Server response data:", data); // Log the response data
+
+      const botMessage = { text: data.text, sender: "assistant" };
       setMessages((prevMessages) => [...prevMessages, botMessage]);
     } catch (error) {
-      console.error('Chatbot error:', error);
-      const errorMessage = {
-        text: "Sorry, I'm having trouble responding. Please try again later.",
-        sender: "assistant",
-      };
-      setMessages((prevMessages) => [...prevMessages, errorMessage]);
+      console.error("Chatbot error:", error);
+      setMessages((prevMessages) => [...prevMessages, { text: error.message, sender: "assistant" }]);
     }
-
-
   };
 
   const handleKeyPress = (event) => {
@@ -66,11 +60,7 @@ const Chatbot = () => {
 
   return (
     <div>
-      {!isOpen && (
-        <button className="chatbot-open-btn" onClick={toggleChatbot}>
-          💬
-        </button>
-      )}
+      {!isOpen && <button className="chatbot-open-btn" onClick={toggleChatbot}>💬</button>}
 
       {isOpen && (
         <div className="chatbot-container">

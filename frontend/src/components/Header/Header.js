@@ -68,10 +68,10 @@ export default function Header({ toggleSidebar }) {
                     onMouseEnter={() => toggleDropdown("volunteer")}
                     onMouseLeave={() => setDropdown(null)}
                 >
-                    Volunteer
+                    Career
                     {dropdown === "volunteer" && (
                         <div className="header-dropdown-menu">
-                            <Link to="/volunteer-info" className="header-dropdown-link">Volunteer Info</Link>
+                            <Link to="/volunteer-info" className="header-dropdown-link">Information</Link>
                             <Link to="/apply" className="header-dropdown-link">Apply Now</Link>
                         </div>
                     )}

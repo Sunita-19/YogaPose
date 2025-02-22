@@ -1,0 +1,15 @@
+.detailed-report-container {
+  padding: 20px;
+  background-color: #f9f9f9;
+}
+
+.detailed-report-header {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.detailed-report-content {
+  font-size: 16px;
+  line-height: 1.5;
+}

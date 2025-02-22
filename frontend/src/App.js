@@ -28,6 +28,8 @@ import VolunteerInfo from './pages/VolunteerInfo/VolunteerInfo';
 import MeetTheTeam from './pages/MeetTheTeam/MeetTheTeam';
 import UserInput from './pages/UserInput/UserInput';
 import RecommendedPoses from './pages/RecommendedPoses/RecommendedPoses'; // Import the new component
+import DetailedReport from './pages/Progress/DetailedReport'; // Import the DetailedReport component
+import Logout from './pages/Logout/Logout'; // Import Logout component
 
 export default function App() {
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -46,47 +48,51 @@ export default function App() {
         <UserProvider>
             <Router>
                 <div className="layout-container">
-                    {isAuthenticated && <Header toggleSidebar={toggleSidebar} />} {/* Render Header only if authenticated */}
-                    {isAuthenticated && <Sidebar isOpen={isSidebarOpen} toggleSidebar={toggleSidebar} />} {/* Render Sidebar only if authenticated */}
-                    <main className="main-content">
-                        <Routes>
-                            <Route path='/' element={<Navigate to="/login" replace />} />
-                            <Route path='/login' element={<LoginPage onLogin={handleLogin} />} /> {/* Pass onLogin to LoginPage */}
-                            <Route path='/signup' element={<SignUpPage />} />
-                            <Route path='/forgot-password' element={<ForgotPassword />} />
-                            <Route path='/reset-password' element={<ResetPassword />} />
-
-                            {/* Protected Routes with Layout */}
-                            {isAuthenticated ? (
-                                <>
-                                    <Route path='/home' element={<Home />} />
-                                    <Route path='/start' element={<Yoga />} />
-                                    <Route path='/about' element={<About />} />
-                                    <Route path='/tutorials' element={<Tutorials />} />
-                                    <Route path='/chatbot' element={<Chatbot />} />
-                                    <Route path='/diet' element={<Diet />} />
-                                    <Route path='/dietplan' element={<DietPlan />} />
-                                    <Route path='/progress' element={<Progress />} />
-                                    <Route path='/feedback' element={<Feedback />} />
-                                    <Route path='/YogaHistory' element={<YogaHistory />} />
-                                    <Route path='/YogaPosesVideos' element={<YogaPosesVideos />} />
-                                    <Route path="/AsanaDetailPage" element={<AsanaDetailPage />} />
-                                    <Route path="/" element={<YogaPosesVideos />} />
-                                    <Route path="/pose/:id" element={<PoseDetails />} />
-                                    <Route path="/volunteer-info" element={<VolunteerInfo />} />
-                                    <Route path="/apply" element={<ApplyNow />} />
-                                    <Route path="/MeetTheTeam" element={<MeetTheTeam/>} />
-                                    <Route path="/" element={<UserInput />} />
-                                    <Route path="/yoga-poses" element={<YogaPosesVideos />} /> {/* Add new route for yoga poses */}
-                                    <Route path="/recommended-poses" element={<RecommendedPoses />} /> {/* Add new route */}
-                                </>
-                            ) : (
-                                <Route path='/home' element={<Navigate to="/login" replace />} />
-                            )}
-                        </Routes>
-                    </main>
+                    <Routes>
+                        <Route path='/login' element={<LoginPage onLogin={handleLogin} />} />
+                        <Route path='/signup' element={<SignUpPage />} />
+                        <Route path='/forgot-password' element={<ForgotPassword />} />
+                        <Route path='/reset-password' element={<ResetPassword />} />
+                        <Route path='/logout' element={<Logout />} />
+                        <Route path='/' element={<Navigate to="/login" replace />} />
+                        {isAuthenticated && (
+                            <>
+                                <Route path='*' element={
+                                    <>
+                                        <Header toggleSidebar={toggleSidebar} />
+                                        <Sidebar isOpen={isSidebarOpen} toggleSidebar={toggleSidebar} />
+                                        <main className="main-content">
+                                            <Routes>
+                                                <Route path='/home' element={<Home />} />
+                                                <Route path='/start' element={<Yoga />} />
+                                                <Route path='/about' element={<About />} />
+                                                <Route path='/tutorials' element={<Tutorials />} />
+                                                <Route path='/chatbot' element={<Chatbot />} />
+                                                <Route path='/diet' element={<Diet />} />
+                                                <Route path='/dietplan' element={<DietPlan />} />
+                                                <Route path='/progress' element={<Progress />} />
+                                                <Route path='/progress/detailedreport' element={<DetailedReport />} />
+                                                <Route path='/feedback' element={<Feedback />} />
+                                                <Route path='/YogaHistory' element={<YogaHistory />} />
+                                                <Route path='/YogaPosesVideos' element={<YogaPosesVideos />} />
+                                                <Route path="/AsanaDetailPage" element={<AsanaDetailPage />} />
+                                                <Route path="/" element={<YogaPosesVideos />} />
+                                                <Route path="/pose/:id" element={<PoseDetails />} />
+                                                <Route path="/volunteer-info" element={<VolunteerInfo />} />
+                                                <Route path="/apply" element={<ApplyNow />} />
+                                                <Route path="/MeetTheTeam" element={<MeetTheTeam />} />
+                                                <Route path="/" element={<UserInput />} />
+                                                <Route path="/yoga-poses" element={<YogaPosesVideos />} />
+                                                <Route path="/recommended-poses" element={<RecommendedPoses />} />
+                                            </Routes>
+                                        </main>
+                                        <Footer />
+                                    </>
+                                } />
+                            </>
+                        )}
+                    </Routes>
                 </div>
-                {isAuthenticated && <Footer />} {/* Render Footer only if authenticated */}
             </Router>
         </UserProvider>
     );

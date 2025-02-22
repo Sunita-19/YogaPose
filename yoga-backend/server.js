@@ -274,6 +274,8 @@ app.post('/api/recommended-poses', authenticateToken, async (req, res) => {
         return res.status(500).json({ error: 'Database error' });
       }
 
+      console.log('Total poses in database:', results.length); // Log the total number of poses
+
       // Filter poses based on user input
       const filteredPoses = results.filter(pose => {
         // Example filtering logic - can be expanded based on requirements
@@ -283,12 +285,16 @@ app.post('/api/recommended-poses', authenticateToken, async (req, res) => {
                                timeCommitment === 'medium' ? 30 : 60);
       });
 
+      console.log('Filtered poses:', filteredPoses); // Log the filtered poses
+
       // Categorize poses by difficulty
       const recommendedPoses = {
         beginner: filteredPoses.filter(pose => pose.difficulty_level === 'beginner'),
         intermediate: filteredPoses.filter(pose => pose.difficulty_level === 'intermediate'),
         advanced: filteredPoses.filter(pose => pose.difficulty_level === 'advanced')
       };
+
+      console.log('Recommended poses:', recommendedPoses); // Log the recommended poses
 
       res.status(200).json(recommendedPoses);
     });
@@ -312,7 +318,7 @@ app.post('/api/chatbot', authenticateToken, async (req, res) => {
             text: `You said: ${message}`,
             timestamp: new Date().toISOString()
         };
-
+            res.send(response);
         res.status(200).json(response);
     } catch (error) {
         console.error('Chatbot error:', error);

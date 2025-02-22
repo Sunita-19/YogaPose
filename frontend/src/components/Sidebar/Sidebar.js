@@ -1,11 +1,18 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import './Sidebar.css';
 
 // Importing the avatar image
 import avatar from '../../utils/images/avatar.jpeg';
 
 export default function Sidebar({ isOpen, toggleSidebar }) {
+    const navigate = useNavigate();
+
+    const handleLogout = () => {
+        navigate('/logout'); // Redirect to the logout page
+        toggleSidebar(); // Close the sidebar
+    };
+
     return (
         <>
             <div className={`overlay ${isOpen ? 'show' : ''}`} onClick={toggleSidebar}></div>
@@ -27,13 +34,11 @@ export default function Sidebar({ isOpen, toggleSidebar }) {
                 {/* Categories */}
                 <div className="categories">
                     <Link to="/start" onClick={toggleSidebar}>Yoga Poses</Link>
-                    <Link to="/yoga/techniques" onClick={toggleSidebar}>Yoga Techniques</Link>
-                    <Link to="/yoga/meditations" onClick={toggleSidebar}>Meditations</Link>
+                    <button onClick={handleLogout} className="logout-btn">Log Out</button>
                 </div>
 
                 {/* Help Section */}
                 <div className="contact-help">
-                    <Link to="/contact" onClick={toggleSidebar}>Contact Us</Link>
                     <Link to="/faq" onClick={toggleSidebar}>FAQ</Link>
                 </div>
             </div>

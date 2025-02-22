@@ -31,6 +31,7 @@ const RecommendedPoses = () => {
           Authorization: `Bearer ${localStorage.getItem('token')}`
         }
       });
+      console.log('Fetched poses:', response.data); // Log the fetched poses
       updateRecommendedPoses(response.data);
     } catch (error) {
       console.error('Error fetching poses:', error);
