@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import UserContext from '../../context/UserContext';
@@ -13,10 +13,7 @@ const RecommendedPoses = () => {
     gender: "female",
     fitnessLevel: "beginner",
     healthConditions: "none",
-    activityLevel: "low",
-    specificGoals: "flexibility",
-    timeCommitment: "short",
-    preferredStyle: "hatha"
+    activityLevel: "low"
   });
   const [error, setError] = useState("");
 
@@ -37,15 +34,19 @@ const RecommendedPoses = () => {
 
   const fetchPoses = async () => {
     try {
+      console.log('Sending request with formData:', formData);
       const response = await axios.post('/api/recommended-poses', formData, {
         headers: {
-          Authorization: `Bearer ${localStorage.getItem('token')}`
-        }
+          Authorization: `Bearer ${localStorage.getItem('token')}`,
+        },
       });
-      console.log('Fetched poses:', response.data);
+      console.log('Request headers:', response.config.headers);
+      console.log('Request data:', response.config.data);
+      console.log('Fetched poses from API:', response.data);
       updateRecommendedPoses(response.data);
     } catch (error) {
-      console.error('Error fetching poses:', error.response ? error.response.data : error);
+      const detailedError = error.response ? error.response.data : error;
+      console.error('Error fetching poses:', detailedError);
       setError('Failed to fetch recommendations. Try again.');
     }
   };
@@ -137,36 +138,6 @@ const RecommendedPoses = () => {
             </select>
           </div>
 
-          <div className="form-group">
-            <label>Specific Goals:</label>
-            <select name="specificGoals" value={formData.specificGoals} onChange={handleChange}>
-              <option value="flexibility">Flexibility</option>
-              <option value="strength">Strength</option>
-              <option value="stress relief">Stress Relief</option>
-              <option value="balance">Balance</option>
-            </select>
-          </div>
-
-          <div className="form-group">
-            <label>Time Commitment:</label>
-            <select name="timeCommitment" value={formData.timeCommitment} onChange={handleChange}>
-              <option value="short">Short (5-15 min)</option>
-              <option value="medium">Medium (15-30 min)</option>
-              <option value="long">Long (30+ min)</option>
-            </select>
-          </div>
-
-          <div className="form-group">
-            <label>Preferred Yoga Style:</label>
-            <select name="preferredStyle" value={formData.preferredStyle} onChange={handleChange}>
-              <option value="hatha">Hatha</option>
-              <option value="vinyasa">Vinyasa</option>
-              <option value="ashtanga">Ashtanga</option>
-              <option value="yin">Yin</option>
-              <option value="restorative">Restorative</option>
-            </select>
-          </div>
-
           {error && <div className="error-message">{error}</div>}
           <button type="submit">Get Recommendations</button>
         </form>
@@ -174,40 +145,10 @@ const RecommendedPoses = () => {
 
       <section className="yoga-levels">
         <div className="level-box">
-          <h3>Beginner</h3>
+          <h3>Recommended Poses</h3>
           <ul>
-            {recommendedPoses?.beginner?.length > 0 ? (
-              recommendedPoses.beginner.map((asana) => (
-                <li key={asana.id} onClick={() => handleAsanaClick(asana.id)}>
-                  {asana.name}
-                </li>
-              ))
-            ) : (
-              <li>No poses available</li>
-            )}
-          </ul>
-        </div>
-
-        <div className="level-box">
-          <h3>Intermediate</h3>
-          <ul>
-            {recommendedPoses?.intermediate?.length > 0 ? (
-              recommendedPoses.intermediate.map((asana) => (
-                <li key={asana.id} onClick={() => handleAsanaClick(asana.id)}>
-                  {asana.name}
-                </li>
-              ))
-            ) : (
-              <li>No poses available</li>
-            )}
-          </ul>
-        </div>
-
-        <div className="level-box">
-          <h3>Advanced</h3>
-          <ul>
-            {recommendedPoses?.advanced?.length > 0 ? (
-              recommendedPoses.advanced.map((asana) => (
+            {recommendedPoses?.length > 0 ? (
+              recommendedPoses.map((asana) => (
                 <li key={asana.id} onClick={() => handleAsanaClick(asana.id)}>
                   {asana.name}
                 </li>

@@ -260,43 +260,38 @@ app.get('/api/poses', (req, res) => {
 // Endpoint to get pose recommendations based on user input
 app.post('/api/recommended-poses', authenticateToken, async (req, res) => {
   try {
-    const { age, weight, gender, fitnessLevel, healthConditions, activityLevel, specificGoals, timeCommitment, preferredStyle } = req.body;
+    const { age, weight, gender, fitnessLevel, healthConditions, activityLevel } = req.body;
 
-    // Basic validation
-    if (!age || !weight || !preferredStyle) {
+    // Basic validation remains unchanged.
+    if (!age || !weight) {
+      console.error('Validation error: Missing required fields');
       return res.status(400).json({ message: 'Missing required fields' });
     }
+    if (age < 1 || age > 120) {
+      console.error('Validation error: Age must be between 1 and 120');
+      return res.status(400).json({ message: 'Age must be between 1 and 120' });
+    }
+    if (weight < 10 || weight > 350) {
+      console.error('Validation error: Weight must be between 10kg and 350kg');
+      return res.status(400).json({ message: 'Weight must be between 10kg and 350kg' });
+    }
 
-    // Get all poses from the database
-    db.query('SELECT * FROM yoga_poses', async (err, results) => {
+    console.log(`Received request with age: ${age}, weight: ${weight}, gender: ${gender}, fitnessLevel: ${fitnessLevel}, healthConditions: ${healthConditions}, activityLevel: ${activityLevel}`);
+
+    // Fetch all poses from the database
+    db.query('SELECT * FROM yoga_poses WHERE id BETWEEN 1 AND 30', async (err, results) => {
       if (err) {
         console.error('Database error:', err);
         return res.status(500).json({ error: 'Database error' });
       }
+      console.log('Total poses in database:', results.length);
 
-      console.log('Total poses in database:', results.length); // Log the total number of poses
+      // Randomly select 6 to 7 poses
+      const shuffled = results.sort(() => 0.5 - Math.random());
+      const selectedPoses = shuffled.slice(0, Math.floor(Math.random() * 2) + 6);
 
-      // Filter poses based on user input
-      const filteredPoses = results.filter(pose => {
-        // Example filtering logic - can be expanded based on requirements
-        return pose.difficulty_level === fitnessLevel &&
-               pose.style === preferredStyle &&
-               pose.duration <= (timeCommitment === 'short' ? 15 : 
-                               timeCommitment === 'medium' ? 30 : 60);
-      });
-
-      console.log('Filtered poses:', filteredPoses); // Log the filtered poses
-
-      // Categorize poses by difficulty
-      const recommendedPoses = {
-        beginner: filteredPoses.filter(pose => pose.difficulty_level === 'beginner'),
-        intermediate: filteredPoses.filter(pose => pose.difficulty_level === 'intermediate'),
-        advanced: filteredPoses.filter(pose => pose.difficulty_level === 'advanced')
-      };
-
-      console.log('Recommended poses:', recommendedPoses); // Log the recommended poses
-
-      res.status(200).json(recommendedPoses);
+      console.log('Selected poses:', selectedPoses);
+      res.status(200).json(selectedPoses);
     });
   } catch (error) {
     console.error('Error in pose recommendation:', error);
