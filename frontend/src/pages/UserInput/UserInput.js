@@ -10,6 +10,7 @@ const UserInput = ({ setUserData }) => {
   const { updateUserInput, setRecommendedPoses: updateRecommendedPoses } = useContext(UserContext);
   const [formData, setFormData] = useState({
     age: "",
+    height: "",
     weight: "",
     gender: "female",
     fitnessLevel: "beginner",
@@ -17,7 +18,7 @@ const UserInput = ({ setUserData }) => {
     activityLevel: "low",
     specificGoals: "flexibility",
     timeCommitment: "short",
-    preferredStyle: "hatha", // Add preferredStyle to formData
+    preferredStyle: "hatha",
   });
   const [error, setError] = useState("");
 
@@ -25,17 +26,28 @@ const UserInput = ({ setUserData }) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
+  const validateInputs = () => {
+    const { age, height, weight } = formData;
+    if (age < 1 || age > 120) {
+      return 'Age must be between 1 and 120';
+    }
+    if (height < 54.6 || height > 251) {
+      return 'Height must be between 54.6cm and 251cm';
+    }
+    if (weight < 10 || weight > 350) {
+      return 'Weight must be between 10kg and 350kg';
+    }
+    return '';
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (formData.age < 0 || formData.weight < 0) {
-      setError("Age and weight cannot be negative");
+    const validationError = validateInputs();
+    if (validationError) {
+      setError(validationError);
       return;
     }
-    if (!formData.age || !formData.weight || !formData.preferredStyle) { // Add preferredStyle validation
-      setError("Please fill all required fields");
-      return;
-    }
-
+    setError('');
     try {
       const response = await axios.post('/api/recommended-poses', formData, {
         headers: {
@@ -61,17 +73,31 @@ const UserInput = ({ setUserData }) => {
           name="age" 
           value={formData.age} 
           onChange={handleChange} 
-          min="0"
+          min="1"
+          max="120"
           required 
         />
         
+        <label>Height (cm):</label>
+        <input 
+          type="number" 
+          name="height" 
+          value={formData.height} 
+          onChange={handleChange} 
+          min="54.6"
+          max="251"
+          step="0.1"
+          required 
+        />
+
         <label>Weight (kg):</label>
         <input 
           type="number" 
           name="weight" 
           value={formData.weight} 
           onChange={handleChange} 
-          min="0"
+          min="10"
+          max="350"
           required 
         />
 
@@ -119,7 +145,7 @@ const UserInput = ({ setUserData }) => {
           <option value="long">Long (30+ min)</option>
         </select>
 
-        <label>Preferred Yoga Style:</label> {/* Add new input field */}
+        <label>Preferred Yoga Style:</label>
         <select name="preferredStyle" value={formData.preferredStyle} onChange={handleChange}>
           <option value="hatha">Hatha</option>
           <option value="vinyasa">Vinyasa</option>
