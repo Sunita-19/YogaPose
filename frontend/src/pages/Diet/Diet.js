@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import "./Diet.css";
 
 const Diet = () => {
@@ -14,24 +14,41 @@ const Diet = () => {
 
   const [dietPlan, setDietPlan] = useState(null);
   const [error, setError] = useState(null);
-  const [previousInput, setPreviousInput] = useState(null);
   const [cache, setCache] = useState({});
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setUserData({ ...userData, [name]: value });
   };
+
   const validateInputs = () => {
     const { age, weight, height } = userData;
-    if (age <= 0 || age > 120) return "Please enter a valid age (1-120).";
-    if (weight <= 0 || weight > 300) return "Please enter a valid weight (1-300 kg).";
-    if (height <= 50 || height > 250) return "Please enter a valid height (50-250 cm).";
-    return null;
+    const ageInt = parseInt(age, 10);
+    const weightInt = parseFloat(weight);
+    const heightInt = parseFloat(height);
+
+    if (ageInt <= 0 || ageInt > 120) return "Please enter a valid age (1-120).";
+
+    if (ageInt <= 1) {
+      if (weightInt < 2 || weightInt > 14) return "For a 1-year-old, weight should be between 2-14 kg.";
+      if (heightInt < 45 || heightInt > 80) return "For a 1-year-old, height should be between 45-80 cm.";
+    } else if (ageInt <= 10) {
+      if (weightInt < 7 || weightInt > 40) return "For ages 1-10, weight should be between 7-40 kg.";
+      if (heightInt < 70 || heightInt > 150) return "For ages 1-10, height should be between 70-150 cm.";
+    } else if (ageInt <= 18) {
+      if (weightInt < 30 || weightInt > 120) return "For ages 11-18, weight should be between 30-120 kg.";
+      if (heightInt < 130 || heightInt > 200) return "For ages 11-18, height should be between 130-200 cm.";
+    } else {
+      if (weightInt < 40 || weightInt > 300) return "For adults, weight should be between 40-300 kg.";
+      if (heightInt < 140 || heightInt > 250) return "For adults, height should be between 140-250 cm.";
+    }
+
+    return null; // No errors
   };
 
   const fetchDietPlan = async () => {
     try {
-      const apiKey = "3bf8f3f8c47b417aa03d776ebc78a657"; // Replace with your actual API key
+      const apiKey = "3bf8f3f8c47b417aa03d776ebc78a657"; // Replace with actual API key
       const apiUrl = `https://api.spoonacular.com/mealplanner/generate?apiKey=${apiKey}&timeFrame=day`;
 
       const response = await fetch(apiUrl);
@@ -58,20 +75,25 @@ const Diet = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const currentInput = JSON.stringify(userData);
 
+    const validationError = validateInputs();
+    if (validationError) {
+      setError(validationError);
+      return;
+    }
+
+    setError(null); // Clear previous errors
+
+    const currentInput = JSON.stringify(userData);
     if (cache[currentInput]) {
-      // If input is in cache, use the stored diet plan
       setDietPlan(cache[currentInput]);
     } else {
       const newDietPlan = await fetchDietPlan();
       if (newDietPlan) {
         setDietPlan(newDietPlan);
-        setCache({ ...cache, [currentInput]: newDietPlan }); // Store result in cache
+        setCache({ ...cache, [currentInput]: newDietPlan });
       }
     }
-
-    setPreviousInput(currentInput);
   };
 
   return (
@@ -81,7 +103,7 @@ const Diet = () => {
         <label>Age:
           <input type="number" name="age" value={userData.age} onChange={handleInputChange} min="1" max="120" required />
         </label>
-        
+
         <label>Gender:
           <select name="gender" value={userData.gender} onChange={handleInputChange} required>
             <option value="">Select</option>
@@ -90,7 +112,7 @@ const Diet = () => {
             <option value="transgender">Transgender</option>
           </select>
         </label>
-        
+
         <label>Weight (kg):
           <input type="number" name="weight" value={userData.weight} onChange={handleInputChange} min="1" max="300" required />
         </label>
@@ -98,7 +120,7 @@ const Diet = () => {
         <label>Height (cm):
           <input type="number" name="height" value={userData.height} onChange={handleInputChange} min="50" max="250" required />
         </label>
-        
+
         <label>Activity Level:
           <select name="activityLevel" value={userData.activityLevel} onChange={handleInputChange} required>
             <option value="">Select</option>
