@@ -343,6 +343,16 @@ app.get('/api/yoga_poses/:id', (req, res) => {
         res.status(200).json(result[0]);
     });
 });
+// Route to fetch all yoga poses without filtering
+router.get('/poses', async (req, res) => {
+    try {
+        const [results] = await db.execute('SELECT * FROM yoga_poses');
+        res.json(results);
+    } catch (error) {
+        console.error("Error fetching yoga poses:", error);
+        res.status(500).json({ message: "Server Error" });
+    }
+});
 
 // Start the server
 app.listen(port, () => {

@@ -24,6 +24,17 @@ const RecommendedPoses = () => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
+  const validateInputs = () => {
+    const { age, weight } = formData;
+    if (age < 1 || age > 120) {
+      return 'Age must be between 1 and 120';
+    }
+    if (weight < 10 || weight > 350) {
+      return 'Weight must be between 10kg and 350kg';
+    }
+    return '';
+  };
+
   const fetchPoses = async () => {
     try {
       const response = await axios.post('/api/recommended-poses', formData, {
@@ -31,24 +42,22 @@ const RecommendedPoses = () => {
           Authorization: `Bearer ${localStorage.getItem('token')}`
         }
       });
-      console.log('Fetched poses:', response.data); // Log the fetched poses
+      console.log('Fetched poses:', response.data);
       updateRecommendedPoses(response.data);
     } catch (error) {
-      console.error('Error fetching poses:', error);
+      console.error('Error fetching poses:', error.response ? error.response.data : error);
+      setError('Failed to fetch recommendations. Try again.');
     }
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Submitting form with data:", formData); // debug log
-    if (formData.age < 0 || formData.weight < 0) {
-      setError("Age and weight cannot be negative");
+    const validationError = validateInputs();
+    if (validationError) {
+      setError(validationError);
       return;
     }
-    if (!formData.age || !formData.weight || !formData.preferredStyle) {
-      setError("Please fill all required fields");
-      return;
-    }
+    setError('');
     await fetchPoses();
   };
 
@@ -72,7 +81,8 @@ const RecommendedPoses = () => {
               name="age" 
               value={formData.age} 
               onChange={handleChange} 
-              min="0"
+              min="1"
+              max="120"
               required 
             />
           </div>
@@ -84,7 +94,8 @@ const RecommendedPoses = () => {
               name="weight" 
               value={formData.weight} 
               onChange={handleChange} 
-              min="0"
+              min="10"
+              max="350"
               required 
             />
           </div>
@@ -165,9 +176,9 @@ const RecommendedPoses = () => {
         <div className="level-box">
           <h3>Beginner</h3>
           <ul>
-            {recommendedPoses.beginner && recommendedPoses.beginner.length > 0 ? (
-              recommendedPoses.beginner.map((asana, index) => (
-                <li key={index} onClick={() => handleAsanaClick(asana.id)}>
+            {recommendedPoses?.beginner?.length > 0 ? (
+              recommendedPoses.beginner.map((asana) => (
+                <li key={asana.id} onClick={() => handleAsanaClick(asana.id)}>
                   {asana.name}
                 </li>
               ))
@@ -180,9 +191,9 @@ const RecommendedPoses = () => {
         <div className="level-box">
           <h3>Intermediate</h3>
           <ul>
-            {recommendedPoses.intermediate && recommendedPoses.intermediate.length > 0 ? (
-              recommendedPoses.intermediate.map((asana, index) => (
-                <li key={index} onClick={() => handleAsanaClick(asana.id)}>
+            {recommendedPoses?.intermediate?.length > 0 ? (
+              recommendedPoses.intermediate.map((asana) => (
+                <li key={asana.id} onClick={() => handleAsanaClick(asana.id)}>
                   {asana.name}
                 </li>
               ))
@@ -195,9 +206,9 @@ const RecommendedPoses = () => {
         <div className="level-box">
           <h3>Advanced</h3>
           <ul>
-            {recommendedPoses.advanced && recommendedPoses.advanced.length > 0 ? (
-              recommendedPoses.advanced.map((asana, index) => (
-                <li key={index} onClick={() => handleAsanaClick(asana.id)}>
+            {recommendedPoses?.advanced?.length > 0 ? (
+              recommendedPoses.advanced.map((asana) => (
+                <li key={asana.id} onClick={() => handleAsanaClick(asana.id)}>
                   {asana.name}
                 </li>
               ))

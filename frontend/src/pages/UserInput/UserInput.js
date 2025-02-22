@@ -1,11 +1,10 @@
-// UserInput.js
 import React, { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import UserContext from "../../context/UserContext";
 import "./UserInput.css";
 
-const UserInput = ({ setUserData }) => {
+const UserInput = () => {
   const navigate = useNavigate();
   const { updateUserInput, setRecommendedPoses: updateRecommendedPoses } = useContext(UserContext);
   const [formData, setFormData] = useState({
