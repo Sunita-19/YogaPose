@@ -4,33 +4,15 @@ import React, { createContext, useState } from 'react';
 const UserContext = createContext();
 
 export const UserProvider = ({ children }) => {
-  const [userInput, setUserInput] = useState({
-    age: "",
-    weight: "",
-    gender: "female",
-    fitnessLevel: "beginner",
-    healthConditions: "none",
-    activityLevel: "low",
-    specificGoals: "flexibility",
-    timeCommitment: "short",
-    preferredStyle: "hatha", // Add preferredStyle to userInput
-  });
-  const [recommendedPoses, setRecommendedPoses] = useState({
-    beginner: [],
-    intermediate: [],
-    advanced: []
-  });
+  const [userInput, setUserInput] = useState({});
+  const [recommendedPoses, setRecommendedPoses] = useState([]);
 
   const updateUserInput = (input) => {
     setUserInput(input);
   };
 
-  const updateRecommendedPoses = (poses) => {
-    setRecommendedPoses(poses);
-  };
-
   return (
-    <UserContext.Provider value={{ userInput, recommendedPoses, setRecommendedPoses: updateRecommendedPoses, updateUserInput }}>
+    <UserContext.Provider value={{ userInput, recommendedPoses, setRecommendedPoses, updateUserInput }}>
       {children}
     </UserContext.Provider>
   );

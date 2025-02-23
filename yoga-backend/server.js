@@ -257,48 +257,24 @@ app.get('/api/poses', (req, res) => {
     });
 });
 
-// Endpoint to get pose recommendations based on user input
-app.post('/api/recommended-poses', authenticateToken, async (req, res) => {
-  try {
-    const { age, weight, gender, fitnessLevel, healthConditions, activityLevel } = req.body;
-
-    // Basic validation remains unchanged.
-    if (!age || !weight) {
-      console.error('Validation error: Missing required fields');
-      return res.status(400).json({ message: 'Missing required fields' });
-    }
-    if (age < 1 || age > 120) {
-      console.error('Validation error: Age must be between 1 and 120');
-      return res.status(400).json({ message: 'Age must be between 1 and 120' });
-    }
-    if (weight < 10 || weight > 350) {
-      console.error('Validation error: Weight must be between 10kg and 350kg');
-      return res.status(400).json({ message: 'Weight must be between 10kg and 350kg' });
-    }
-
-    console.log(`Received request with age: ${age}, weight: ${weight}, gender: ${gender}, fitnessLevel: ${fitnessLevel}, healthConditions: ${healthConditions}, activityLevel: ${activityLevel}`);
-
-    // Fetch all poses from the database
-    db.query('SELECT * FROM yoga_poses WHERE id BETWEEN 1 AND 30', async (err, results) => {
+app.post('/api/recommended-poses', authenticateToken, (req, res) => {
+    console.log('Received request:', req.body); // Debugging
+  
+    db.query('SELECT * FROM yoga_poses', (err, results) => {
       if (err) {
         console.error('Database error:', err);
         return res.status(500).json({ error: 'Database error' });
       }
-      console.log('Total poses in database:', results.length);
-
-      // Randomly select 6 to 7 poses
-      const shuffled = results.sort(() => 0.5 - Math.random());
-      const selectedPoses = shuffled.slice(0, Math.floor(Math.random() * 2) + 6);
-
-      console.log('Selected poses:', selectedPoses);
-      res.status(200).json(selectedPoses);
+  
+      if (results.length === 0) {
+        return res.status(404).json({ error: 'No yoga poses found.' });
+      }
+  
+    //   console.log('Fetched poses:', results);
+      res.status(200).json(results);
     });
-  } catch (error) {
-    console.error('Error in pose recommendation:', error);
-    res.status(500).json({ error: 'Internal server error' });
-  }
-});
-
+  });
+  
 // Chatbot endpoint
 app.post('/api/chatbot', authenticateToken, async (req, res) => {
     try {
@@ -321,33 +297,7 @@ app.post('/api/chatbot', authenticateToken, async (req, res) => {
     }
 });
 
-// Endpoint to get details of a specific yoga pose
-app.get('/api/yoga_poses/:id', (req, res) => {
 
-
-    const poseId = req.params.id;
-
-    db.query('SELECT * FROM yoga_poses WHERE id = ?', [poseId], (err, result) => {
-        if (err) {
-            console.error('Database error:', err);
-            return res.status(500).json({ error: 'Database error' });
-        }
-        if (result.length === 0) {
-            return res.status(404).json({ message: 'Yoga pose not found' });
-        }
-        res.status(200).json(result[0]);
-    });
-});
-// Route to fetch all yoga poses without filtering
-router.get('/poses', async (req, res) => {
-    try {
-        const [results] = await db.execute('SELECT * FROM yoga_poses');
-        res.json(results);
-    } catch (error) {
-        console.error("Error fetching yoga poses:", error);
-        res.status(500).json({ message: "Server Error" });
-    }
-});
 
 // Start the server
 app.listen(port, () => {

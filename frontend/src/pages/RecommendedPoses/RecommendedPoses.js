@@ -1,12 +1,12 @@
-import React, { useContext, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState, useContext } from 'react';
 import axios from 'axios';
 import UserContext from '../../context/UserContext';
-import './RecommendedPoses.css';
+import { useNavigate } from 'react-router-dom';
+import './RecommendedPoses.css'; 
 
 const RecommendedPoses = () => {
+  const { recommendedPoses, setRecommendedPoses } = useContext(UserContext);
   const navigate = useNavigate();
-  const { recommendedPoses, setRecommendedPoses: updateRecommendedPoses } = useContext(UserContext);
   const [formData, setFormData] = useState({
     age: "",
     weight: "",
@@ -21,44 +21,33 @@ const RecommendedPoses = () => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const validateInputs = () => {
-    const { age, weight } = formData;
-    if (age < 1 || age > 120) {
-      return 'Age must be between 1 and 120';
-    }
-    if (weight < 10 || weight > 350) {
-      return 'Weight must be between 10kg and 350kg';
-    }
-    return '';
-  };
-
   const fetchPoses = async () => {
+    setError('');
     try {
-      console.log('Sending request with formData:', formData);
-      const response = await axios.post('/api/recommended-poses', formData, {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem('token')}`,
-        },
+      const token = localStorage.getItem('token');
+      if (!token) {
+        setError("User not authenticated. Please log in.");
+        return;
+      }
+  
+      const response = await axios.post('http://localhost:5000/api/recommended-poses', formData, {
+        headers: { Authorization: `Bearer ${token}` }
       });
-      console.log('Request headers:', response.config.headers);
-      console.log('Request data:', response.config.data);
-      console.log('Fetched poses from API:', response.data);
-      updateRecommendedPoses(response.data);
+  
+      if (response.status === 200) {
+        // console.log('Fetched poses:', response.data);
+        setRecommendedPoses(response.data);
+      } else {
+        setError("No recommended poses found.");
+      }
     } catch (error) {
-      const detailedError = error.response ? error.response.data : error;
-      console.error('Error fetching poses:', detailedError);
-      setError('Failed to fetch recommendations. Try again.');
+      console.error('Error fetching poses:', error.response ? error.response.data : error);
+      setError(error.response?.data?.error || "Failed to fetch poses. Please try again later.");
     }
   };
-
+  
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const validationError = validateInputs();
-    if (validationError) {
-      setError(validationError);
-      return;
-    }
-    setError('');
     await fetchPoses();
   };
 
