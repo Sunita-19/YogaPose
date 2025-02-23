@@ -1,8 +1,8 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import axios from 'axios';
 import UserContext from '../../context/UserContext';
 import { useNavigate } from 'react-router-dom';
-import './RecommendedPoses.css'; 
+import './RecommendedPoses.css';
 
 const RecommendedPoses = () => {
   const { recommendedPoses, setRecommendedPoses } = useContext(UserContext);
@@ -16,6 +16,7 @@ const RecommendedPoses = () => {
     activityLevel: "low"
   });
   const [error, setError] = useState("");
+  const [lastFormData, setLastFormData] = useState(null); // Stores last submitted data
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -29,13 +30,15 @@ const RecommendedPoses = () => {
         setError("User not authenticated. Please log in.");
         return;
       }
-  
+
       const response = await axios.post('http://localhost:5000/api/recommended-poses', formData, {
         headers: { Authorization: `Bearer ${token}` }
       });
-  
+
       if (response.status === 200) {
-        // console.log('Fetched poses:', response.data);
+        if (response.data.length === 0) {
+          setError("No exact matches found, but here are some general poses.");
+        }
         setRecommendedPoses(response.data);
       } else {
         setError("No recommended poses found.");
@@ -45,10 +48,17 @@ const RecommendedPoses = () => {
       setError(error.response?.data?.error || "Failed to fetch poses. Please try again later.");
     }
   };
-  
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    if (JSON.stringify(formData) === JSON.stringify(lastFormData)) {
+      setError("Your recommendations are already up to date.");
+      return;
+    }
+
     await fetchPoses();
+    setLastFormData(formData); // Update the last submitted form data
   };
 
   const handleAsanaClick = (asanaId) => {
