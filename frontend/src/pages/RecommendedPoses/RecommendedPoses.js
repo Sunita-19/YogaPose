@@ -16,7 +16,7 @@ const RecommendedPoses = () => {
     activityLevel: "low"
   });
   const [error, setError] = useState("");
-  const [lastFormData, setLastFormData] = useState(null); // Stores last submitted data
+  const [lastFormData, setLastFormData] = useState(null);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -42,9 +42,8 @@ const RecommendedPoses = () => {
           return;
         }
   
-        // Select random 6-7 poses from the full backend response
-        const shuffledPoses = response.data.sort(() => 0.5 - Math.random()); // Shuffle array
-        const selectedPoses = shuffledPoses.slice(0, Math.floor(Math.random() * 2) + 6); // Select 6 or 7 poses randomly
+        const shuffledPoses = response.data.sort(() => 0.5 - Math.random());
+        const selectedPoses = shuffledPoses.slice(0, Math.floor(Math.random() * 2) + 6);
   
         setRecommendedPoses(selectedPoses);
       } else {
@@ -57,7 +56,7 @@ const RecommendedPoses = () => {
       setRecommendedPoses([]);
     }
   };
-  
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -67,12 +66,14 @@ const RecommendedPoses = () => {
     }
 
     await fetchPoses();
-    setLastFormData(formData); // Update the last submitted form data
+    setLastFormData(formData);
   };
 
   const handleAsanaClick = (asanaId) => {
+    console.log("Navigating to pose details for ID:", asanaId); // Debugging
     navigate(`/pose/${asanaId}`);
   };
+  
 
   return (
     <div className="recommended-poses-container">
@@ -114,7 +115,7 @@ const RecommendedPoses = () => {
             <select name="gender" value={formData.gender} onChange={handleChange}>
               <option value="female">Female</option>
               <option value="male">Male</option>
-              <option value="other">Other</option>
+              <option value="other">Transgender</option>
             </select>
           </div>
 
@@ -156,7 +157,7 @@ const RecommendedPoses = () => {
           <h3>Recommended Poses</h3>
           <ul>
             {recommendedPoses?.length > 0 ? (
-              recommendedPoses.slice(0, 7).map((asana) => ( // Limiting to 7 poses
+              recommendedPoses.slice(0, 7).map((asana) => (
                 <li key={asana.id} onClick={() => handleAsanaClick(asana.id)}>
                   {asana.name}
                 </li>
