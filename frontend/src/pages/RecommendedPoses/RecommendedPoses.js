@@ -30,25 +30,34 @@ const RecommendedPoses = () => {
         setError("User not authenticated. Please log in.");
         return;
       }
-
+  
       const response = await axios.post('http://localhost:5000/api/recommended-poses', formData, {
         headers: { Authorization: `Bearer ${token}` }
       });
-
+  
       if (response.status === 200) {
         if (response.data.length === 0) {
           setError("No exact matches found, but here are some general poses.");
+          setRecommendedPoses([]);
+          return;
         }
-        setRecommendedPoses(response.data);
+  
+        // Select random 6-7 poses from the full backend response
+        const shuffledPoses = response.data.sort(() => 0.5 - Math.random()); // Shuffle array
+        const selectedPoses = shuffledPoses.slice(0, Math.floor(Math.random() * 2) + 6); // Select 6 or 7 poses randomly
+  
+        setRecommendedPoses(selectedPoses);
       } else {
         setError("No recommended poses found.");
+        setRecommendedPoses([]);
       }
     } catch (error) {
       console.error('Error fetching poses:', error.response ? error.response.data : error);
       setError(error.response?.data?.error || "Failed to fetch poses. Please try again later.");
+      setRecommendedPoses([]);
     }
   };
-
+  
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -147,7 +156,7 @@ const RecommendedPoses = () => {
           <h3>Recommended Poses</h3>
           <ul>
             {recommendedPoses?.length > 0 ? (
-              recommendedPoses.map((asana) => (
+              recommendedPoses.slice(0, 7).map((asana) => ( // Limiting to 7 poses
                 <li key={asana.id} onClick={() => handleAsanaClick(asana.id)}>
                   {asana.name}
                 </li>
