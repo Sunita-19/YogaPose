@@ -4,9 +4,24 @@ import UserContext from '../../context/UserContext';
 import { useNavigate } from 'react-router-dom';
 import './RecommendedPoses.css';
 
+// Function to convert YouTube URL to embeddable format
+const getEmbeddedUrl = (url) => {
+  if (url.includes("youtube.com/watch?v=")) {
+    return url.replace("watch?v=", "embed/");
+  } else if (url.includes("youtu.be/")) {
+    return url.replace("youtu.be/", "youtube.com/embed/");
+  }
+  return url;
+};
+
+
 const RecommendedPoses = () => {
   const { recommendedPoses, setRecommendedPoses } = useContext(UserContext);
   const navigate = useNavigate();
+  const [selectedPose, setSelectedPose] = useState(null);
+  const [poseDetails, setPoseDetails] = useState(null);
+  const [loadingDetails, setLoadingDetails] = useState(false);
+
   const [formData, setFormData] = useState({
     age: "",
     weight: "",
@@ -69,10 +84,52 @@ const RecommendedPoses = () => {
     setLastFormData(formData);
   };
 
-  const handleAsanaClick = (asanaId) => {
-    console.log("Navigating to pose details for ID:", asanaId); // Debugging
-    navigate(`/pose/${asanaId}`);
+  const handleAsanaClick = async (asanaId) => {
+    if (selectedPose === asanaId) {
+      setSelectedPose(null);
+      setPoseDetails(null);
+      return;
+    }
+
+    setLoadingDetails(true);
+    setSelectedPose(asanaId);
+    
+    try {
+      const token = localStorage.getItem('token');
+      console.log('Token:', token); // Debug token
+      if (!token) {
+        throw new Error('User not authenticated');
+      }
+
+      const url = `http://localhost:5000/api/yoga_poses/${asanaId}`;
+      console.log('Fetching pose details from:', url); // Debug URL
+
+      const response = await axios.get(url, {
+        headers: { Authorization: `Bearer ${token}` }
+      });
+
+      console.log('API Response:', response); // Debug response
+
+      if (!response.data) {
+        throw new Error('No pose data received');
+      }
+
+      setPoseDetails(response.data);
+    } catch (error) {
+      console.error('Error fetching pose details:', {
+        message: error.message,
+        response: error.response,
+        stack: error.stack
+      });
+      setError(`Failed to load pose details: ${error.message}`);
+      setPoseDetails(null);
+    } finally {
+      setLoadingDetails(false);
+    }
   };
+
+
+
   
 
   return (
@@ -158,14 +215,54 @@ const RecommendedPoses = () => {
           <ul>
             {recommendedPoses?.length > 0 ? (
               recommendedPoses.slice(0, 7).map((asana) => (
-                <li key={asana.id} onClick={() => handleAsanaClick(asana.id)}>
-                  {asana.name}
-                </li>
+                <React.Fragment key={asana.id}>
+                  <li 
+                    className={`pose-name ${selectedPose === asana.id ? 'active' : ''}`}
+                    onClick={() => handleAsanaClick(asana.id)}
+                  >
+                    {asana.name}
+                  </li>
+                  {selectedPose === asana.id && (
+                    <div className="pose-details">
+                      {loadingDetails ? (
+                        <div>Loading pose details...</div>
+                      ) : poseDetails ? (
+                        <div>
+                          <h4>{poseDetails.name}</h4>
+                          <img 
+                            src={poseDetails.image_url} 
+                            alt={poseDetails.name} 
+                            className="pose-image"
+                          />
+                          <ul className="pose-steps">
+                            {poseDetails.description.split('\n').map((point, index) => (
+                              <li key={index}>{point}</li>
+                            ))}
+                          </ul>
+                          {poseDetails.video_url && (
+                            <iframe
+                              className="pose-video"
+                              width="100%"
+                              height="315"
+                              src={getEmbeddedUrl(poseDetails.video_url)}
+                              title={poseDetails.name}
+                              frameBorder="0"
+                              allowFullScreen
+                            ></iframe>
+                          )}
+                        </div>
+                      ) : (
+                        <div>Failed to load pose details</div>
+                      )}
+                    </div>
+                  )}
+                </React.Fragment>
               ))
             ) : (
               <li>No poses available</li>
             )}
           </ul>
+
         </div>
       </section>
     </div>
