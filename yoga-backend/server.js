@@ -8,7 +8,7 @@ const jwt = require('jsonwebtoken');
 require('dotenv').config(); // Load environment variables from .env file
 
 const app = express();
-const port = 5000; // You can change the port if needed
+const port = process.env.PORT || 5000;
 
 app.use(cors());
 app.use(bodyParser.json());
@@ -38,7 +38,6 @@ function authenticateToken(req, res, next) {
     jwt.verify(token.split(' ')[1], process.env.JWT_SECRET, (err, user) => {
         if (err) return res.status(403).json({ message: 'Invalid token' });
         req.user = user;
-        // console.log('Authenticated user:', req.user); // Log the user information for debugging
         next();
     });
 }
@@ -295,28 +294,27 @@ app.post('/api/recommended-poses', authenticateToken, (req, res) => {
   });
   
 // Chatbot endpoint
-app.post('/api/chatbot', authenticateToken, async (req, res) => {
-    try {
-        const { message } = req.body;
-        
-        if (!message || typeof message !== 'string') {
-            return res.status(400).json({ error: 'Invalid message format' });
-        }
+const { GoogleGenerativeAI } = require("@google/generative-ai");
+const genAI = new GoogleGenerativeAI(process.env.OPENAI_API_KEY); // Use environment variable
+const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 
-        // TODO: Add chatbot logic here
-        const response = {
-            text: `You said: ${message}`,
-            timestamp: new Date().toISOString()
-        };
-            res.send(response);
-        res.status(200).json(response);
-    } catch (error) {
-        console.error('Chatbot error:', error);
-        res.status(500).json({ error: 'Error processing chatbot request' });
+app.post("/api/chatbot", async (req, res) => {
+  try {
+    const { message } = req.body;
+
+    if (!message || typeof message !== "string") {
+      return res.status(400).json({ error: "Invalid message format" });
     }
+
+    const result = await model.generateContent(message);
+    const responseText = result.response.text();
+
+    return res.status(200).json({ text: responseText });
+  } catch (error) {
+    console.error("Chatbot error:", error);
+    return res.status(500).json({ error: "Error processing chatbot request" });
+  }
 });
-
-
 
 // Start the server
 app.listen(port, () => {

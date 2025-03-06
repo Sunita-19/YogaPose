@@ -1,67 +1,54 @@
 import React, { useState } from "react";
 import "./Chatbot.css";
 
+const API_URL = process.env.REACT_APP_API_URL || "http://localhost:5000/api/chatbot";
+const API_KEY = process.env.REACT_APP_OPENAI_API_KEY;
+
 const Chatbot = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState("");
 
-  const toggleChatbot = () => {
-    setIsOpen(true);
-  };
-
-  const closeChatbot = () => {
-    setIsOpen(false);
-  };
+  const toggleChatbot = () => setIsOpen(true);
+  const closeChatbot = () => setIsOpen(false);
 
   const handleSendMessage = async () => {
     if (!input.trim()) return;
 
     const userMessage = { text: input, sender: "user" };
-    setMessages([...messages, userMessage]);
+    setMessages((prev) => [...prev, userMessage]);
     setInput("");
 
     try {
-      const secretKey = localStorage.getItem('token');
-      alert(secretKey);
-      if (!secretKey) throw new Error("Missing secret key");
+      if (!API_KEY) throw new Error("API key is missing");
 
-      console.log("Sending message to server:", input); // Log the message being sent
-
-      const response = await fetch("/api/chatbot", {
+      const response = await fetch(API_URL, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          "Authorization": `Bearer ${secretKey}`,
+          Authorization: `Bearer ${API_KEY}`,
         },
         body: JSON.stringify({ message: input }),
       });
 
-      console.log("Server response status:", response.status); // Log the response status
-
       if (!response.ok) throw new Error("Failed to get response from server");
 
       const data = await response.json();
-      console.log("Server response data:", data); // Log the response data
-
       const botMessage = { text: data.text, sender: "assistant" };
-      setMessages((prevMessages) => [...prevMessages, botMessage]);
+      setMessages((prev) => [...prev, botMessage]);
     } catch (error) {
       console.error("Chatbot error:", error);
-      setMessages((prevMessages) => [...prevMessages, { text: error.message, sender: "assistant" }]);
+      setMessages((prev) => [...prev, { text: error.message, sender: "assistant" }]);
     }
   };
 
-  const handleKeyPress = (event) => {
-    if (event.key === "Enter") {
-      handleSendMessage();
-    }
+  const handleKeyPress = (e) => {
+    if (e.key === "Enter") handleSendMessage();
   };
 
   return (
     <div>
       {!isOpen && <button className="chatbot-open-btn" onClick={toggleChatbot}>💬</button>}
-
       {isOpen && (
         <div className="chatbot-container">
           <div className="chatbot-header">
@@ -70,9 +57,7 @@ const Chatbot = () => {
           </div>
           <div className="chatbot-messages">
             {messages.map((msg, index) => (
-              <div key={index} className={`message ${msg.sender}`}>
-                {msg.text}
-              </div>
+              <div key={index} className={`message ${msg.sender}`}>{msg.text}</div>
             ))}
           </div>
           <div className="chatbot-input">
