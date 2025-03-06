@@ -33,14 +33,9 @@ export default function Sidebar({ isOpen, toggleSidebar }) {
 
                 {/* Categories */}
                 <div className="categories">
-                    <Link to="/start" onClick={toggleSidebar}>Yoga Poses</Link>
                     <button onClick={handleLogout} className="logout-btn">Log Out</button>
                 </div>
 
-                {/* Help Section */}
-                <div className="contact-help">
-                    <Link to="/faq" onClick={toggleSidebar}>FAQ</Link>
-                </div>
             </div>
         </>
     );
