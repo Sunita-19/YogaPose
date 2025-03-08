@@ -12,10 +12,6 @@ export const poseImages = {
     Dog: dog,
     Warrior: warrior,
     Chair: chair,
-    Traingle: traingle,
+    Triangle: traingle,
     Shoulderstand: shoulderstand
-} 
-
-
-
- 
+}
