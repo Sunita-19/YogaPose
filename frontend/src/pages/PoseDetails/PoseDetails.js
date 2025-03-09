@@ -5,13 +5,39 @@ import "./PoseDetails.css";
 const PoseDetails = () => {
   const { id } = useParams();
   const [poseDetails, setPoseDetails] = useState(null);
+  const [error, setError] = useState("");
 
   useEffect(() => {
-    fetch(`http://localhost:5000/api/yoga_poses/${id}`)
-      .then((response) => response.json())
-      .then((data) => setPoseDetails(data))
-      .catch((error) => console.error("Error fetching pose details:", error));
+    const token = localStorage.getItem('token');
+    console.log("Fetching pose details for id:", id);
+    fetch(`http://localhost:5000/api/yoga_poses/${id}`, {
+      headers: {
+        Authorization: token ? `Bearer ${token}` : ""
+      }
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Network response was not OK");
+        }
+        return response.json();
+      })
+      .then((data) => {
+        console.log("Fetched data:", data);
+        if (!data || Object.keys(data).length === 0) {
+          setError("No data returned for this pose.");
+        } else {
+          setPoseDetails(data);
+        }
+      })
+      .catch((error) => {
+        console.error("Error fetching pose details:", error);
+        setError("Error fetching pose details. Please try again later.");
+      });
   }, [id]);
+
+  if (error) {
+    return <div className="error">{error}</div>;
+  }
 
   if (!poseDetails) {
     return <div>Loading...</div>;
@@ -24,23 +50,28 @@ const PoseDetails = () => {
     } else if (url.includes("youtu.be/")) {
       return url.replace("youtu.be/", "youtube.com/embed/");
     }
-    return url; // Return the original URL if it doesn't match
+    return url;
   };
 
   return (
     <div className="pose-details-container">
       <h1>{poseDetails.name}</h1>
-      {/* Modified description rendering */}
       <ul className="pose-steps">
-        {poseDetails.description.split('\n').map((point, index) => (
-          <li key={index}>{point}</li>
-        ))}
+        {poseDetails.description && poseDetails.description.trim() !== ""
+          ? poseDetails.description.split("\n").map((point, index) => (
+              <li key={index}>{point}</li>
+            ))
+          : null}
       </ul>
       <div className="pose-content">
-        <img className="pose-image" src={poseDetails.image_url} alt={poseDetails.name} />
-        
-        {/* Embed YouTube Video */}
-        {poseDetails.video_url ? (
+        {poseDetails.image_url && (
+          <img
+            className="pose-image"
+            src={poseDetails.image_url}
+            alt={poseDetails.name}
+          />
+        )}
+        {poseDetails.video_url && poseDetails.video_url.trim() !== "" ? (
           <iframe
             className="pose-video"
             width="100%"
@@ -50,9 +81,7 @@ const PoseDetails = () => {
             frameBorder="0"
             allowFullScreen
           ></iframe>
-        ) : (
-          <p>Video not available for this pose.</p>
-        )}
+        ) : null}
       </div>
     </div>
   );
