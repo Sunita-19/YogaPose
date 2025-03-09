@@ -2,6 +2,12 @@ import React from 'react';
 import { poseImages } from '../../utils/pose_images';
 import './DropDown.css';
 
+let poseList = [
+    'Tree', 'Chair', 'Cobra', 'Warrior', 'Dog', 'Shoulderstand', 'Triangle',
+    'Tadasana', 'Adho_Mukha_Svanasana', 'Virabhadrasana I', 'Balasana', 
+    'Paschimottanasana', 'Setu Bandhasana', 'Marjaryasana-Bitilasana'
+];
+
 export default function DropDown({ poseList, currentPose, setCurrentPose }) {
     return (
         <div className='dropdown dropdown-container'>

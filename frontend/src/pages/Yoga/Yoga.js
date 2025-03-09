@@ -12,7 +12,11 @@ import { POINTS, keypointConnections } from '../../utils/data';
 import { drawPoint, drawSegment } from '../../utils/helper';
 
 let skeletonColor = 'rgb(255,255,255)';
-let poseList = ['Tree', 'Chair', 'Cobra', 'Warrior', 'Dog', 'Shoulderstand', 'Triangle'];
+let poseList = [
+    'Tree', 'Chair', 'Cobra', 'Warrior', 'Dog', 'Shoulderstand', 'Triangle',
+    'Tadasana', 'Adho Mukha Svanasana', 'Virabhadrasana I', 'Balasana', 
+    'Paschimottanasana', 'Setu Bandhasana', 'Marjaryasana-Bitilasana'
+];
 
 let interval;
 let flag = false;
@@ -53,6 +57,13 @@ function Yoga() {
     Triangle: 5,
     Tree: 6,
     Warrior: 7,
+    Tadasana: 8,
+    'Adho Mukha Svanasana': 9,
+    'Virabhadrasana I': 10,
+    Balasana: 11,
+    Paschimottanasana: 12,
+    Setu_Bandhasana: 13,
+    'Marjaryasana-Bitilasana': 14
   };
 
   function get_center_point(landmarks, left_bodypart, right_bodypart) {
