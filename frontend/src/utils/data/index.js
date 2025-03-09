@@ -1,89 +1,103 @@
 export const poseInstructions = {
     Tree: [
         'Get into position. Tree pose often starts from mountain pose (or Tadasana), with both feet planted firmly on the ground and your weight adequately distributed so that you are balanced.',
-        'Bend one leg at the knee. Choose the leg you are going to fold in first. If your left leg is your standing leg, keep your left foot planted on the ground, and slowly bend in your right leg at the right knee so that the sole of your right foot rests against your left inner thigh (known as the half-lotus position in Bikram yoga). Point the knee of your bent leg outward, away from your body.',
-        'Lengthen your body. Clasp your hands together in Anjali Mudra (also called the “prayer position”)',
-        'Hold and repeat. Hold the pose for as long as necessary, making sure to breathe properly. When you’re ready to switch legs, exhale, and return to mountain pose to start again.'
-        ],
+        'Bend one leg at the knee. Choose the leg you are going to fold in first. If your left leg is your standing leg, keep your left foot planted on the ground, and slowly bend in your right leg at the right knee so that the sole of your right foot rests against your left inner thigh. Point the knee of your bent leg outward, away from your body.',
+        'Lengthen your body. Clasp your hands together in Anjali Mudra (prayer position).',
+        'Hold and repeat. Hold the pose for as long as needed, and then switch legs.'
+    ],
     Cobra: [
-        'Lie prone on the floor. Stretch your legs back, tops of the feet on the floor. Spread your hands on the floor under your shoulders. Hug the elbows back into your body.',
-        'On an inhalation, begin to straighten the arms to lift the chest off the floor, going only to the height at which you can maintain a connection through your pubis to your legs. Press the tailbone toward the pubis and lift the pubis toward the navel. Narrow the hip points. Firm but don’t harden the buttocks.',
-        'Firm the shoulder blades against the back, puffing the side ribs forward. Lift through the top of the sternum but avoid pushing the front ribs forward, which only hardens the lower back. Distribute the backbend evenly throughout the entire spine.',    
-        'Hold the pose anywhere from 15 to 30 seconds, breathing easily. Release back to the floor with an exhalation.',
+        'Lie prone on the floor with your legs stretched back and the tops of your feet on the floor.',
+        'Place your hands under your shoulders. On an inhalation, gently press through your hands to lift your chest off the floor while keeping a light bend in your elbows.',
+        'Maintain a soft gaze forward and hold the position while breathing steadily.',
+        'Exhale and return to the starting position.'
     ],
     Dog: [
-        'Come onto your hands and knees, with your hands a tiny bit in front of your shoulders and your knees directly below your hips. Spread your palms, rooting down through all four corners of your hands, and turn your toes under.',
-        'Exhale and lift your knees from the floor, at first keeping your knees slightly bent and your heels lifted off the floor. Lengthen your tailbone away from the back of your pelvis, lift the sitting bones toward the ceiling, and draw your inner legs from your inner ankles up through your groins.',
-        'On an exhalation, push your top thighs back and stretch your heels toward the floor. Straighten your knees without locking them.',
-        'Firm your outer arms and press the bases of your index fingers actively into the floor. Lift along your inner arms from the wrists to the tops of the shoulders. Firm your shoulder blades against your back, then widen them and draw them toward your tailbone. Keep your head between your upper arms.',
-        'Stay in the pose for 10 or more breaths, then bend your knees on an exhalation and lower yourself into Child’s Pose',
-    
+        'Come onto your hands and knees with your hands a little in front of your shoulders.',
+        'Exhale and lift your knees off the floor, reaching your hips up and back to form an inverted V-shape.',
+        'Press your heels gently toward the floor, and keep your head between your upper arms.',
+        'Hold the pose for several breaths.'
     ],
     Chair: [
-        'Stand straight and tall with your feet slightly wider than hip­-width apart and your arms at your sides.',
-        'Inhale and lift your arms next to your ears, stretching them straight and parallel with wrists and fingers long. Keep your shoulders down and spine neutral.',
-        'Exhale as you bend your knees, keeping your thighs and knees parallel. Lean your torso forward to create a right angle with the tops of your thighs. Keep your neck and head in line with your torso and arms. Hold for 30 seconds to 1 minute.',
+        'Stand with your feet slightly wider than hip-width apart and arms at your sides.',
+        'Inhale and lift your arms parallel to the floor as you begin to bend your knees, as if preparing to sit in a chair.',
+        'Keep your weight on your heels and your back straight.',
+        'Hold the pose for 30 seconds to a minute, breathing steadily.'
     ],
     Warrior: [
-        'Begin in lunge with your front knee bent, your back leg straight and your back heel lifted. Your hips and chest should be squared to front of the mat. Raise your arms above your head.',
-        'Move your hands to your heart, with palms pressed against each other in a prayer position. Lean forward until your back leg extends straight back, even with your hips. Keep your foot flexed and your gaze downward.',
-        'Make sure your standing leg is strong and straight, but not locked at knee. Reach your arms forward so your body forms a “T” shape.',
+        'Begin in a lunge position with the front knee bent and the back leg straight.',
+        'Rotate your back foot slightly and raise your arms overhead, palms facing each other.',
+        'Ensure your hips and shoulders face forward and hold the pose while breathing deeply.'
     ],
-
     Triangle: [
-        'Begin standing, then lightly jump your feet apart to a wide position about three to four feet apart. Turn your left foot out and turn to face that direction. Take a slight bend in your left leg and raise your arms out on your sides, forming a “T” shape.',
-        'Straighten through your left leg, then hinge and reach your torso over your left leg as your hips jut back. Rotate your left palm so it faces the ceiling, and gaze out over your left arm.',
-        'Maintain a long, straight spine as you reach your left hand to the mat, placing it in front of your left foot. If you feel off balance, bring in your back leg closer to shorten your stance. Gaze towards your right arm, which should be extended overhead. Hold and repeat on the other side.',
+        'Stand with your feet wide apart.',
+        'Turn your left foot out 90 degrees and your right foot in slightly, then extend your arms out to the sides.',
+        'Lean over your left leg and reach your left hand down toward your left foot, while your right hand stretches upward.',
+        'Keep your chest open and spine long as you hold the pose. Repeat on the other side.'
     ],
-    
     Shoulderstand: [
-        'Start with a stack of two folded blankets. Lay down on your mat aligning shoulders onto the blankets. With legs bent and feet on the floor (as if setting up for bridge pose) begin to walk your shoulders underneath your upper back feeling the chest gently rising.',
-        'Lift your hips off of the mat coming into bridge pose and extend your arms onto the ground, palms facing down as if your hands could touch your heels. Press firmly into the palms using them as leverage to lift onto the balls of the feet and extend one leg up. Bend at the elbows, place your hands on your low back creating a shelf, and then extend the next leg up.',
-        "Once you raise the legs, don't turn your head to the side to look around the room, since you can injure your neck. Keep your gaze upward and your neck straight.",
-        "Lift up through the balls of your feet. Walk your hands further up the back for more stability. Feel the chest reaching towards the chin to support opening the upper back.",
-        "Move your hips toward the front of the room and your feet toward the back of the room to straighten the body. The correct alignment is with the hips over the shoulders and feet over the hips. Ask your teacher or a friend to help you determine if your legs are perpendicular to the floor.",
-        "Stay in the pose for up to 10 breaths",
+        'Lie on your back with your shoulders on a folded blanket for support.',
+        'Lift your legs and hips off the ground, supporting your lower back with your hands.',
+        'Align your body in a straight line, and hold the pose while keeping your gaze upward.',
+        'Exhale and slowly lower your body back to the floor.'
     ],
-    Utkatasana: [
-        'Stand with your feet together and arms at your sides.',
-        'Inhale and raise your arms overhead, keeping them shoulder-width apart.',
-        'Exhale and bend your knees, lowering your hips as if sitting in a chair.',
-        'Keep your back straight and chest lifted, holding the pose for several breaths.'
+    // Newly added poses:
+    Tadasana: [
+        'Stand tall with your feet together or hip-width apart.',
+        'Distribute your weight evenly through your feet and engage your leg muscles.',
+        'Lift your chest, roll your shoulders back and down, and let your arms hang naturally at your sides.',
+        'Focus on your breath and hold the pose for a few deep breaths.'
+    ],
+    'Adho Mukha Svanasana': [
+        'Start on your hands and knees on a mat, with your wrists directly under your shoulders and knees under your hips.',
+        'Spread your fingers wide and press firmly into the mat, lifting your hips up and back.',
+        'Straighten your legs as much as possible, but keep a slight bend in your knees if needed.',
+        'Relax your head between your arms and hold the inverted V-shape for several breaths.'
+    ],
+    'Virabhadrasana I': [
+        'Step into a lunge with your right foot forward, keeping the left leg straight and turned slightly inwards.',
+        'Raise your arms overhead with palms facing each other while keeping your shoulders down.',
+        'Square your hips toward the front and ensure your front knee is directly over your ankle.',
+        'Hold the pose while breathing deeply and then repeat on the opposite side.'
+    ],
+    Balasana: [
+        'Kneel on the mat with your knees spread apart, big toes touching.',
+        'Sit back on your heels and lean forward, lowering your chest to rest on your thighs and your forehead to the mat.',
+        'Stretch your arms forward or let them rest alongside your body.',
+        'Breathe deeply, relaxing in the pose for as long as comfortable.'
+    ],
+    'Setu Bandhasana': [
+        'Lie on your back with your knees bent and your feet flat on the mat, hip-width apart.',
+        'Press your feet into the floor as you slowly lift your hips toward the ceiling.',
+        'Interlace your fingers under your back and roll onto your shoulders to lift your chest higher.',
+        'Hold the pose for a few breaths before lowering your hips down.'
+    ],
+    'Marjaryasana-Bitilasana': [
+        'Begin on your hands and knees in a tabletop position with your wrists under your shoulders and knees under your hips.',
+        'On an inhalation, lower your belly, lift your head and tailbone (Cow Pose).',
+        'On an exhalation, round your spine upward, tucking your chin toward your chest (Cat Pose).',
+        'Alternate between these two movements slowly, coordinating your breath with the motion.'
     ],
     Paschimottanasana: [
-        'Sit on the floor with your legs extended straight in front of you.',
-        'Inhale and lengthen your spine, reaching your arms overhead.',
-        'Exhale and hinge at your hips, reaching for your feet or shins.',
-        'Hold the pose, breathing deeply and relaxing into the stretch.'
-    ],
-    Setu_Bandhasana: [
-        'Lie on your back with your knees bent and feet flat on the floor, hip-width apart.',
-        'Inhale and lift your hips towards the ceiling, pressing your feet into the ground.',
-        'Clasp your hands under your back and hold the pose for several breaths.'
-    ],
-    Marjaryasana_Bitilasana: [
-        'Start on your hands and knees in a tabletop position.',
-        'Inhale and arch your back, lifting your head and tailbone (cow pose).',
-        'Exhale and round your back, tucking your chin to your chest (cat pose).',
-        'Repeat the sequence several times.',
+        'Sit on the floor with your legs straight in front of you and your spine upright.',
+        'Inhale to lengthen your spine, and slowly lean forward from the hips while keeping your back as flat as possible.',
+        'Reach your hands toward your feet, ankles, or shins, depending on your flexibility.',
+        'Relax your neck and hold the pose for several deep breaths, then gently return to an upright seated position.'
     ]
-    
-}
-
+};
 
 export const tutorials = [
-    '1. When App ask for permission of camera, allow it to access to capture pose.',
-    '2. Select what pose you want to do in the dropdown.',
-    '3. Read Instrctions of that pose so you will know how to do that pose.',
-    '4. Click on Start pose and see the image of the that pose in the right side and replecate that image in front of camera.',
-    '5. If you will do correctly the skeleton over the video will become green in color and sound will start playing'
-]
+    '1. Allow camera permission when the app requests access for capturing your pose.',
+    '2. Select the pose you want to perform from the dropdown menu.',
+    '3. Read the instructions for the selected pose to understand the correct alignment and posture.',
+    '4. Click on "Start Pose" to see the reference image of the pose, and replicate it in front of the camera.',
+    '5. When performed correctly, the skeleton will change to a green color and audio cues will play.'
+];
 
 export const fixCamera = [
-    'Solution 1. Make sure you have allowed the permission of camera, if you have denined the permission, go to setting of your browser to allow the access of camera to the application.',
-    'Solution 2. Make sure no any other application is not accessing camera at that time, if yes, close that application',
-    'Solution 3. Try to close all the other opened broswers'
-] 
+    'Solution 1: Make sure you have allowed camera permission. If denied, change the settings in your browser.',
+    'Solution 2: Close any other applications that might be using the camera.',
+    'Solution 3: Try closing other open browsers and restart the application.'
+];
 
 export const POINTS = {
     NOSE : 0,
@@ -103,7 +117,7 @@ export const POINTS = {
     RIGHT_KNEE : 14,
     LEFT_ANKLE : 15,
     RIGHT_ANKLE : 16,
-}
+};
 
 export const keypointConnections = {
     nose: ['left_ear', 'right_ear'],
@@ -117,4 +131,4 @@ export const keypointConnections = {
     right_hip: ['right_knee'],
     left_knee: ['left_ankle'],
     right_knee: ['right_ankle']
-}
+};
