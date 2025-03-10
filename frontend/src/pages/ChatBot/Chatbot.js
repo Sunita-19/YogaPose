@@ -2,7 +2,8 @@ import React, { useState } from "react";
 import "./Chatbot.css";
 
 const API_URL = process.env.REACT_APP_API_URL || "http://localhost:5000/api/chatbot";
-const API_KEY = process.env.REACT_APP_OPENAI_API_KEY;
+const API_KEY =
+  process.env.REACT_APP_OPENAI_API_KEY || "AIzaSyB-FXhfKV8PMkg8LAjUuM9XuRg4Gqk21JQ";
 
 const Chatbot = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -38,7 +39,10 @@ const Chatbot = () => {
       setMessages((prev) => [...prev, botMessage]);
     } catch (error) {
       console.error("Chatbot error:", error);
-      setMessages((prev) => [...prev, { text: error.message, sender: "assistant" }]);
+      setMessages((prev) => [
+        ...prev,
+        { text: error.message, sender: "assistant" },
+      ]);
     }
   };
 
@@ -48,16 +52,24 @@ const Chatbot = () => {
 
   return (
     <div>
-      {!isOpen && <button className="chatbot-open-btn" onClick={toggleChatbot}>💬</button>}
+      {!isOpen && (
+        <button className="chatbot-open-btn" onClick={toggleChatbot}>
+          💬
+        </button>
+      )}
       {isOpen && (
         <div className="chatbot-container">
           <div className="chatbot-header">
             AI Chatbot
-            <button className="chatbot-close" onClick={closeChatbot}>✖</button>
+            <button className="chatbot-close" onClick={closeChatbot}>
+              ✖
+            </button>
           </div>
           <div className="chatbot-messages">
             {messages.map((msg, index) => (
-              <div key={index} className={`message ${msg.sender}`}>{msg.text}</div>
+              <div key={index} className={`message ${msg.sender}`}>
+                {msg.text}
+              </div>
             ))}
           </div>
           <div className="chatbot-input">
