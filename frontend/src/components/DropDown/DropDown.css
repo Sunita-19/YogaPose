@@ -1,23 +1,36 @@
 #pose-dropdown-btn:hover {
-    border-color: white;
+    border-color: #007bff;
+    background-color: #e9ecef;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
 }
 /* #pose-dropdown-btn:active {
     background-color: white;
 } */
 #pose-dropdown-btn {
-    width: 400px;
+    width: 100%;
+    padding: 10px 15px;
+    font-size: 1.1rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #f8f9fa;
+    color: #333;
+    text-align: left; 
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: background-color 0.2s, border-color 0.2s, box-shadow 0.2s;
 }
-
-
 
 .dropdown-container {
     display: flex;
     justify-content: center;
+    margin: 20px auto;
+    max-width: 500px;
 }
 #pose-dropdown-btn:focus {
-    background-color: white;
+    background-color: #e9ecef;
     color: black;
-    box-shadow: none;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
 }
 #pose-dropdown-btn:focus-within {
     border-color: white;
@@ -27,28 +40,54 @@
 }
 
 .dropdown-custom-menu {
-    overflow: scroll;
-    height: 40vh;
-    scrollbar-width: none;
-    -ms-overflow-style: none;
+    width: 100%;
+    margin-top: 5px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    max-height: 300px;
+    overflow-y: auto;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
+    padding: 0;
 }
 
 .dropdown-custom-menu::-webkit-scrollbar {
-    display: none;
+    width: 0;
+    height: 0;
 }
 
 .dropdown-item-container {
-    width: 400px;
     display: flex;
-    border-radius: 4px;
-    justify-content: center;
     align-items: center;
+    padding: 10px;
+    cursor: pointer;
+    transition: background-color 0.2s, color 0.2s;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.dropdown-item-container:last-child {
+    border-bottom: none;
+}
+
+.dropdown-item-container:hover {
+    background-color: #007bff;  /* Blue background on hover */
+}
+
+.dropdown-item-container:hover .dropdown-item-1 {
+    color: #fff;  /* White text on hover */
 }
 
 .dropdown-item-1 {
-    margin: 10px;
+    flex: 1;
+    font-size: 1rem;
+    color: #333;
+    margin-left: 15px;
 }
+
 .dropdown-img {
-    width: 80px;
-    height: 80px;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #ddd;
 }
