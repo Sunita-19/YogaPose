@@ -60,7 +60,7 @@ const Chatbot = () => {
       {isOpen && (
         <div className="chatbot-container">
           <div className="chatbot-header">
-            AI Chatbot
+            Fun Chatbot
             <button className="chatbot-close" onClick={closeChatbot}>
               ✖
             </button>
