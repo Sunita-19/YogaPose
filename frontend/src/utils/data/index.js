@@ -40,18 +40,11 @@ export const poseInstructions = {
         'Align your body in a straight line, and hold the pose while keeping your gaze upward.',
         'Exhale and slowly lower your body back to the floor.'
     ],
-    // Newly added poses:
     Tadasana: [
         'Stand tall with your feet together or hip-width apart.',
         'Distribute your weight evenly through your feet and engage your leg muscles.',
         'Lift your chest, roll your shoulders back and down, and let your arms hang naturally at your sides.',
         'Focus on your breath and hold the pose for a few deep breaths.'
-    ],
-    'Adho Mukha Svanasana': [
-        'Start on your hands and knees on a mat, with your wrists directly under your shoulders and knees under your hips.',
-        'Spread your fingers wide and press firmly into the mat, lifting your hips up and back.',
-        'Straighten your legs as much as possible, but keep a slight bend in your knees if needed.',
-        'Relax your head between your arms and hold the inverted V-shape for several breaths.'
     ],
     'Virabhadrasana I': [
         'Step into a lunge with your right foot forward, keeping the left leg straight and turned slightly inwards.',
@@ -82,6 +75,53 @@ export const poseInstructions = {
         'Inhale to lengthen your spine, and slowly lean forward from the hips while keeping your back as flat as possible.',
         'Reach your hands toward your feet, ankles, or shins, depending on your flexibility.',
         'Relax your neck and hold the pose for several deep breaths, then gently return to an upright seated position.'
+    ],
+    'Ardha Chandrasana (Half Moon Pose)': [
+        'Stand tall and shift your weight onto your left foot.',
+        'Lift your right leg behind you, keeping it straight, and extend your right arm upward for balance.',
+        'Place your left hand on the floor a few inches in front, opening your chest and torso.',
+        'Hold the pose while keeping your core engaged and your gaze upward.'
+    ],
+    'Bakasana (Crow Pose)': [
+        'Begin in a deep squat with your feet close together.',
+        'Place your hands on the ground in front of you with fingers spread wide.',
+        'Lean forward, shift your weight onto your hands, and lift your knees onto your triceps.',
+        'Focus your gaze forward and balance the pose, engaging your core and arms.',
+        'Hold the pose for a few controlled breaths before releasing.'
+    ],
+    'Navasana (Boat Pose)': [
+        'Sit on the floor with your legs extended in front of you.',
+        'Lean back slightly and lift your legs off the floor, keeping them straight or bending them if needed.',
+        'Extend your arms forward parallel to the floor.',
+        'Engage your core to maintain balance, forming a V-shape with your body.',
+        'Hold the pose while keeping your spine straight.'
+    ],
+    'Phalakasana (Plank Pose)': [
+        'Start in a push-up position with your hands directly under your shoulders and legs extended behind.',
+        'Keep your body in a straight line from head to heels, engaging your core.',
+        'Avoid sagging or lifting your hips too high.',
+        'Hold the pose for as long as you can maintain proper form.'
+    ],
+    'Parivrtta Trikonasana (Revolved Triangle Pose)': [
+        'Stand with your feet wide apart and extend your arms out to the sides.',
+        'Turn your right foot out and your left foot slightly in, then twist your torso to the right.',
+        'Place your left hand on your right leg or the floor while extending your right arm upward.',
+        'Keep the left leg straight and maintain hip alignment as you twist.',
+        'Hold the pose and then switch sides.'
+    ],
+    'Eka Pada Rajakapotasana (Pigeon Pose)': [
+        'Begin in a tabletop position and slide your right knee forward between your hands.',
+        'Extend your left leg straight back, keeping your hips square.',
+        'Lower your torso over your right leg by folding forward gradually.',
+        'Keep your back leg extended and relax into the stretch.',
+        'Hold the pose for several deep breaths and then switch sides.'
+    ],
+    'Ustrasana (Camel Pose)': [
+        'Kneel on the floor with your knees hip-width apart.',
+        'Place your hands on your lower back for support as you gently arch backward.',
+        'Lean your head back and open your chest, reaching for your heels if comfortable.',
+        'Engage your core and keep your knees stable.',
+        'Hold the pose for several deep breaths before returning to an upright position.'
     ]
 };
 

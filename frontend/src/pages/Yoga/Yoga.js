@@ -13,9 +13,26 @@ import { drawPoint, drawSegment } from '../../utils/helper';
 
 let skeletonColor = 'rgb(255,255,255)';
 let poseList = [
-    'Tree', 'Chair', 'Cobra', 'Warrior', 'Dog', 'Shoulderstand', 'Triangle',
-    'Tadasana', 'Adho Mukha Svanasana', 'Virabhadrasana I', 'Balasana', 
-    'Paschimottanasana', 'Setu Bandhasana', 'Marjaryasana-Bitilasana'
+  'Tree',
+  'Chair',
+  'Cobra',
+  'Warrior',
+  'Dog',
+  'Shoulderstand',
+  'Triangle',
+  'Tadasana',
+  'Virabhadrasana I',
+  'Balasana',
+  'Paschimottanasana',
+  'Setu Bandhasana',
+  'Marjaryasana-Bitilasana',
+  'Ardha Chandrasana',
+  'Bakasana',
+  'Navasana',
+  'Phalakasana',
+  'Parivrtta Trikonasana ',
+  'Eka Pada Rajakapotasana',
+  'Ustrasana'
 ];
 
 let interval;
