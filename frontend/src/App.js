@@ -21,7 +21,6 @@ import ForgotPassword from './components/ForgotPassword/ForgotPassword';
 import ResetPassword from './components/ResetPassword';
 import YogaHistory from './pages/YogaHistory/YogaHistory';
 import YogaPosesVideos from './pages/YogaPosesVideos/YogaPosesVideos';
-import AsanaDetailPage from './pages/AsanaDetailPage/AsanaDetailPage';
 import PoseDetails from './pages/PoseDetails/PoseDetails'; // Import PoseDetails component
 import ApplyNow from './pages/ApplyNow/ApplyNow';
 import VolunteerInfo from './pages/VolunteerInfo/VolunteerInfo';
@@ -75,7 +74,6 @@ export default function App() {
                                                 <Route path='/feedback' element={<Feedback />} />
                                                 <Route path='/YogaHistory' element={<YogaHistory />} />
                                                 <Route path='/YogaPosesVideos' element={<YogaPosesVideos />} />
-                                                <Route path="/AsanaDetailPage" element={<AsanaDetailPage />} />
                                                 <Route path="/" element={<YogaPosesVideos />} />
                                                 <Route path="/pose/:id" element={<PoseDetails />} />
                                                 <Route path="/volunteer-info" element={<VolunteerInfo />} />
