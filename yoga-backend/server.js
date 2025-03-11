@@ -153,62 +153,6 @@ app.get('/api/achievements', authenticateToken, (req, res) => {
     });
 });
 
-// Get all articles
-app.get('/api/articles', authenticateToken, (req, res) => {
-    db.query('SELECT * FROM articles', (err, results) => {
-        if (err) {
-            console.error('Database error:', err);
-            return res.status(500).json({ error: 'Database error' });
-        }
-        res.status(200).json(results);
-    });
-});
-
-// Get notifications for a user
-app.get('/api/notifications', authenticateToken, (req, res) => {
-    db.query('SELECT * FROM notifications WHERE user_id = ?', [req.user.id], (err, results) => {
-        if (err) {
-            console.error('Database error:', err);
-            return res.status(500).json({ error: 'Database error' });
-        }
-        res.status(200).json(results);
-    });
-});
-
-// Mark notification as read
-app.put('/api/notifications/:id/read', authenticateToken, (req, res) => {
-    const notificationId = req.params.id;
-
-    db.query('UPDATE notifications SET read_status = 1 WHERE id = ? AND user_id = ?', [notificationId, req.user.id], (err, results) => {
-        if (err) {
-            console.error('Database error:', err);
-            return res.status(500).json({ error: 'Database error' });
-        }
-        if (results.affectedRows === 0) {
-            return res.status(404).json({ message: 'Notification not found' });
-        }
-        res.status(200).json({ message: 'Notification marked as read' });
-    });
-});
-
-// Endpoint to add a new environmental activity
-app.post('/api/activities', authenticateToken, (req, res) => {
-    const { title, description, date, location } = req.body;
-
-    if (!title || !description || !date || !location) {
-        return res.status(400).json({ message: 'All fields are required!' });
-    }
-
-    db.query('INSERT INTO activities (user_id, title, description, date, location) VALUES (?, ?, ?, ?, ?)', 
-    [req.user.id, title, description, date, location], (err, results) => {
-        if (err) {
-            console.error('Database error:', err);
-            return res.status(500).json({ error: 'Database error' });
-        }
-        res.status(201).json({ message: 'Activity added successfully' });
-    });
-});
-
 // Endpoint to add a new reward
 app.post('/api/rewards', authenticateToken, (req, res) => {
     const { points, description } = req.body;
@@ -258,11 +202,13 @@ app.get('/api/poses', (req, res) => {
 
 // Endpoint to get yoga pose details by ID
 app.get('/api/yoga_poses/:id', authenticateToken, (req, res) => {
-    const poseId = req.params.id;
+    const poseId = parseInt(req.params.id, 10);
+    
+    console.log(`Fetching yoga pose ${poseId} for user ${req.user.id}`);
     
     db.query('SELECT * FROM yoga_poses WHERE id = ?', [poseId], (err, results) => {
         if (err) {
-            console.error('Database error:', err);
+            console.error('Database error when fetching pose:', err);
             return res.status(500).json({ error: 'Database error' });
         }
         
@@ -270,10 +216,21 @@ app.get('/api/yoga_poses/:id', authenticateToken, (req, res) => {
             return res.status(404).json({ error: 'Pose not found' });
         }
         
-        res.status(200).json(results[0]);
+        console.log(`Inserting click activity for user ${req.user.id} and pose ${poseId}`);
+        db.query(
+            'INSERT INTO user_activity (user_id, activity_type, yoga_pose_id, detail) VALUES (?, ?, ?, ?)',
+            [req.user.id, 'click', poseId, 'User clicked on the pose for more details'],
+            (insertErr, insertResults) => {
+                if (insertErr) {
+                    console.error('Error logging activity:', insertErr);
+                } else {
+                    console.log(`Activity logged successfully for user ${req.user.id} on pose ${poseId}`);
+                }
+                return res.status(200).json(results[0]);
+            }
+        );
     });
 });
-
 
 app.post('/api/recommended-poses', authenticateToken, (req, res) => {
     console.log('Received request:', req.body); // Debugging
@@ -314,6 +271,117 @@ app.post("/api/chatbot", async (req, res) => {
     console.error("Chatbot error:", error);
     return res.status(500).json({ error: "Error processing chatbot request" });
   }
+});
+
+app.get('/api/progress-report', authenticateToken, (req, res) => {
+  const userId = req.user.id;
+
+  // Query total practice sessions
+  const sessionsQuery = `
+    SELECT COUNT(*) AS completed 
+    FROM user_activity 
+    WHERE user_id = ? AND activity_type = 'practice'
+  `;
+  
+  // Query user's activity history (all types) ordered by date (most recent first)
+  const historyQuery = `
+    SELECT id, user_id, activity_type, yoga_pose_id, activity_date, detail, accuracy
+    FROM user_activity 
+    WHERE user_id = ? 
+    ORDER BY activity_date DESC
+  `;
+  
+  // Query diet charts: return activity_date as date and detail as meals
+  const dietQuery = `
+    SELECT activity_date AS date, detail AS meals 
+    FROM user_activity 
+    WHERE user_id = ? AND activity_type = 'diet_chart' 
+    ORDER BY activity_date DESC
+  `;
+  
+  // Query recommended poses:
+  // Return poses where the user has not done a practice. Adjust limit as needed.
+  const recommendedQuery = `
+    SELECT yp.id, yp.name 
+    FROM yoga_poses yp 
+    WHERE yp.id NOT IN (
+      SELECT DISTINCT yoga_pose_id 
+      FROM user_activity 
+      WHERE user_id = ? AND activity_type = 'practice' AND yoga_pose_id IS NOT NULL
+    )
+    LIMIT 5
+  `;
+
+  db.query(sessionsQuery, [userId], (err, sessionResults) => {
+    if (err) {
+      console.error('Error querying sessions:', err);
+      return res.status(500).json({ error: 'Database error in sessions' });
+    }
+
+    db.query(historyQuery, [userId], (err, historyResults) => {
+      if (err) {
+        console.error('Error querying history:', err);
+        return res.status(500).json({ error: 'Database error in history' });
+      }
+
+      db.query(dietQuery, [userId], (err, dietResults) => {
+        if (err) {
+          console.error('Error querying diet charts:', err);
+          return res.status(500).json({ error: 'Database error in diet charts' });
+        }
+
+        db.query(recommendedQuery, [userId], (err, recommendedResults) => {
+          if (err) {
+            console.error('Error querying recommended poses:', err);
+            return res.status(500).json({ error: 'Database error in recommended poses' });
+          }
+          
+          // Returning total sessions (total can be set from application settings; here we use a fixed goal of 20)
+          res.status(200).json({
+            sessions: { completed: sessionResults[0].completed, total: 20 },
+            history: historyResults,
+            dietCharts: dietResults,
+            recommendedPoses: recommendedResults
+          });
+        });
+      });
+    });
+  });
+});
+
+// Practice endpoint
+app.post('/api/practice', authenticateToken, (req, res) => {
+    const { poseId, accuracy } = req.body;
+    console.log(`POST /api/practice triggered for user ${req.user.id} with poseId: ${poseId} and accuracy: ${accuracy}`);
+    
+    db.query(
+        'INSERT INTO user_activity (user_id, activity_type, yoga_pose_id, detail, accuracy) VALUES (?, ?, ?, ?, ?)',
+        [req.user.id, 'practice', poseId, 'User completed the pose successfully', accuracy],
+        (err, results) => {
+            if (err) {
+                console.error('Error logging practice activity:', err);
+                return res.status(500).json({ error: 'Database error' });
+            }
+            console.log('Practice record inserted:', results);
+            res.status(200).json({ message: 'Practice activity logged successfully' });
+        }
+    );
+});
+
+// Diet chart endpoint
+app.post('/api/diet-chart', authenticateToken, (req, res) => {
+    const { meals } = req.body;
+    db.query(
+        'INSERT INTO user_activity (user_id, activity_type, detail) VALUES (?, ?, ?)',
+        [req.user.id, 'diet_chart', `Generated diet chart: ${meals}`],
+        (err, results) => {
+            if (err) {
+                console.error('Error logging diet chart activity:', err);
+                return res.status(500).json({ error: 'Database error' });
+            }
+            res.status(200).json({ message: 'Diet chart activity logged successfully' });
+        }
+    );
 });
 
 // Start the server
