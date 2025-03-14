@@ -351,18 +351,24 @@ app.get('/api/progress-report', authenticateToken, (req, res) => {
 
 // Practice endpoint
 app.post('/api/practice', authenticateToken, (req, res) => {
-    const { poseId, accuracy } = req.body;
-    console.log(`POST /api/practice triggered for user ${req.user.id} with poseId: ${poseId} and accuracy: ${accuracy}`);
+    const { poseId } = req.body;
+    console.log(`POST /api/practice for user ${req.user.id} received: poseId=${poseId}`);
+    
+    // Validate that poseId is sent
+    if (!poseId) {
+      console.error('Missing poseId in the request body');
+      return res.status(400).json({ error: 'Missing poseId' });
+    }
     
     db.query(
-        'INSERT INTO user_activity (user_id, activity_type, yoga_pose_id, detail, accuracy) VALUES (?, ?, ?, ?, ?)',
-        [req.user.id, 'practice', poseId, 'User completed the pose successfully', accuracy],
+        'INSERT INTO user_activity (user_id, activity_type, yoga_pose_id, detail) VALUES (?, ?, ?, ?)',
+        [req.user.id, 'practice', poseId, 'User completed the pose successfully'],
         (err, results) => {
             if (err) {
                 console.error('Error logging practice activity:', err);
-                return res.status(500).json({ error: 'Database error' });
+                return res.status(500).json({ error: 'Database error in practice endpoint' });
             }
-            console.log('Practice record inserted:', results);
+            console.log('Practice activity inserted:', results);
             res.status(200).json({ message: 'Practice activity logged successfully' });
         }
     );

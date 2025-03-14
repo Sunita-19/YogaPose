@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import PracticeButton from "../../components/PracticeButton";
 import "./PoseDetails.css";
 
 const PoseDetails = () => {
@@ -43,7 +44,6 @@ const PoseDetails = () => {
     return <div>Loading...</div>;
   }
 
-  // Function to convert YouTube URL to embeddable format
   const getEmbeddedUrl = (url) => {
     if (url.includes("youtube.com/watch?v=")) {
       return url.replace("watch?v=", "embed/");
@@ -83,6 +83,7 @@ const PoseDetails = () => {
           ></iframe>
         ) : null}
       </div>
+      <PracticeButton poseId={poseDetails.id} accuracy={0.95} />
     </div>
   );
 };
