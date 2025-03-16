@@ -8,6 +8,13 @@ const Progress = () => {
   const token = localStorage.getItem('token');
   const navigate = useNavigate();
 
+  // Helper to get a full URL for images.
+  const getImageUrl = (url) => {
+    if (!url) return "";
+    if (url.startsWith("http")) return url;
+    return `http://localhost:5000/${url}`;
+  };
+
   useEffect(() => {
     if (token) {
       axios
@@ -35,7 +42,6 @@ const Progress = () => {
   // Parser to extract meal details.
   // Expected format: "Generated diet chart: Breakfast: xxx, Lunch: yyy, Dinner: zzz"
   const parseDietMeals = (mealStr) => {
-    // Remove the prefix if it exists.
     mealStr = mealStr.replace(/^Generated diet chart:\s*/i, '');
     const parts = mealStr.split(',');
     const breakfast = parts[0] ? parts[0].replace(/Breakfast:\s*/i, '').trim() : 'N/A';
@@ -60,8 +66,8 @@ const Progress = () => {
                 className="card"
                 onClick={() => navigate(`/pose/${item.yoga_pose_id}`)}
               >
-                {item.image ? (
-                  <img src={item.image} alt={item.name} className="pose-image" />
+                {item.image_url ? (
+                  <img src={getImageUrl(item.image_url)} alt={item.name} className="pose-image" />
                 ) : (
                   <div className="no-image">No Image</div>
                 )}
@@ -78,49 +84,58 @@ const Progress = () => {
       <section className="segment diet-section">
         <h2 className="segment-heading">Diet Chart</h2>
         {progress.dietCharts && progress.dietCharts.map((item, idx) => {
-            const meals = parseDietMeals(item.meals || item.detail);
-            return (
-              <div key={idx} className="diet-chart-card">
-                <p className="date">{new Date(item.date).toLocaleDateString()}</p>
-                <div className="diet-grid">
-                  <div className="diet-card">
-                    <h3>Breakfast</h3>
-                    <p>{meals.breakfast}</p>
-                  </div>
-                  <div className="diet-card">
-                    <h3>Lunch</h3>
-                    <p>{meals.lunch}</p>
-                  </div>
-                  <div className="diet-card">
-                    <h3>Dinner</h3>
-                    <p>{meals.dinner}</p>
-                  </div>
+          const meals = parseDietMeals(item.meals || item.detail);
+          return (
+            <div key={idx} className="diet-chart-card">
+              <div>
+              <p className="date">{new Date(item.date).toLocaleDateString()}</p>
+              </div>
+              <div className="diet-quote">
+                "Eat healthy, live healthy. Your body is your temple."
+              </div>
+              
+              <div className="diet-grid">
+ 
+                <div className="diet-card">
+                  <h3>Breakfast</h3>
+                  <p>{meals.breakfast}</p>
+                </div>
+                <div className="diet-card">
+                  <h3>Lunch</h3>
+                  <p>{meals.lunch}</p>
+                </div>
+                <div className="diet-card">
+                  <h3>Dinner</h3>
+                  <p>{meals.dinner}</p>
                 </div>
               </div>
-            );
-          })}
+             
+            </div>
+          );
+        })}
       </section>
 
       {/* Recommended Yoga Poses Section */}
       <section className="segment recommendation-section">
         <h2 className="segment-heading">Recommended Yoga Poses</h2>
         <div className="grid-container">
-          {progress.recommendedPoses && progress.recommendedPoses.map(poseData => (
-            <div
-              key={poseData.id}
-              className="card"
-              onClick={() => navigate(`/pose/${poseData.id}`)}
-            >
-              {poseData.image ? (
-                <img src={poseData.image} alt={poseData.name} className="pose-image" />
-              ) : (
-                <div className="no-image">No Image</div>
-              )}
-              <div className="card-content">
-                <h3>{poseData.name || 'Yoga Pose'}</h3>
+          {progress.recommendedPoses &&
+            progress.recommendedPoses.map(poseData => (
+              <div
+                key={poseData.id}
+                className="card"
+                onClick={() => navigate(`/pose/${poseData.id}`)}
+              >
+                {poseData.image_url ? (
+                  <img src={getImageUrl(poseData.image_url)} alt={poseData.name} className="pose-image" />
+                ) : (
+                  <div className="no-image">No Image</div>
+                )}
+                <div className="card-content">
+                  <h3>{poseData.name || 'Yoga Pose'}</h3>
+                </div>
               </div>
-            </div>
-          ))}
+            ))}
         </div>
       </section>
     </div>

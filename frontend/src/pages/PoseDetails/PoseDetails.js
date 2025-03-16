@@ -3,6 +3,13 @@ import { useParams } from "react-router-dom";
 import PracticeButton from "../../components/PracticeButton";
 import "./PoseDetails.css";
 
+// Define getImageUrl helper at the top of your Progress.js component:
+const getImageUrl = (url) => {
+  if (!url) return "";
+  if (url.startsWith("http")) return url;
+  return `http://localhost:5000/${url}`;
+};
+
 const PoseDetails = () => {
   const { id } = useParams();
   const [poseDetails, setPoseDetails] = useState(null);
@@ -39,7 +46,6 @@ const PoseDetails = () => {
   if (error) {
     return <div className="error">{error}</div>;
   }
-
   if (!poseDetails) {
     return <div>Loading...</div>;
   }
@@ -64,12 +70,14 @@ const PoseDetails = () => {
           : null}
       </ul>
       <div className="pose-content">
-        {poseDetails.image_url && (
+        {poseDetails.image_url ? (
           <img
-            className="pose-image"
-            src={poseDetails.image_url}
+            src={getImageUrl(poseDetails.image_url)}
             alt={poseDetails.name}
+            className="pose-image"
           />
+        ) : (
+          <div className="no-image">No Image</div>
         )}
         {poseDetails.video_url && poseDetails.video_url.trim() !== "" ? (
           <iframe

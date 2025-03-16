@@ -57,17 +57,17 @@
 }
 
 .card {
-    cursor: pointer;
-    width: 250px;      /* Fixed width */
-    height: 300px;     /* Fixed height */
+    width: 420px;       /* increased width */
+    height: 410px;      /* increased height */
+    margin: 10px;
     border: 1px solid #B2DFDB; /* Light teal border */
     border-radius: 8px;
     overflow: hidden;
     background: #FFFFFF;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.15);
     transition: transform 0.2s, box-shadow 0.2s;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
 }
 
 .activity-box:hover, .diet-box:hover, .recommendation-box:hover, .card:hover {
@@ -89,14 +89,14 @@
 
 .pose-image {
     width: 100%;
-    height: 150px;
+    height: 200px;      /* increased height for image */
     object-fit: cover;
     border-bottom: 1px solid #B2DFDB;
 }
 
 .no-image {
     width: 100%;
-    height: 150px;
+    height: 200px;      /* match image height */
     background: #B2DFDB;
     display: flex;
     align-items: center;
@@ -112,8 +112,8 @@
 }
 
 .card-content h3 {
+    margin: 10px 0 5px;
     font-size: 20px;
-    margin: 5px 0;
     color: #00695C;
 }
 
@@ -136,15 +136,16 @@
 }
 
 .diet-date, .date {
-    font-size: 12px;
-    color: #AAAAAA;
+    font-size: 14px;
+    color: #6D4C41;
     margin-bottom: 10px;
 }
 
 .date {
-    font-size: 14px;
-    color: #009688;
-    margin-bottom: 5px;
+    font-size: 23px;       /* increased font size */
+    font-weight: bold;
+    color: #BF360C;        /* deep orange tone */
+    margin-bottom: 8px;
 }
 
 .progress-heading {
@@ -177,20 +178,73 @@
 }
 
 .card-content {
-    padding: 10px;
+    padding: 15px;
     text-align: center;
 }
 
 /* Diet Chart specific styles */
 .diet-chart-card {
+    background: linear-gradient(135deg, #FFECB3, #FFE082);  /* warm gradient background */
+    border-radius: 18px;
+    padding: 40px;  /* reduced padding for a compact look */
     margin-bottom: 20px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    position: relative;
 }
 
+/* Highlighted Date - bold and colored */
+.diet-date {
+    font-size: 16px;
+    font-weight: bold;
+    color: #BF360C;       /* deep orange tone */
+    margin-bottom: 5px;
+}
+
+/* Motivational Quote styling */
+.diet-quote {
+    font-size: 26px;       /* increased font size */
+    font-style: italic;
+    color: #5D4037;
+    margin-bottom: 10px;
+}
+
+/* Diet Grid Layout */
 .diet-grid {
     display: flex;
-    justify-content: center;
-    gap: 20px;
-    margin-top: 10px;
+    justify-content: space-between;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.diet-card {
+    background: #FFF3E0;    /* light, warm background */
+    border: 1px solid #FFCC80;
+    border-radius: 8px;
+    padding: 8px;
+    width: 230px;    /* slightly reduced width */
+    height: 180px;   /* reduced height */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s, box-shadow 0.2s;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.diet-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.2);
+}
+
+.diet-card h3 {
+    font-size: 20px;
+    color: #00695C;
+    margin: 0 0 5px 0;
+}
+
+.diet-card p {
+    font-size: 16px;
+    color: #004D40;
+    margin: 5px 0;
 }
 
 .diet-card {
@@ -205,13 +259,13 @@
 }
 
 .diet-card h3 {
-    font-size: 20px;
+    font-size: 30px;
     color: #00695C;
-    margin-bottom: 10px;
+    margin-bottom: 5px;
 }
 
 .diet-card p {
-    font-size: 16px;
+    font-size: 26px;
     color: #004D40;
-    margin: 5px 0;
+    margin: 2px 0;
 }
