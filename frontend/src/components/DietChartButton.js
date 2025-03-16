@@ -5,16 +5,18 @@ const DietChartButton = () => {
   const token = localStorage.getItem('token');
 
   const handleGenerateDietChart = async () => {
-    const meals = "Breakfast: Oatmeal, Lunch: Salad, Dinner: Grilled Chicken"; // you can get this from user's preferences
     try {
+      // Assume you have already fetched the meals from an external API
+      const meals = "Breakfast: Oatmeal, Lunch: Salad, Dinner: Grilled Chicken";
       const response = await axios.post(
-        '/api/diet-chart',
+        "http://localhost:5000/api/diet-chart",
         { meals },
         { headers: { Authorization: `Bearer ${token}` } }
       );
       console.log(response.data.message);
+      // Optionally update UI state to reflect new diet chart entry
     } catch (error) {
-      console.error('Error logging diet chart activity:', error);
+      console.error('Error logging diet chart activity:', error.response?.data || error);
     }
   };
 

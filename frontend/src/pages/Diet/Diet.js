@@ -85,13 +85,35 @@ const Diet = () => {
     setError(null); // Clear previous errors
 
     const currentInput = JSON.stringify(userData);
+    let newDietPlan;
     if (cache[currentInput]) {
-      setDietPlan(cache[currentInput]);
+      newDietPlan = cache[currentInput];
+      setDietPlan(newDietPlan);
     } else {
-      const newDietPlan = await fetchDietPlan();
+      newDietPlan = await fetchDietPlan();
       if (newDietPlan) {
         setDietPlan(newDietPlan);
         setCache({ ...cache, [currentInput]: newDietPlan });
+      }
+    }
+    
+    // Persist the diet chart in the backend
+    if (newDietPlan) {
+      try {
+        const token = localStorage.getItem("token");
+        await fetch("http://localhost:5000/api/diet-chart", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}`
+          },
+          body: JSON.stringify({
+            meals: `Breakfast: ${newDietPlan.breakfast}, Lunch: ${newDietPlan.lunch}, Dinner: ${newDietPlan.dinner}`
+          })
+        });
+        console.log("Diet chart activity inserted successfully.");
+      } catch (err) {
+        console.error("Error inserting diet chart activity:", err);
       }
     }
   };
