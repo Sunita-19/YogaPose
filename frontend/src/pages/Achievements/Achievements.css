@@ -1,0 +1,70 @@
+.achievements-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 40px;
+  text-align: center;
+  background: #E0F7FA;
+  min-height: 80vh;
+  font-family: 'Raleway', sans-serif;
+}
+
+.achievements-container h1 {
+  font-size: 36px;
+  color: #00695C;
+  margin-bottom: 10px;
+}
+
+.achievements-container p {
+  font-size: 18px;
+  color: #444;
+  margin-bottom: 30px;
+}
+
+.achievements-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+}
+
+.achievement-card {
+  background: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  transition: transform 0.3s;
+}
+
+.achievement-card:hover {
+  transform: translateY(-5px);
+}
+
+.achievement-badge {
+  width: 80px;
+  height: 80px;
+  margin-bottom: 15px;
+}
+
+.achievement-card h3 {
+  margin-bottom: 10px;
+  color: #00695C;
+}
+
+.achievement-card p {
+  font-size: 14px;
+  color: #444;
+  margin-bottom: 15px;
+}
+
+.achievement-progress {
+  background: #f0f0f0;
+  border-radius: 5px;
+  overflow: hidden;
+  height: 10px;
+  margin-top: 10px;
+}
+
+.achievement-progress .progress-bar {
+  background: #008CBA;
+  height: 100%;
+  transition: width 0.5s ease;
+}
