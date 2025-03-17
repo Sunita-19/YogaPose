@@ -232,3 +232,42 @@
     margin: 0;                 /* remove extra margins */
     line-height: 1.1;          /* control spacing */
 }
+
+/* Carousel container styling */
+.carousel-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.carousel-slide {
+  display: flex;
+  gap: 20px;
+  overflow: hidden;
+}
+
+/* Navigation buttons */
+.carousel-nav {
+  background: #008CBA;
+  color: #FFFFFF;
+  border: none;
+  padding: 10px;
+  font-size: 24px;
+  cursor: pointer;
+  border-radius: 50%;
+  transition: background 0.3s;
+}
+
+.carousel-nav:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.carousel-nav.left {
+  margin-right: 10px;
+}
+
+.carousel-nav.right {
+  margin-left: 10px;
+}

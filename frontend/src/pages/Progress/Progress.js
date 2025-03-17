@@ -6,8 +6,14 @@ import { poseImages } from '../../utils/pose_images';
 
 const Progress = () => {
   const [progress, setProgress] = useState(null);
+  const [historyCarouselIndex, setHistoryCarouselIndex] = useState(0);
+  const [activitiesCarouselIndex, setActivitiesCarouselIndex] = useState(0);
+  const [recommendedCarouselIndex, setRecommendedCarouselIndex] = useState(0);
   const token = localStorage.getItem('token');
   const navigate = useNavigate();
+  const historyDisplayedCount = 3; // cards to show in yogaHistory carousel
+  const activitiesDisplayedCount = 3; // cards to show in recent activities carousel
+  const recommendedDisplayedCount = 2; // cards to show in recommended carousel
 
   // Helper to get a full URL for images.
   const getImageUrl = (url) => {
@@ -39,7 +45,7 @@ const Progress = () => {
     return <div className="loading">Loading progress...</div>;
   }
 
-  // Updated parser to correctly map meals based on their labels
+  // Parse diet meals (unchanged)
   const parseDietMeals = (mealStr) => {
     mealStr = mealStr.replace(/^Generated diet chart:\s*/i, '');
     const parts = mealStr.split(',');
@@ -61,99 +67,146 @@ const Progress = () => {
     return { breakfast, lunch, dinner };
   };
 
-  // Compute final recommended list by taking a fixed mix of backend and fallback poses
+  // Deduplicate yogaHistory by pose name
+  const dedupedYogaHistory = Array.from(
+    new Map(
+      progress.yogaHistory.map(record => [record.pose_name || "Yoga Pose", record])
+    ).values()
+  );
+
+  // Compute final recommended list by merging backend and fallback poses
   const finalRecommended = (() => {
     const backendRecs = progress.recommendedPoses || [];
-    // Always take at most 2 from backend recommendations.
+    // Take at most 2 from backend recommendations.
     const backendPart = backendRecs.slice(0, 2);
-    
-    // Get fallback pose names from local poseImages that are not already in the backendPart (by name, case-insensitive)
+    // Get fallback pose names from poseImages that are not already in backendPart (by name, case-insensitive)
     const fallbackNames = Object.keys(poseImages).filter(poseName =>
       !backendPart.some(rec => rec.name && rec.name.toLowerCase() === poseName.toLowerCase())
     );
-    
-    // Take 2 fallback poses (or however many you need to reach 4 total)
+    // Take 2 fallback poses (or as many needed to reach 4)
     const fallbackPart = fallbackNames.slice(0, Math.max(0, 4 - backendPart.length)).map(poseName => ({
       id: `fallback-${poseName}`,
       name: poseName,
-      image_url: null // Frontend will use poseImages mapping
+      image_url: null // Frontend uses poseImages mapping
     }));
-    
-    // Merge backend and fallback parts
-    return [...backendPart, ...fallbackPart];
+    // Merge and then deduplicate by pose name
+    const merged = [...backendPart, ...fallbackPart];
+    return Array.from(
+      new Map(merged.map(pose => [pose.name.toLowerCase(), pose])).values()
+    );
   })();
+
+  // Calculate maximum indexes for carousels
+  const maxHistoryIndex = Math.max(dedupedYogaHistory.length - historyDisplayedCount, 0);
+  const maxActivitiesIndex = Math.max(
+    progress.history.filter(item => item.activity_type === 'practice' && item.yoga_pose_id).length - activitiesDisplayedCount,
+    0
+  );
+  const maxRecommendedIndex = Math.max(finalRecommended.length - recommendedDisplayedCount, 0);
 
   return (
     <div className="progress-container">
       <h1 className="progress-heading">Your Progress</h1>
 
-      {/* Yoga Practice History Section */}
-      {progress.yogaHistory && progress.yogaHistory.length > 0 && (
+      {/* Yoga Practice History Carousel Section */}
+      {dedupedYogaHistory.length > 0 && (
         <section className="segment yoga-history-section" style={{ background: "white" }}>
           <h2 className="segment-heading">Your Recent Detected Poses</h2>
-          <div className="grid-container">
-            {Array.from(
-              new Map(
-                progress.yogaHistory.map(record => [record.pose_name || "Yoga Pose", record])
-              ).values()
-            ).map((record) => (
-              <div
-                key={record.id}
-                className="card"
-                onClick={() =>
-                  navigate("/start", { state: { selectedPose: record.pose_name || "Yoga Pose" } })
-                }
-                style={{ cursor: "pointer" }}
-              >
-                {poseImages[record.pose_name] ? (
-                  <img
-                    src={poseImages[record.pose_name]}
-                    alt={record.pose_name}
-                    className="pose-image"
-                  />
-                ) : (
-                  <div className="no-image">No Image</div>
-                )}
-                <div className="card-content">
-                  <h3>{record.pose_name || "Yoga Pose"}</h3>
-                  <p className="date">
-                    {new Date(record.activity_date).toLocaleDateString()}
-                  </p>
+          <div className="carousel-container">
+            <button 
+              className="carousel-nav left" 
+              onClick={() => setHistoryCarouselIndex(prev => Math.max(prev - 1, 0))} 
+              disabled={historyCarouselIndex === 0}
+            >
+              &#60;
+            </button>
+            <div className="carousel-slide">
+              {dedupedYogaHistory.slice(historyCarouselIndex, historyCarouselIndex + historyDisplayedCount).map(record => (
+                <div
+                  key={record.id}
+                  className="card"
+                  onClick={() =>
+                    navigate("/start", { state: { selectedPose: record.pose_name || "Yoga Pose" } })
+                  }
+                  style={{ cursor: "pointer" }}
+                >
+                  {poseImages[record.pose_name] ? (
+                    <img
+                      src={poseImages[record.pose_name]}
+                      alt={record.pose_name || "Yoga Pose"}
+                      className="pose-image"
+                    />
+                  ) : (
+                    <div className="no-image">No Image</div>
+                  )}
+                  <div className="card-content">
+                    <h3>{record.pose_name || "Yoga Pose"}</h3>
+                    <p className="date">{new Date(record.activity_date).toLocaleDateString()}</p>
+                  </div>
                 </div>
-              </div>
-            ))}
+              ))}
+            </div>
+            <button 
+              className="carousel-nav right" 
+              onClick={() => setHistoryCarouselIndex(prev => Math.min(prev + 1, maxHistoryIndex))} 
+              disabled={historyCarouselIndex >= maxHistoryIndex}
+            >
+              &#62;
+            </button>
           </div>
         </section>
       )}
 
-      {/* Practice Activities Section */}
-      <section className="segment activity-section" style={{background: "white"}}>
+      {/* Recent Activities Carousel Section */}
+      <section className="segment activity-section" style={{ background: "white" }}>
         <h2 className="segment-heading">Your Recent Activities</h2>
-        <div className="grid-container">
-          {progress.history
-            .filter(item => item.activity_type === 'practice' && item.yoga_pose_id)
-            .map(item => (
-              <div
-                key={item.id}
-                className="card"
-                onClick={() => navigate(`/pose/${item.yoga_pose_id}`)}
-              >
-                {item.image_url ? (
-                  <img src={getImageUrl(item.image_url)} alt={item.name} className="pose-image" />
-                ) : (
-                  <div className="no-image">No Image</div>
-                )}
-                <div className="card-content">
-                  <h3>{item.name || 'Yoga Pose'}</h3>
-                  <p className="date">{new Date(item.activity_date).toLocaleDateString()}</p>
+        <div className="carousel-container">
+          <button 
+            className="carousel-nav left" 
+            onClick={() => setActivitiesCarouselIndex(prev => Math.max(prev - 1, 0))} 
+            disabled={activitiesCarouselIndex === 0}
+          >
+            &#60;
+          </button>
+          <div className="carousel-slide">
+            {progress.history
+              .filter(item => item.activity_type === 'practice' && item.yoga_pose_id)
+              .slice(activitiesCarouselIndex, activitiesCarouselIndex + activitiesDisplayedCount)
+              .map(item => (
+                <div
+                  key={item.id}
+                  className="card"
+                  onClick={() => navigate(`/pose/${item.yoga_pose_id}`)}
+                >
+                  {item.image_url ? (
+                    <img 
+                      src={getImageUrl(item.image_url)} 
+                      alt={item.name} 
+                      className="pose-image" 
+                    />
+                  ) : (
+                    <div className="no-image">No Image</div>
+                  )}
+                  <div className="card-content">
+                    <h3>{item.name || 'Yoga Pose'}</h3>
+                    <p className="date">{new Date(item.activity_date).toLocaleDateString()}</p>
+                  </div>
                 </div>
-              </div>
-            ))}
+              ))
+            }
+          </div>
+          <button 
+            className="carousel-nav right" 
+            onClick={() => setActivitiesCarouselIndex(prev => Math.min(prev + 1, maxActivitiesIndex))} 
+            disabled={activitiesCarouselIndex >= maxActivitiesIndex}
+          >
+            &#62;
+          </button>
         </div>
       </section>
 
       {/* Diet Chart Section */}
-      <section className="segment diet-section" style={{background: "white"}}>
+      <section className="segment diet-section" style={{ background: "white" }}>
         <h2 className="segment-heading">Your Diet For Today</h2>
         {progress.dietCharts && progress.dietCharts.map((item, idx) => {
           const meals = parseDietMeals(item.meals || item.detail);
@@ -184,27 +237,33 @@ const Progress = () => {
         })}
       </section>
 
-      {/* Recommended Yoga Poses Section */}
+      {/* Recommended Yoga Poses Carousel Section */}
       <section className="segment recommendation-section" style={{ background: "white" }}>
         <h2 className="segment-heading">Recommended Yoga Poses For You</h2>
-        <div className="grid-container">
-          {finalRecommended && finalRecommended.length > 0 ? (
-            finalRecommended.map(poseData => (
+        <div className="carousel-container">
+          <button 
+            className="carousel-nav left" 
+            onClick={() => setRecommendedCarouselIndex(prev => Math.max(prev - 1, 0))} 
+            disabled={recommendedCarouselIndex === 0}
+          >
+            &#60;
+          </button>
+          <div className="carousel-slide">
+            {finalRecommended.slice(recommendedCarouselIndex, recommendedCarouselIndex + recommendedDisplayedCount).map(poseData => (
               <div
                 key={poseData.id}
                 className="card"
                 onClick={() =>
-                  // If fallback, navigate to /start (yoga.js), otherwise go to pose details
                   poseData.id.toString().startsWith('fallback')
                     ? navigate("/start", { state: { selectedPose: poseData.name } })
                     : navigate(`/pose/${poseData.id}`)
                 }
               >
-                {poseData.image_url || poseImages[poseData.name] ? (
+                { (poseData.image_url || poseImages[poseData.name]) ? (
                   <img 
                     src={poseData.image_url || poseImages[poseData.name]} 
                     alt={poseData.name} 
-                    className="pose-image" 
+                    className="pose-image"  // same class used in other sections
                   />
                 ) : (
                   <div className="no-image">No Image</div>
@@ -213,10 +272,15 @@ const Progress = () => {
                   <h3>{poseData.name || 'Yoga Pose'}</h3>
                 </div>
               </div>
-            ))
-          ) : (
-            <p>No Recommended Yoga Poses available</p>
-          )}
+            ))}
+          </div>
+          <button 
+            className="carousel-nav right" 
+            onClick={() => setRecommendedCarouselIndex(prev => Math.min(prev + 1, maxRecommendedIndex))} 
+            disabled={recommendedCarouselIndex >= maxRecommendedIndex}
+          >
+            &#62;
+          </button>
         </div>
       </section>
     </div>
