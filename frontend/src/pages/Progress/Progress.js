@@ -9,11 +9,13 @@ const Progress = () => {
   const [historyCarouselIndex, setHistoryCarouselIndex] = useState(0);
   const [activitiesCarouselIndex, setActivitiesCarouselIndex] = useState(0);
   const [recommendedCarouselIndex, setRecommendedCarouselIndex] = useState(0);
+  const [dietIndex, setDietIndex] = useState(0); // For diet chart sliding
   const token = localStorage.getItem('token');
   const navigate = useNavigate();
   const historyDisplayedCount = 3; // cards to show in yogaHistory carousel
   const activitiesDisplayedCount = 3; // cards to show in recent activities carousel
   const recommendedDisplayedCount = 3; // show 3 poses at once
+  const dietDisplayedCount = 1; // 1 meal per day
 
   // Helper to get a full URL for images.
   const getImageUrl = (url) => {
@@ -74,7 +76,15 @@ const Progress = () => {
     ).values()
   );
 
-  // Compute final recommended list by merging backend and fallback poses
+  // Deduplicate "Your Recent Activities" from recentActivities (user_activity data)
+  const practiceActivities = progress.recentActivities || [];
+  const dedupedPracticeActivities = Array.from(
+    new Map(
+      practiceActivities.map(item => [ (item.pose_name || "Yoga Pose").toLowerCase(), item])
+    ).values()
+  );
+
+  // Compute final recommended list by merging backend and fallback poses, deduplicated by name
   const finalRecommended = (() => {
     const backendRecs = progress.recommendedPoses || [];
     // Take at most 2 from backend recommendations.
@@ -98,17 +108,9 @@ const Progress = () => {
 
   // Calculate maximum indexes for carousels
   const maxHistoryIndex = Math.max(dedupedYogaHistory.length - historyDisplayedCount, 0);
-  // Use the recentActivities property from the API for "Your Recent Activities"
-  const practiceActivities = progress.recentActivities || [];
-
-  // Calculate maximum index for the "Your Recent Activities" carousel
-  // (Now, since the query returns activity_type, the filter works correctly)
-  const maxActivitiesIndex = Math.max(
-    practiceActivities.filter(item => item.activity_type === 'practice' && item.yoga_pose_id).length - activitiesDisplayedCount,
-    0
-  );
-  // Calculate maxRecommendedIndex based on the new recommended count
+  const maxActivitiesIndex = Math.max(dedupedPracticeActivities.length - activitiesDisplayedCount, 0);
   const maxRecommendedIndex = Math.max(finalRecommended.length - recommendedDisplayedCount, 0);
+  const maxDietIndex = progress.dietCharts ? progress.dietCharts.length - dietDisplayedCount : 0;
 
   return (
     <div className="progress-container">
@@ -175,8 +177,7 @@ const Progress = () => {
             &#60;
           </button>
           <div className="carousel-slide">
-            {practiceActivities
-              .filter(item => item.activity_type === 'practice' && item.yoga_pose_id)
+            {dedupedPracticeActivities
               .slice(activitiesCarouselIndex, activitiesCarouselIndex + activitiesDisplayedCount)
               .map(item => (
                 <div
@@ -211,37 +212,57 @@ const Progress = () => {
         </div>
       </section>
 
-      {/* Diet Chart Section */}
-      <section className="segment diet-section" style={{ background: "white" }}>
-        <h2 className="segment-heading">Your Diet For Today</h2>
-        {progress.dietCharts && progress.dietCharts.map((item, idx) => {
-          const meals = parseDietMeals(item.meals || item.detail);
-          return (
-            <div key={idx} className="diet-chart-card">
-              <div>
-                <p className="date">{new Date(item.date).toLocaleDateString()}</p>
-              </div>
-              <div className="diet-quote">
-                "Eat healthy, live healthy. Your body is your temple."
-              </div>
-              <div className="diet-grid">
-                <div className="diet-card">
-                  <h3>Breakfast</h3>
-                  <p>{meals.breakfast}</p>
-                </div>
-                <div className="diet-card">
-                  <h3>Lunch</h3>
-                  <p>{meals.lunch}</p>
-                </div>
-                <div className="diet-card">
-                  <h3>Dinner</h3>
-                  <p>{meals.dinner}</p>
-                </div>
-              </div>
+      {/* Diet Chart Slider Section */}
+      {progress.dietCharts && progress.dietCharts.length > 0 && (
+        <section className="segment diet-section" style={{ background: "white" }}>
+          <h2 className="segment-heading">Your Diet For Today</h2>
+          <div className="carousel-container">
+            <button 
+              className="carousel-nav left" 
+              onClick={() => setDietIndex(prev => Math.max(prev - 1, 0))} 
+              disabled={dietIndex === 0}
+            >
+              &#60;
+            </button>
+            <div className="carousel-slide">
+              {progress.dietCharts.slice(dietIndex, dietIndex + dietDisplayedCount).map((item, idx) => {
+                const meals = parseDietMeals(item.meals || item.detail);
+                return (
+                  <div key={idx} className="diet-chart-card">
+                    <div>
+                      <p className="date">{new Date(item.date).toLocaleDateString()}</p>
+                    </div>
+                    <div className="diet-quote">
+                      "Eat healthy, live healthy. Your body is your temple."
+                    </div>
+                    <div className="diet-grid">
+                      <div className="diet-card">
+                        <h3>Breakfast</h3>
+                        <p>{meals.breakfast}</p>
+                      </div>
+                      <div className="diet-card">
+                        <h3>Lunch</h3>
+                        <p>{meals.lunch}</p>
+                      </div>
+                      <div className="diet-card">
+                        <h3>Dinner</h3>
+                        <p>{meals.dinner}</p>
+                      </div>
+                    </div>
+                  </div>
+                );
+              })}
             </div>
-          );
-        })}
-      </section>
+            <button 
+              className="carousel-nav right" 
+              onClick={() => setDietIndex(prev => Math.min(prev + 1, maxDietIndex))} 
+              disabled={dietIndex >= maxDietIndex}
+            >
+              &#62;
+            </button>
+          </div>
+        </section>
+      )}
 
       {/* Recommended Yoga Poses Carousel Section */}
       <section className="segment recommendation-section" style={{ background: "white" }}>
@@ -265,7 +286,7 @@ const Progress = () => {
                     : navigate(`/pose/${poseData.yoga_pose_id}`)
                 }
               >
-                { (poseData.image_url || poseImages[poseData.name]) ? (
+                {(poseData.image_url || poseImages[poseData.name]) ? (
                   <img 
                     src={poseData.image_url || poseImages[poseData.name]} 
                     alt={poseData.name || 'Yoga Pose'} 
