@@ -80,19 +80,6 @@
     box-shadow: 0 2px 12px rgba(0, 0, 0, 0.2);
 }
 
-.pose-img, .pose-image {
-    width: 100%;
-    height: auto;
-    border-radius: 5px;
-    display: block;
-}
-
-.pose-image {
-    width: 100%;
-    height: 200px;      /* increased height for image */
-    object-fit: cover;
-    border-bottom: 1px solid #B2DFDB;
-}
 
 .no-image {
     width: 100%;

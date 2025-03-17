@@ -22,7 +22,7 @@ const Progress = () => {
           headers: { Authorization: `Bearer ${token}` }
         })
         .then(response => {
-          console.log('Progress response:', response.data);
+          // console.log('Progress response:', response.data);
           setProgress(response.data);
         })
         .catch(error => {
@@ -91,12 +91,7 @@ const Progress = () => {
               </div>
             ))}
         </div>
-        {progress.history.map((record, index) => (
-          <div key={record.id}>
-            <span>{index + 1}. </span>
-            <span>{record.name}</span>
-          </div>
-        ))}
+
       </section>
 
       {/* Diet Chart Section */}
