@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import './Progress.css';
+import { poseImages } from '../../utils/pose_images';
 
 const Progress = () => {
   const [progress, setProgress] = useState(null);
@@ -22,7 +23,6 @@ const Progress = () => {
           headers: { Authorization: `Bearer ${token}` }
         })
         .then(response => {
-          // console.log('Progress response:', response.data);
           setProgress(response.data);
         })
         .catch(error => {
@@ -41,9 +41,7 @@ const Progress = () => {
 
   // Updated parser to correctly map meals based on their labels
   const parseDietMeals = (mealStr) => {
-    // Remove any leading text like "Generated diet chart:"
     mealStr = mealStr.replace(/^Generated diet chart:\s*/i, '');
-    // Split string by comma instead of assuming fixed order
     const parts = mealStr.split(',');
     let breakfast = 'N/A';
     let lunch = 'N/A';
@@ -63,9 +61,70 @@ const Progress = () => {
     return { breakfast, lunch, dinner };
   };
 
+  // Compute final recommended list by taking a fixed mix of backend and fallback poses
+  const finalRecommended = (() => {
+    const backendRecs = progress.recommendedPoses || [];
+    // Always take at most 2 from backend recommendations.
+    const backendPart = backendRecs.slice(0, 2);
+    
+    // Get fallback pose names from local poseImages that are not already in the backendPart (by name, case-insensitive)
+    const fallbackNames = Object.keys(poseImages).filter(poseName =>
+      !backendPart.some(rec => rec.name && rec.name.toLowerCase() === poseName.toLowerCase())
+    );
+    
+    // Take 2 fallback poses (or however many you need to reach 4 total)
+    const fallbackPart = fallbackNames.slice(0, Math.max(0, 4 - backendPart.length)).map(poseName => ({
+      id: `fallback-${poseName}`,
+      name: poseName,
+      image_url: null // Frontend will use poseImages mapping
+    }));
+    
+    // Merge backend and fallback parts
+    return [...backendPart, ...fallbackPart];
+  })();
+
   return (
     <div className="progress-container">
       <h1 className="progress-heading">Your Progress</h1>
+
+      {/* Yoga Practice History Section */}
+      {progress.yogaHistory && progress.yogaHistory.length > 0 && (
+        <section className="segment yoga-history-section" style={{ background: "white" }}>
+          <h2 className="segment-heading">Your Recent Detected Poses</h2>
+          <div className="grid-container">
+            {Array.from(
+              new Map(
+                progress.yogaHistory.map(record => [record.pose_name || "Yoga Pose", record])
+              ).values()
+            ).map((record) => (
+              <div
+                key={record.id}
+                className="card"
+                onClick={() =>
+                  navigate("/start", { state: { selectedPose: record.pose_name || "Yoga Pose" } })
+                }
+                style={{ cursor: "pointer" }}
+              >
+                {poseImages[record.pose_name] ? (
+                  <img
+                    src={poseImages[record.pose_name]}
+                    alt={record.pose_name}
+                    className="pose-image"
+                  />
+                ) : (
+                  <div className="no-image">No Image</div>
+                )}
+                <div className="card-content">
+                  <h3>{record.pose_name || "Yoga Pose"}</h3>
+                  <p className="date">
+                    {new Date(record.activity_date).toLocaleDateString()}
+                  </p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
+      )}
 
       {/* Practice Activities Section */}
       <section className="segment activity-section" style={{background: "white"}}>
@@ -91,7 +150,6 @@ const Progress = () => {
               </div>
             ))}
         </div>
-
       </section>
 
       {/* Diet Chart Section */}
@@ -127,18 +185,27 @@ const Progress = () => {
       </section>
 
       {/* Recommended Yoga Poses Section */}
-      <section className="segment recommendation-section" style={{background: "white"}}>
+      <section className="segment recommendation-section" style={{ background: "white" }}>
         <h2 className="segment-heading">Recommended Yoga Poses For You</h2>
         <div className="grid-container">
-          {progress.recommendedPoses &&
-            progress.recommendedPoses.slice(0, 4).map(poseData => (
+          {finalRecommended && finalRecommended.length > 0 ? (
+            finalRecommended.map(poseData => (
               <div
                 key={poseData.id}
                 className="card"
-                onClick={() => navigate(`/pose/${poseData.id}`)}
+                onClick={() =>
+                  // If fallback, navigate to /start (yoga.js), otherwise go to pose details
+                  poseData.id.toString().startsWith('fallback')
+                    ? navigate("/start", { state: { selectedPose: poseData.name } })
+                    : navigate(`/pose/${poseData.id}`)
+                }
               >
-                {poseData.image_url ? (
-                  <img src={getImageUrl(poseData.image_url)} alt={poseData.name} className="pose-image" />
+                {poseData.image_url || poseImages[poseData.name] ? (
+                  <img 
+                    src={poseData.image_url || poseImages[poseData.name]} 
+                    alt={poseData.name} 
+                    className="pose-image" 
+                  />
                 ) : (
                   <div className="no-image">No Image</div>
                 )}
@@ -146,7 +213,10 @@ const Progress = () => {
                   <h3>{poseData.name || 'Yoga Pose'}</h3>
                 </div>
               </div>
-            ))}
+            ))
+          ) : (
+            <p>No Recommended Yoga Poses available</p>
+          )}
         </div>
       </section>
     </div>

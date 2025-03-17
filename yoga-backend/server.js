@@ -96,9 +96,15 @@ app.post('/api/login', async (req, res) => {
                     console.error(`Error clearing user_activity for user ${user.id}:`, delErr);
                     // Optionally, continue login even if deletion fails
                 }
-                // Generate JWT token
-                const token = jwt.sign({ id: user.id, username: user.username }, process.env.JWT_SECRET, { expiresIn: '1h' });
-                res.status(200).json({ message: 'Login successful', token });
+                db.query('DELETE FROM yoga_activity WHERE user_id = ?', [user.id], (delErr2) => {
+                    if (delErr2) {
+                        console.error(`Error clearing yoga_activity for user ${user.id}:`, delErr2);
+                        // Continue even if deletion fails
+                    }
+                    // Generate JWT token after deletion
+                    const token = jwt.sign({ id: user.id, username: user.username }, process.env.JWT_SECRET, { expiresIn: '1h' });
+                    res.status(200).json({ message: 'Login successful', token });
+                });
             });
         } catch (error) {
             console.error('Error comparing password:', error);
@@ -136,6 +142,27 @@ app.post('/api/practice', authenticateToken, (req, res) => {
             }
             console.log('Practice activity inserted:', results);
             res.status(200).json({ message: 'Practice activity logged successfully' });
+        }
+    );
+});
+
+app.post('/api/yoga-practice', authenticateToken, (req, res) => {
+    const { poseId, poseName } = req.body;
+    if (!poseId || !poseName) {
+        console.error('Missing poseId or poseName in the request body');
+        return res.status(400).json({ error: 'Missing poseId or poseName' });
+    }
+    // Insert into the yoga_activity table (assumes columns: user_id, yoga_pose_id, pose_name, detail)
+    db.query(
+        'INSERT INTO yoga_activity (user_id, yoga_pose_id, pose_name, detail) VALUES (?, ?, ?, ?)',
+        [req.user.id, poseId, poseName, 'Yoga practice recorded from Yoga.js'],
+        (err, results) => {
+            if (err) {
+                console.error('Error logging yoga practice activity:', err);
+                return res.status(500).json({ error: 'Database error in yoga-practice endpoint' });
+            }
+            console.log('Yoga practice activity inserted:', results);
+            res.status(200).json({ message: 'Yoga practice activity logged successfully' });
         }
     );
 });
@@ -197,42 +224,79 @@ app.get('/api/yoga_poses/:id', authenticateToken, (req, res) => {
 
 app.post('/api/recommended-poses', authenticateToken, (req, res) => {
     console.log('Received request:', req.body);
+
+    // Fallback yoga.js list (the same as your dropdown list)
+    const fallbackPoseList = [
+      'Tree',
+      'Chair',
+      'Cobra',
+      'Warrior',
+      'Dog',
+      'Shoulderstand',
+      'Triangle',
+      'Tadasana',
+      'Virabhadrasana I',
+      'Balasana',
+      'Paschimottanasana',
+      'Setu Bandhasana',
+      'Marjaryasana-Bitilasana',
+      'Ardha Chandrasana (Half Moon Pose)',
+      'Bakasana (Crow Pose)',
+      'Navasana (Boat Pose)',
+      'Phalakasana (Plank Pose)',
+      'Parivrtta Trikonasana (Revolved Triangle Pose)',
+      'Eka Pada Rajakapotasana (Pigeon Pose)',
+      'Ustrasana (Camel Pose)'
+    ];
+
     db.query('SELECT * FROM yoga_poses', (err, results) => {
         if (err) {
             console.error('Database error:', err);
             return res.status(500).json({ error: 'Database error' });
         }
-        if (results.length === 0) {
-            return res.status(404).json({ error: 'No yoga poses found.' });
-        }
-        res.status(200).json(results);
+        
+        // Create fallback data objects (you can assign a null image_url so the frontend uses its poseImages)
+        const fallbackPoses = fallbackPoseList.map(poseName => ({
+          id: `fallback-${poseName}`,
+          name: poseName,
+          image_url: null
+        }));
+        
+        // Merge fallback with database results; only add fallback if not already provided by the DB.
+        const dbPoseNames = results.map(r => r.name);
+        const merged = results.concat(fallbackPoses.filter(p => !dbPoseNames.includes(p.name)));
+        
+        res.status(200).json(merged);
     });
 });
 
 app.get('/api/progress-report', authenticateToken, (req, res) => {
     const userId = req.user.id;
+    
     const sessionsQuery = `
         SELECT COUNT(*) AS completed 
         FROM user_activity 
         WHERE user_id = ? AND activity_type = 'practice'
     `;
+    
     const historyQuery = `
         SELECT 
             MAX(ua.id) AS id,
             ua.user_id,
             ua.activity_type,
             ua.yoga_pose_id,
-            MAX(ua.activity_date) AS activity_date,
             ANY_VALUE(ua.detail) AS detail,
             ANY_VALUE(ua.accuracy) AS accuracy,
             ANY_VALUE(yp.image_url) AS image_url,
-            ANY_VALUE(yp.name) AS name
+            ANY_VALUE(yp.name) AS name,
+            MAX(ua.activity_date) AS activity_date
         FROM user_activity ua
         INNER JOIN yoga_poses yp ON ua.yoga_pose_id = yp.id
         WHERE ua.user_id = ? AND ua.activity_type = 'practice'
         GROUP BY ua.yoga_pose_id
         ORDER BY activity_date DESC
     `;
+    
     const dietQuery = `
         SELECT activity_date AS date, detail AS meals 
         FROM user_activity 
@@ -240,18 +304,37 @@ app.get('/api/progress-report', authenticateToken, (req, res) => {
         ORDER BY activity_date DESC
         LIMIT 1
     `;
+    
+    // Recommended poses: only exclude poses that the user has done as a practice,
+    // not excluding those added by diet chart generation.
     const recommendedQuery = `
         SELECT yp.id, yp.name, yp.image_url
-        FROM yoga_poses yp 
+        FROM yoga_poses yp
         WHERE yp.id NOT IN (
-            SELECT DISTINCT yoga_pose_id 
-            FROM user_activity 
-            WHERE user_id = ? AND activity_type = 'practice' AND yoga_pose_id IS NOT NULL
+          SELECT DISTINCT yoga_pose_id
+          FROM user_activity
+          WHERE user_id = ? 
+            AND activity_type = 'practice'
+            AND yoga_pose_id IS NOT NULL
         )
         ORDER BY RAND()
-        LIMIT 6
+        LIMIT 4
     `;
-
+    
+    // New query for yoga practice records from yoga_activity table
+    const yogaHistoryQuery = `
+        SELECT 
+            id,
+            yoga_pose_id,
+            COALESCE(pose_name, 'Yoga Pose') AS pose_name,
+            detail,
+            activity_date
+        FROM yoga_activity
+        WHERE user_id = ?
+        ORDER BY activity_date DESC
+    `;
+    
+    // Execute queries sequentially (or using promises/async)
     db.query(sessionsQuery, [userId], (err, sessionResults) => {
         if (err) {
             console.error('Error querying sessions:', err);
@@ -272,11 +355,18 @@ app.get('/api/progress-report', authenticateToken, (req, res) => {
                         console.error('Error querying recommended poses:', err);
                         return res.status(500).json({ error: 'Database error in recommended poses' });
                     }
-                    res.status(200).json({
-                        sessions: { completed: sessionResults[0].completed, total: 20 },
-                        history: historyResults,
-                        dietCharts: dietResults,
-                        recommendedPoses: recommendedResults
+                    db.query(yogaHistoryQuery, [userId], (err, yogaHistoryResults) => {
+                        if (err) {
+                            console.error('Error querying yoga history:', err);
+                            return res.status(500).json({ error: 'Database error in yoga history' });
+                        }
+                        res.status(200).json({
+                            sessions: { completed: sessionResults[0].completed },
+                            history: historyResults,
+                            dietCharts: dietResults,
+                            recommendedPoses: recommendedResults,
+                            yogaHistory: yogaHistoryResults
+                        });
                     });
                 });
             });

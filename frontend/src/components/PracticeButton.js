@@ -17,7 +17,19 @@ const PracticeButton = ({ poseId }) => {
     }
   };
 
-  return <button onClick={handlePractice}>I did this pose!</button>;
+  return (
+    <button 
+      className="btn"
+      onClick={(e) => {
+        e.stopPropagation();
+        // Here use an appropriate mapping for poseId; e.g. if not tied to yoga_poses, use the index or a custom mapping.
+        // For this example, we use the index + 1.
+        handlePractice(poseId);
+      }}
+    >
+      I did this pose
+    </button>
+  );
 };
 
 export default PracticeButton;

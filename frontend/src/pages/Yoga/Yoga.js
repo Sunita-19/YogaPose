@@ -10,6 +10,7 @@ import DropDown from '../../components/DropDown/DropDown';
 import { poseImages } from '../../utils/pose_images';
 import { POINTS, keypointConnections } from '../../utils/data';
 import { drawPoint, drawSegment } from '../../utils/helper';
+import axios from 'axios'; // Ensure axios is imported along with your other imports
 
 let skeletonColor = 'rgb(255,255,255)';
 let poseList = [
@@ -48,6 +49,36 @@ function Yoga() {
   const [bestPerform, setBestPerform] = useState(0);
   const [currentPose, setCurrentPose] = useState('Tree');
   const [isStartPose, setIsStartPose] = useState(false);
+
+  const token = localStorage.getItem('token');
+
+  // Existing handlePracticePose is kept for posedetail page usage (do not change it)
+  const handlePracticePose = async (poseId) => {
+    try {
+      const response = await axios.post(
+        'http://localhost:5000/api/practice',
+        { poseId },
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+      console.log('Practice activity recorded:', response.data.message);
+    } catch (error) {
+      console.error('Error recording practice activity:', error.response?.data || error);
+    }
+  };
+
+  // Update your Yoga.js handler for yoga practice
+  const handleYogaPractice = async (poseId, poseName) => {
+    try {
+      const response = await axios.post(
+        'http://localhost:5000/api/yoga-practice',
+        { poseId, poseName },
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+      console.log('Yoga practice recorded:', response.data.message);
+    } catch (error) {
+      console.error('Error recording yoga practice:', error.response?.data || error);
+    }
+  };
 
   useEffect(() => {
     const timeDiff = (currentTime - startingTime) / 1000;
@@ -256,6 +287,20 @@ function Yoga() {
           />
           <Instructions currentPose={currentPose} />
           <button onClick={startYoga} className="secondary-btn">Start Pose</button>
+          {/* 
+            Update the "I did this pose" button to call handleYogaPractice so that a new record is created 
+            using the separate endpoint. Adjust the poseId mapping if necessary.
+          */}
+          <button 
+            className="btn"
+            onClick={(e) => {
+              e.stopPropagation();
+              // Here we use the same mapping as before—you can adjust if needed.
+              handleYogaPractice(poseList.indexOf(currentPose) + 1, currentPose);
+            }}
+          >
+            I did this pose
+          </button>
         </>
       )}
     </div>
