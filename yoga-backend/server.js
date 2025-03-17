@@ -90,22 +90,10 @@ app.post('/api/login', async (req, res) => {
             if (!isMatch) {
                 return res.status(401).json({ message: 'Invalid username or password' });
             }
-            // Clear any previous user_activity records for a fresh session
-            db.query('DELETE FROM user_activity WHERE user_id = ?', [user.id], (delErr) => {
-                if (delErr) {
-                    console.error(`Error clearing user_activity for user ${user.id}:`, delErr);
-                    // Optionally, continue login even if deletion fails
-                }
-                db.query('DELETE FROM yoga_activity WHERE user_id = ?', [user.id], (delErr2) => {
-                    if (delErr2) {
-                        console.error(`Error clearing yoga_activity for user ${user.id}:`, delErr2);
-                        // Continue even if deletion fails
-                    }
-                    // Generate JWT token after deletion
-                    const token = jwt.sign({ id: user.id, username: user.username }, process.env.JWT_SECRET, { expiresIn: '1h' });
-                    res.status(200).json({ message: 'Login successful', token });
-                });
-            });
+            // No deletion of previous records here.
+            // Generate JWT token after successful login.
+            const token = jwt.sign({ id: user.id, username: user.username }, process.env.JWT_SECRET, { expiresIn: '1h' });
+            res.status(200).json({ message: 'Login successful', token });
         } catch (error) {
             console.error('Error comparing password:', error);
             return res.status(500).json({ error: 'Error during login process' });
@@ -114,15 +102,8 @@ app.post('/api/login', async (req, res) => {
 });
 
 app.post('/api/logout', authenticateToken, (req, res) => {
-    const userId = req.user.id;
-    // Delete all user_activity records upon logout
-    db.query('DELETE FROM user_activity WHERE user_id = ?', [userId], (err, results) => {
-        if (err) {
-            console.error(`Error clearing user_activity for user ${userId}:`, err);
-            return res.status(500).json({ error: 'Database error while clearing user activity' });
-        }
-        res.status(200).json({ message: 'User activity cleared on logout' });
-    });
+    // Do not delete any records on logout.
+    res.status(200).json({ message: 'Logout successful' });
 });
 
 app.post('/api/practice', authenticateToken, (req, res) => {
@@ -273,56 +254,15 @@ app.post('/api/recommended-poses', authenticateToken, (req, res) => {
 app.get('/api/progress-report', authenticateToken, (req, res) => {
     const userId = req.user.id;
     
+    // Sessions query (if needed)
     const sessionsQuery = `
         SELECT COUNT(*) AS completed 
         FROM user_activity 
         WHERE user_id = ? AND activity_type = 'practice'
     `;
     
-    const historyQuery = `
-        SELECT 
-            MAX(ua.id) AS id,
-            ua.user_id,
-            ua.activity_type,
-            ua.yoga_pose_id,
-            ANY_VALUE(ua.detail) AS detail,
-            ANY_VALUE(ua.accuracy) AS accuracy,
-            ANY_VALUE(yp.image_url) AS image_url,
-            ANY_VALUE(yp.name) AS name,
-            MAX(ua.activity_date) AS activity_date
-        FROM user_activity ua
-        INNER JOIN yoga_poses yp ON ua.yoga_pose_id = yp.id
-        WHERE ua.user_id = ? AND ua.activity_type = 'practice'
-        GROUP BY ua.yoga_pose_id
-        ORDER BY activity_date DESC
-    `;
-    
-    const dietQuery = `
-        SELECT activity_date AS date, detail AS meals 
-        FROM user_activity 
-        WHERE user_id = ? AND activity_type = 'diet_chart' 
-        ORDER BY activity_date DESC
-        LIMIT 1
-    `;
-    
-    // Recommended poses: only exclude poses that the user has done as a practice,
-    // not excluding those added by diet chart generation.
-    const recommendedQuery = `
-        SELECT yp.id, yp.name, yp.image_url
-        FROM yoga_poses yp
-        WHERE yp.id NOT IN (
-          SELECT DISTINCT yoga_pose_id
-          FROM user_activity
-          WHERE user_id = ? 
-            AND activity_type = 'practice'
-            AND yoga_pose_id IS NOT NULL
-        )
-        ORDER BY RAND()
-        LIMIT 4
-    `;
-    
-    // New query for yoga practice records from yoga_activity table
-    const yogaHistoryQuery = `
+    // "Your Recent Detected Poses" -> use the yoga_activity table
+    const detectedPosesQuery = `
         SELECT 
             id,
             yoga_pose_id,
@@ -332,40 +272,93 @@ app.get('/api/progress-report', authenticateToken, (req, res) => {
         FROM yoga_activity
         WHERE user_id = ?
         ORDER BY activity_date DESC
+        LIMIT 30
     `;
     
-    // Execute queries sequentially (or using promises/async)
+    // "Your Recent Activities" -> use the user_activity table for practice records and include activity_type & image_url.
+    const recentActivitiesQuery = `
+        SELECT 
+            id,
+            yoga_pose_id,
+            activity_type,
+            (SELECT name FROM yoga_poses WHERE id = yoga_pose_id) AS pose_name,
+            detail,
+            activity_date,
+            (SELECT image_url FROM yoga_poses WHERE id = yoga_pose_id) AS image_url
+        FROM user_activity
+        WHERE user_id = ? AND activity_type = 'practice'
+        ORDER BY activity_date DESC
+        LIMIT 30
+    `;
+    
+    // Diet chart query (using user_activity table)
+    const dietQuery = `
+        SELECT activity_date AS date, detail AS meals 
+        FROM user_activity 
+        WHERE user_id = ? AND activity_type = 'diet_chart'
+        ORDER BY activity_date DESC
+        LIMIT 1
+    `;
+    
+    // Recommended poses query -> union of both tables, now including image_url.
+    const recommendedQuery = `
+        SELECT * FROM (
+            SELECT 
+                id,
+                yoga_pose_id,
+                COALESCE(pose_name, (SELECT name FROM yoga_poses WHERE id = yoga_pose_id)) AS pose_name,
+                detail,
+                activity_date,
+                (SELECT image_url FROM yoga_poses WHERE id = yoga_pose_id) AS image_url
+            FROM yoga_activity
+            WHERE user_id = ?
+            UNION ALL
+            SELECT 
+                id,
+                yoga_pose_id,
+                (SELECT name FROM yoga_poses WHERE id = yoga_pose_id) AS pose_name,
+                detail,
+                activity_date,
+                (SELECT image_url FROM yoga_poses WHERE id = yoga_pose_id) AS image_url
+            FROM user_activity
+            WHERE user_id = ? AND activity_type = 'practice'
+        ) AS combined
+        ORDER BY RAND()
+        LIMIT 6
+    `;
+    
+    // Execute queries sequentially (nesting callbacks)
     db.query(sessionsQuery, [userId], (err, sessionResults) => {
         if (err) {
             console.error('Error querying sessions:', err);
             return res.status(500).json({ error: 'Database error in sessions' });
         }
-        db.query(historyQuery, [userId], (err, historyResults) => {
+        db.query(detectedPosesQuery, [userId], (err, detectedPosesResults) => {
             if (err) {
-                console.error('Error querying history:', err);
-                return res.status(500).json({ error: 'Database error in history' });
+                console.error('Error querying detected poses:', err);
+                return res.status(500).json({ error: 'Database error in detected poses' });
             }
-            db.query(dietQuery, [userId], (err, dietResults) => {
+            db.query(recentActivitiesQuery, [userId], (err, recentActivitiesResults) => {
                 if (err) {
-                    console.error('Error querying diet charts:', err);
-                    return res.status(500).json({ error: 'Database error in diet charts' });
+                    console.error('Error querying recent activities:', err);
+                    return res.status(500).json({ error: 'Database error in recent activities' });
                 }
-                db.query(recommendedQuery, [userId], (err, recommendedResults) => {
+                db.query(dietQuery, [userId], (err, dietResults) => {
                     if (err) {
-                        console.error('Error querying recommended poses:', err);
-                        return res.status(500).json({ error: 'Database error in recommended poses' });
+                        console.error('Error querying diet charts:', err);
+                        return res.status(500).json({ error: 'Database error in diet charts' });
                     }
-                    db.query(yogaHistoryQuery, [userId], (err, yogaHistoryResults) => {
+                    db.query(recommendedQuery, [userId, userId], (err, recommendedResults) => {
                         if (err) {
-                            console.error('Error querying yoga history:', err);
-                            return res.status(500).json({ error: 'Database error in yoga history' });
+                            console.error('Error querying recommended poses:', err);
+                            return res.status(500).json({ error: 'Database error in recommended poses' });
                         }
                         res.status(200).json({
-                            sessions: { completed: sessionResults[0].completed },
-                            history: historyResults,
+                            sessions: sessionResults,
+                            yogaHistory: detectedPosesResults, // for "Your Recent Detected Poses"
+                            recentActivities: recentActivitiesResults, // for "Your Recent Activities"
                             dietCharts: dietResults,
-                            recommendedPoses: recommendedResults,
-                            yogaHistory: yogaHistoryResults
+                            recommendedPoses: recommendedResults
                         });
                     });
                 });

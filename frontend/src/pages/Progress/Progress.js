@@ -13,7 +13,7 @@ const Progress = () => {
   const navigate = useNavigate();
   const historyDisplayedCount = 3; // cards to show in yogaHistory carousel
   const activitiesDisplayedCount = 3; // cards to show in recent activities carousel
-  const recommendedDisplayedCount = 2; // cards to show in recommended carousel
+  const recommendedDisplayedCount = 3; // show 3 poses at once
 
   // Helper to get a full URL for images.
   const getImageUrl = (url) => {
@@ -79,29 +79,35 @@ const Progress = () => {
     const backendRecs = progress.recommendedPoses || [];
     // Take at most 2 from backend recommendations.
     const backendPart = backendRecs.slice(0, 2);
-    // Get fallback pose names from poseImages that are not already in backendPart (by name, case-insensitive)
+    // Get fallback pose names from poseImages that are not already in backendPart (case-insensitive)
     const fallbackNames = Object.keys(poseImages).filter(poseName =>
       !backendPart.some(rec => rec.name && rec.name.toLowerCase() === poseName.toLowerCase())
     );
-    // Take 2 fallback poses (or as many needed to reach 4)
-    const fallbackPart = fallbackNames.slice(0, Math.max(0, 4 - backendPart.length)).map(poseName => ({
+    // Take enough fallback poses to reach a total of 6 items
+    const fallbackPart = fallbackNames.slice(0, Math.max(0, 6 - backendPart.length)).map(poseName => ({
       id: `fallback-${poseName}`,
       name: poseName,
       image_url: null // Frontend uses poseImages mapping
     }));
-    // Merge and then deduplicate by pose name
+    // Merge and then deduplicate by pose name (case-insensitive)
     const merged = [...backendPart, ...fallbackPart];
     return Array.from(
-      new Map(merged.map(pose => [pose.name.toLowerCase(), pose])).values()
+      new Map(merged.map(pose => [ (pose.name || 'Yoga Pose').toLowerCase(), pose ])).values()
     );
   })();
 
   // Calculate maximum indexes for carousels
   const maxHistoryIndex = Math.max(dedupedYogaHistory.length - historyDisplayedCount, 0);
+  // Use the recentActivities property from the API for "Your Recent Activities"
+  const practiceActivities = progress.recentActivities || [];
+
+  // Calculate maximum index for the "Your Recent Activities" carousel
+  // (Now, since the query returns activity_type, the filter works correctly)
   const maxActivitiesIndex = Math.max(
-    progress.history.filter(item => item.activity_type === 'practice' && item.yoga_pose_id).length - activitiesDisplayedCount,
+    practiceActivities.filter(item => item.activity_type === 'practice' && item.yoga_pose_id).length - activitiesDisplayedCount,
     0
   );
+  // Calculate maxRecommendedIndex based on the new recommended count
   const maxRecommendedIndex = Math.max(finalRecommended.length - recommendedDisplayedCount, 0);
 
   return (
@@ -169,7 +175,7 @@ const Progress = () => {
             &#60;
           </button>
           <div className="carousel-slide">
-            {progress.history
+            {practiceActivities
               .filter(item => item.activity_type === 'practice' && item.yoga_pose_id)
               .slice(activitiesCarouselIndex, activitiesCarouselIndex + activitiesDisplayedCount)
               .map(item => (
@@ -256,14 +262,14 @@ const Progress = () => {
                 onClick={() =>
                   poseData.id.toString().startsWith('fallback')
                     ? navigate("/start", { state: { selectedPose: poseData.name } })
-                    : navigate(`/pose/${poseData.id}`)
+                    : navigate(`/pose/${poseData.yoga_pose_id}`)
                 }
               >
                 { (poseData.image_url || poseImages[poseData.name]) ? (
                   <img 
                     src={poseData.image_url || poseImages[poseData.name]} 
-                    alt={poseData.name} 
-                    className="pose-image"  // same class used in other sections
+                    alt={poseData.name || 'Yoga Pose'} 
+                    className="pose-image"
                   />
                 ) : (
                   <div className="no-image">No Image</div>
