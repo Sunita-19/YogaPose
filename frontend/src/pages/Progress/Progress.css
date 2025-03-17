@@ -184,7 +184,7 @@
 
 /* Diet Chart specific styles */
 .diet-chart-card {
-    background: linear-gradient(135deg, #FFECB3, #FFE082);  /* warm gradient background */
+    background: linear-gradient(135deg, #FFECB3, #fdecb8);  /* warm gradient background */
     border-radius: 18px;
     padding: 40px;  /* reduced padding for a compact look */
     margin-bottom: 20px;
@@ -216,56 +216,32 @@
     margin-top: 15px;
 }
 
+/* Consolidated styling for diet card to reduce vertical space */
 .diet-card {
-    background: #FFF3E0;    /* light, warm background */
+    background: #ffffff;         /* light, warm background */
     border: 1px solid #FFCC80;
     border-radius: 8px;
     padding: 8px;
-    width: 230px;    /* slightly reduced width */
-    height: 180px;   /* reduced height */
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    width: 250px;
+    /* Remove fixed height so content determines card height */
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
     transition: transform 0.2s, box-shadow 0.2s;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    align-items: center;       /* Center content horizontally */
+    justify-content: center;   /* Pack content together vertically */
 }
 
-.diet-card:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.2);
-}
-
-.diet-card h3 {
-    font-size: 20px;
-    color: #00695C;
-    margin: 0 0 5px 0;
-}
-
-.diet-card p {
-    font-size: 16px;
-    color: #004D40;
-    margin: 5px 0;
-}
-
-.diet-card {
-    width: 250px;
-    height: 200px;
-    border: 1px solid #B2DFDB;
-    border-radius: 8px;
-    background: #FFFFFF;
-    padding: 10px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-    transition: transform 0.2s, box-shadow 0.2s;
-}
-
+/* Adjusted spacing for heading and paragraph in diet card */
 .diet-card h3 {
     font-size: 30px;
     color: #00695C;
-    margin-bottom: 5px;
+    margin: 0 0 5px 0;         /* minimal bottom margin */
 }
 
 .diet-card p {
     font-size: 26px;
     color: #004D40;
-    margin: 2px 0;
+    margin: 0;                 /* remove extra margins */
+    line-height: 1.1;          /* control spacing */
 }
