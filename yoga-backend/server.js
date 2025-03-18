@@ -142,7 +142,7 @@ app.post('/api/yoga-practice', authenticateToken, (req, res) => {
                 console.error('Error logging yoga practice activity:', err);
                 return res.status(500).json({ error: 'Database error in yoga-practice endpoint' });
             }
-            console.log('Yoga practice activity inserted:', results);
+            // console.log('Yoga practice activity inserted:', results);
             res.status(200).json({ message: 'Yoga practice activity logged successfully' });
         }
     );
