@@ -121,7 +121,7 @@ app.post('/api/practice', authenticateToken, (req, res) => {
                 console.error('Error logging practice activity:', err);
                 return res.status(500).json({ error: 'Database error in practice endpoint' });
             }
-            console.log('Practice activity inserted:', results);
+            // console.log('Practice activity inserted:', results);
             res.status(200).json({ message: 'Practice activity logged successfully' });
         }
     );
@@ -325,7 +325,7 @@ app.get('/api/progress-report', authenticateToken, (req, res) => {
         FROM user_activity 
         WHERE user_id = ? AND activity_type = 'diet_chart'
         ORDER BY activity_date DESC
-        LIMIT 1
+        LIMIT 10
     `;
     
     // Recommended poses query -> union of both tables, now including image_url.
