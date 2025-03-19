@@ -325,7 +325,7 @@ app.get('/api/progress-report', authenticateToken, (req, res) => {
         FROM user_activity 
         WHERE user_id = ? AND activity_type = 'diet_chart'
         ORDER BY activity_date DESC
-        LIMIT 10
+        LIMIT 30
     `;
     
     // Recommended poses query -> union of both tables, now including image_url.
