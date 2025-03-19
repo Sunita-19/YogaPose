@@ -1,22 +1,22 @@
+/* Overall Page Styling */
 .achievements-container {
-  max-width: 1200px;
-  margin: 0 auto;
+  max-width: 900px;
+  margin: 40px auto;
   padding: 40px;
   text-align: center;
-  background: linear-gradient(to bottom right, #E0F7FA, #B2EBF2);
-  min-height: 80vh;
-  font-family: 'Raleway', sans-serif;
+  background: linear-gradient(135deg, #E0F7FA, #B2EBF2);
   border-radius: 20px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+  font-family: 'Poppins', sans-serif;
   position: relative;
 }
 
 /* Header Styling */
 .achievements-container h1 {
-  font-size: 40px;
+  font-size: 42px;
   color: #004D40;
+  font-weight: 700;
   margin-bottom: 10px;
-  font-weight: bold;
 }
 
 .achievements-container p {
@@ -25,70 +25,95 @@
   margin-bottom: 30px;
 }
 
-/* Leaderboard */
+/* 🏆 Leaderboard Styling */
 .leaderboard {
-  background: rgba(255, 255, 255, 0.8);
+  background: rgba(255, 255, 255, 0.9);
   padding: 20px;
   border-radius: 15px;
   margin-bottom: 30px;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
 }
 
 .leaderboard h2 {
-  font-size: 22px;
+  font-size: 26px;
   color: #D32F2F;
-  margin-bottom: 10px;
+  font-weight: bold;
+  margin-bottom: 15px;
 }
 
+/* Leaderboard List */
 .leaderboard ul {
   list-style: none;
   padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 
+/* Leaderboard Items */
 .leaderboard li {
   font-size: 18px;
   font-weight: bold;
-  margin: 5px 0;
+  background: rgba(255, 255, 255, 0.85);
+  padding: 12px;
+  border-radius: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+  transition: all 0.3s ease;
 }
 
-/* Achievements Grid */
+/* Highlight Top Achiever */
+.leaderboard li:first-child {
+  background: linear-gradient(45deg, #FFD700, #FFB300);
+  color: white;
+  font-size: 20px;
+}
+
+/* Hover Effect */
+.leaderboard li:hover {
+  transform: translateY(-5px);
+}
+
+/* 🎖 Achievements Grid */
 .achievements-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   gap: 20px;
+  margin-top: 20px;
 }
 
-/* Achievement Cards */
+/* 🏅 Achievement Cards */
 .achievement-card {
-  background: rgba(255, 255, 255, 0.9);
+  background: rgba(255, 255, 255, 0.95);
   padding: 20px;
   border-radius: 15px;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-  transition: transform 0.3s, background 0.3s;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
   text-align: center;
-  position: relative;
+  transition: all 0.3s ease;
 }
 
 .achievement-card:hover {
-  transform: translateY(-8px);
-  background: #f7f7f7;
+  transform: translateY(-10px);
+  background: #f9f9f9;
 }
 
-/* Badges */
+/* Achievement Badge */
 .achievement-badge {
-  width: 90px;
-  height: 90px;
+  width: 80px;
+  height: 80px;
   margin-bottom: 15px;
-  animation: sparkle 1.5s infinite alternate;
+  animation: glow 1.5s infinite alternate;
 }
 
-/* Sparkle Animation */
-@keyframes sparkle {
+/* ✨ Glow Effect */
+@keyframes glow {
   from { transform: scale(1); }
   to { transform: scale(1.1); }
 }
 
-/* Achievement Progress Bar */
+/* 🎯 Progress Bar */
 .achievement-progress {
   background: #ddd;
   border-radius: 5px;
@@ -104,11 +129,58 @@
   border-radius: 5px;
 }
 
-/* Confetti Effect */
+/* 🎉 Confetti Effect */
 .confetti {
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
+}
+/* Motivational Message */
+.motivational-message {
+  font-size: 20px;
+  font-weight: bold;
+  color: #2E7D32;
+  background: rgba(46, 125, 50, 0.1);
+  padding: 10px;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  text-align: center;
+  animation: fadeIn 1s ease-in-out;
+}
+
+/* No Achievements Message */
+.no-achievements {
+  font-size: 18px;
+  font-weight: bold;
+  color: #D32F2F;
+  background: rgba(211, 47, 47, 0.1);
+  padding: 10px;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  text-align: center;
+  animation: fadeIn 1s ease-in-out;
+}
+
+/* Leaderboard Styling */
+.leaderboard ul {
+  padding: 0;
+}
+
+.leaderboard li {
+  display: flex;
+  justify-content: space-between;
+  font-size: 18px;
+  font-weight: bold;
+  background: rgba(255, 255, 255, 0.9);
+  padding: 10px;
+  border-radius: 8px;
+  margin: 5px 0;
+  box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
 }

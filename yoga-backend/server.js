@@ -133,20 +133,33 @@ app.post('/api/yoga-practice', authenticateToken, (req, res) => {
         console.error('Missing poseId or poseName in the request body');
         return res.status(400).json({ error: 'Missing poseId or poseName' });
     }
-    // Insert into the yoga_activity table (assumes columns: user_id, yoga_pose_id, pose_name, detail)
+
     db.query(
         'INSERT INTO yoga_activity (user_id, yoga_pose_id, pose_name, detail) VALUES (?, ?, ?, ?)',
-        [req.user.id, poseId, poseName, 'Yoga practice recorded from Yoga.js'],
-        (err, results) => {
+        [req.user.id, poseId, poseName, 'Yoga practice recorded'],
+        (err) => {
             if (err) {
                 console.error('Error logging yoga practice activity:', err);
                 return res.status(500).json({ error: 'Database error in yoga-practice endpoint' });
             }
-            // console.log('Yoga practice activity inserted:', results);
+
+            // Increase XP for practicing a pose
+            const xpEarned = 20; // Adjust XP as needed
+            db.query(
+                'UPDATE user_achievements SET xp = xp + ?, achievements_count = achievements_count + 1 WHERE user_id = ?',
+                [xpEarned, req.user.id],
+                (updateErr) => {
+                    if (updateErr) {
+                        console.error('Error updating XP:', updateErr);
+                    }
+                }
+            );
+
             res.status(200).json({ message: 'Yoga practice activity logged successfully' });
         }
     );
 });
+
 
 app.post('/api/diet-chart', authenticateToken, (req, res) => {
     const { meals } = req.body;
@@ -190,7 +203,8 @@ app.get('/api/poses', (req, res) => {
 
 app.get('/api/yoga_poses/:id', authenticateToken, (req, res) => {
     const poseId = parseInt(req.params.id, 10);
-    console.log(`Fetching yoga pose ${poseId} for user ${req.user.id}`);
+    // console.log(`Fetching yoga pose ${poseId} for user ${req.user.id}`);
+
     db.query('SELECT * FROM yoga_poses WHERE id = ?', [poseId], (err, results) => {
         if (err) {
             console.error('Database error when fetching pose:', err);
@@ -199,9 +213,23 @@ app.get('/api/yoga_poses/:id', authenticateToken, (req, res) => {
         if (results.length === 0) {
             return res.status(404).json({ error: 'Pose not found' });
         }
+
+        // Increase XP for viewing a pose
+        const xpEarned = 10; // Change XP amount as needed
+        db.query(
+            'UPDATE user_achievements SET xp = xp + ? WHERE user_id = ?',
+            [xpEarned, req.user.id],
+            (updateErr) => {
+                if (updateErr) {
+                    console.error('Error updating XP:', updateErr);
+                }
+            }
+        );
+
         return res.status(200).json(results[0]);
     });
 });
+
 
 app.post('/api/recommended-poses', authenticateToken, (req, res) => {
     console.log('Received request:', req.body);
@@ -384,6 +412,41 @@ app.post("/api/chatbot", async (req, res) => {
         console.error("Chatbot error:", error);
         return res.status(500).json({ error: "Error processing chatbot request" });
     }
+});
+
+app.get('/api/leaderboard', (req, res) => {
+    const query = `
+    SELECT u.username, ua.xp
+    FROM user_achievements ua
+    JOIN users u ON ua.user_id = u.id
+    ORDER BY ua.xp DESC, ua.achievements_count DESC
+    LIMIT 5
+`;
+
+db.query(query, (err, results) => {
+    if (err) {
+        console.error('Error fetching leaderboard:', err);
+        return res.status(500).json({ error: 'Failed to retrieve leaderboard' });
+    }
+    res.json({ leaderboard: results });
+});
+});
+
+app.post('/api/update-xp', (req, res) => {
+    const { userId, xpEarned, newAchievement } = req.body;
+    const query = `
+        UPDATE user_achievements
+        SET xp = xp + ?, achievements_count = achievements_count + ?
+        WHERE user_id = ?
+    `;
+
+    db.query(query, [xpEarned, newAchievement ? 1 : 0, userId], (err, result) => {
+        if (err) {
+            console.error('Error updating XP:', err);
+            return res.status(500).json({ error: 'Failed to update XP' });
+        }
+        res.json({ message: 'XP updated successfully' });
+    });
 });
 
 app.listen(port, () => {
