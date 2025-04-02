@@ -162,33 +162,57 @@ app.post('/api/yoga-practice', authenticateToken, (req, res) => {
 
 
 app.post('/api/diet-chart', authenticateToken, (req, res) => {
-    const { meals } = req.body;
-    // Check if a diet chart record already exists for this user
-    db.query(
-        'SELECT * FROM user_activity WHERE user_id = ? AND activity_type = "diet_chart" LIMIT 1',
-        [req.user.id],
-        (err, results) => {
-            if (err) {
-                console.error('Error checking existing diet chart:', err);
-                return res.status(500).json({ error: 'Database error' });
-            }
-            if (results.length > 0) {
-                return res.status(200).json({ message: 'Diet chart already generated' });
-            } else {
-                db.query(
-                    'INSERT INTO user_activity (user_id, activity_type, detail) VALUES (?, ?, ?)', 
-                    [req.user.id, 'diet_chart', `Generated diet chart: ${meals}`],
-                    (err, results) => {
-                        if (err) {
-                            console.error('Error logging diet chart activity:', err);
-                            return res.status(500).json({ error: 'Database error' });
-                        }
-                        res.status(200).json({ message: 'Diet chart activity logged successfully' });
-                    }
-                );
-            }
+  const userId = req.user.id;
+  const todayStr = new Date().toISOString().slice(0, 10); // Format: 'YYYY-MM-DD'
+
+  // Check if a diet chart record already exists for this user today
+  db.query(
+    'SELECT * FROM user_activity WHERE user_id = ? AND activity_type = "diet_chart" AND DATE(activity_date) = ? LIMIT 1',
+    [userId, todayStr],
+    (err, results) => {
+      if (err) {
+        console.error('Error checking existing diet chart:', err);
+        return res.status(500).json({ error: 'Database error' });
+      }
+      if (results.length > 0) {
+        return res.status(200).json({ message: "Today's diet chart already generated", diet: results[0] });
+      } else {
+        // Seeded randomness to generate a personalized diet chart
+        function seedRandom(seed) {
+          var x = Math.sin(seed) * 10000;
+          return x - Math.floor(x);
         }
-    );
+        // List of diet templates
+        const dietTemplates = [
+          "Breakfast: Oatmeal with fruits, Lunch: Grilled chicken salad, Dinner: Steamed salmon with veggies",
+          "Breakfast: Smoothie bowl, Lunch: Spinach quinoa salad, Dinner: Tofu stir-fry with brown rice",
+          "Breakfast: Scrambled eggs with avocado toast, Lunch: Turkey wrap, Dinner: Pasta with marinara sauce",
+          "Breakfast: Greek yogurt with granola, Lunch: Lentil soup, Dinner: Grilled shrimp with asparagus",
+          "Breakfast: Banana pancakes, Lunch: Veggie burger, Dinner: Stir-fried beef with broccoli"
+        ];
+        // Use user id and today's date (without dashes) to form a unique seed
+        const seed = parseInt(userId, 10) + parseInt(todayStr.replace(/-/g, ''), 10);
+        const randomIndex = Math.floor(seedRandom(seed) * dietTemplates.length);
+        const dietPlan = dietTemplates[randomIndex];
+
+        // Insert the personalized diet chart for the user
+        db.query(
+          'INSERT INTO user_activity (user_id, activity_type, detail) VALUES (?, "diet_chart", ?)', 
+          [userId, `Generated diet chart: ${dietPlan}`],
+          (insertErr, insertResults) => {
+            if (insertErr) {
+              console.error('Error logging diet chart activity:', insertErr);
+              return res.status(500).json({ error: 'Database error while inserting diet chart' });
+            }
+            return res.status(200).json({
+              message: 'Diet chart generated successfully',
+              diet: { date: todayStr, meals: dietPlan }
+            });
+          }
+        );
+      }
+    }
+  );
 });
 
 app.get('/api/poses', (req, res) => {
