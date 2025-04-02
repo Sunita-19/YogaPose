@@ -163,9 +163,9 @@ app.post('/api/yoga-practice', authenticateToken, (req, res) => {
 
 app.post('/api/diet-chart', authenticateToken, (req, res) => {
   const userId = req.user.id;
-  const todayStr = new Date().toISOString().slice(0, 10); // Format: 'YYYY-MM-DD'
+  const todayStr = new Date().toISOString().slice(0, 10); // Format: "YYYY-MM-DD"
 
-  // Check if a diet chart record already exists for this user today
+  // Check if a diet chart record already exists for THIS user today
   db.query(
     'SELECT * FROM user_activity WHERE user_id = ? AND activity_type = "diet_chart" AND DATE(activity_date) = ? LIMIT 1',
     [userId, todayStr],
@@ -174,30 +174,43 @@ app.post('/api/diet-chart', authenticateToken, (req, res) => {
         console.error('Error checking existing diet chart:', err);
         return res.status(500).json({ error: 'Database error' });
       }
-      if (results.length > 0) {
-        return res.status(200).json({ message: "Today's diet chart already generated", diet: results[0] });
-      } else {
-        // Seeded randomness to generate a personalized diet chart
-        function seedRandom(seed) {
-          var x = Math.sin(seed) * 10000;
-          return x - Math.floor(x);
-        }
-        // List of diet templates
-        const dietTemplates = [
-          "Breakfast: Oatmeal with fruits, Lunch: Grilled chicken salad, Dinner: Steamed salmon with veggies",
-          "Breakfast: Smoothie bowl, Lunch: Spinach quinoa salad, Dinner: Tofu stir-fry with brown rice",
-          "Breakfast: Scrambled eggs with avocado toast, Lunch: Turkey wrap, Dinner: Pasta with marinara sauce",
-          "Breakfast: Greek yogurt with granola, Lunch: Lentil soup, Dinner: Grilled shrimp with asparagus",
-          "Breakfast: Banana pancakes, Lunch: Veggie burger, Dinner: Stir-fried beef with broccoli"
-        ];
-        // Use user id and today's date (without dashes) to form a unique seed
-        const seed = parseInt(userId, 10) + parseInt(todayStr.replace(/-/g, ''), 10);
-        const randomIndex = Math.floor(seedRandom(seed) * dietTemplates.length);
-        const dietPlan = dietTemplates[randomIndex];
+      // Generate a personalized diet plan regardless, then upsert its value.
+      function seededRandom(seed) {
+        const x = Math.sin(seed) * 10000;
+        return x - Math.floor(x);
+      }
+      const dietTemplates = [
+        "Breakfast: Oatmeal with fruits, Lunch: Grilled chicken salad, Dinner: Steamed salmon with veggies",
+        "Breakfast: Smoothie bowl, Lunch: Spinach quinoa salad, Dinner: Tofu stir-fry with brown rice",
+        "Breakfast: Scrambled eggs with avocado toast, Lunch: Turkey wrap, Dinner: Pasta with marinara sauce",
+        "Breakfast: Greek yogurt with granola, Lunch: Lentil soup, Dinner: Grilled shrimp with asparagus",
+        "Breakfast: Banana pancakes, Lunch: Veggie burger, Dinner: Stir-fried beef with broccoli"
+      ];
+      // Use concatenation so the seed is unique per user and date.
+      const seed = parseInt(`${userId}${todayStr.replace(/-/g, '')}`, 10);
+      const randomIndex = Math.floor(seededRandom(seed) * dietTemplates.length);
+      const dietPlan = dietTemplates[randomIndex];
 
-        // Insert the personalized diet chart for the user
+      if (results.length > 0) {
+        // Update the record so that it always reflects the current user's parameters.
         db.query(
-          'INSERT INTO user_activity (user_id, activity_type, detail) VALUES (?, "diet_chart", ?)', 
+          'UPDATE user_activity SET detail = ? WHERE id = ?',
+          [`Generated diet chart: ${dietPlan}`, results[0].id],
+          (updateErr, updateResults) => {
+            if (updateErr) {
+              console.error('Error updating diet chart activity:', updateErr);
+              return res.status(500).json({ error: 'Database error while updating diet chart' });
+            }
+            return res.status(200).json({
+              message: 'Diet chart updated successfully',
+              diet: { date: todayStr, meals: dietPlan }
+            });
+          }
+        );
+      } else {
+        // No record exists for this user today, so insert a new record.
+        db.query(
+          'INSERT INTO user_activity (user_id, activity_type, detail) VALUES (?, "diet_chart", ?)',
           [userId, `Generated diet chart: ${dietPlan}`],
           (insertErr, insertResults) => {
             if (insertErr) {

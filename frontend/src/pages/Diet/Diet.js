@@ -157,7 +157,6 @@ const Diet = () => {
             <option value="">Select</option>
             <option value="vegetarian">Vegetarian</option>
             <option value="non-vegetarian">Non-Vegetarian</option>
-            <option value="vegan">Vegan</option>
           </select>
         </label>
 
