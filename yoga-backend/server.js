@@ -453,21 +453,14 @@ app.post("/api/chatbot", async (req, res) => {
 });
 
 app.get('/api/leaderboard', (req, res) => {
-    const query = `
-    SELECT u.username, ua.xp
-    FROM user_achievements ua
-    JOIN users u ON ua.user_id = u.id
-    ORDER BY ua.xp DESC, ua.achievements_count DESC
-    LIMIT 5
-`;
-
-db.query(query, (err, results) => {
+  const query = 'SELECT username, xp FROM user_achievements ORDER BY xp DESC LIMIT 10';
+  db.query(query, (err, results) => {
     if (err) {
-        console.error('Error fetching leaderboard:', err);
-        return res.status(500).json({ error: 'Failed to retrieve leaderboard' });
+      console.error('Error fetching leaderboard:', err);
+      return res.status(500).json({ error: 'Failed to fetch leaderboard' });
     }
     res.json({ leaderboard: results });
-});
+  });
 });
 
 app.post('/api/update-xp', (req, res) => {
@@ -507,6 +500,27 @@ app.post('/api/feedback', (req, res) => {
       res.status(200).json({ message: 'Feedback submitted successfully' });
     }
   );
+});
+
+app.get('/api/achievements', authenticateToken, (req, res) => {
+  const userId = req.user.id;
+  db.query('SELECT * FROM user_achievements WHERE user_id = ?', [userId], (err, results) => {
+    if (err) {
+      console.error('Error fetching achievements:', err);
+      return res.status(500).json({ error: 'Failed to fetch achievements' });
+    }
+    // Map your data as needed for the frontend
+    // (You might adjust these fields and mappings as per your design)
+    const achievements = results.map(row => ({
+      badgeUrl: row.badge_url || 'https://via.placeholder.com/150', // Use a default placeholder if needed
+      title: row.achievements_count > 0 ? `Achievement ${row.achievements_count}` : 'Keep Practicing',
+      description: `You have earned ${row.xp} XP.`,
+      progress: row.xp > 0 ? 100 : 0,
+      username: row.username,
+      level: row.achievements_count
+    }));
+    res.json({ achievements });
+  });
 });
 
 app.listen(port, () => {

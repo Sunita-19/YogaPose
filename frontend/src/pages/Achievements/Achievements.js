@@ -13,10 +13,10 @@ const Achievements = () => {
 
   // Use a case-insensitive search for the current user's leaderboard entry.
   const currentUserBoard = leaderboard.find(user => {
-    // Make sure user.username exists before calling trim.
     return (user.username || "").trim().toLowerCase() === currentUsername.trim().toLowerCase();
   });
   const userXp = currentUserBoard ? currentUserBoard.xp : 0;
+  console.log('currentUsername:', currentUsername, 'userXp:', userXp, 'Leaderboard:', leaderboard);
 
   const shareAchievement = (achievement) => {
     const shareText = `I just reached ${achievement.title} on Fun Yoga! Join me and unlock your own rewards!`;
@@ -33,8 +33,26 @@ const Achievements = () => {
     }
   };
 
+  const shareXPPoints = () => {
+    const shareText = `I have earned ${userXp} XP points on Fun Yoga! Join me and start your fitness journey.`;
+    if (navigator.share) {
+      navigator.share({
+        title: 'My Yoga XP on Fun Yoga!',
+        text: shareText,
+        url: window.location.href
+      })
+      .then(() => console.log('Thanks for sharing!'))
+      .catch(error => console.error('Error sharing:', error));
+    } else {
+      // Fallback: open Twitter share URL
+      const twitterUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}`;
+      window.open(twitterUrl, '_blank');
+    }
+  };
+
   useEffect(() => {
     if (token) {
+      // Fetch achievements
       axios.get('http://localhost:5000/api/achievements', {
         headers: { Authorization: `Bearer ${token}` }
       })
@@ -46,11 +64,13 @@ const Achievements = () => {
         }
       })
       .catch(error => console.error('Error fetching achievements:', error));
-
+      
+      // Fetch leaderboard
       axios.get('http://localhost:5000/api/leaderboard', {
         headers: { Authorization: `Bearer ${token}` }
       })
       .then(response => {
+        // Assuming your backend sends { leaderboard: [...] } 
         setLeaderboard(response.data.leaderboard || []);
       })
       .catch(error => console.error('Error fetching leaderboard:', error));
@@ -72,8 +92,8 @@ const Achievements = () => {
           {leaderboard.length === 0 ? (
             <p>No leaderboard data available</p>
           ) : (
-            leaderboard.map((user, index) => {
-              const isCurrentUser = user.username === currentUsername;
+            leaderboard.slice(0, 5).map((user, index) => {
+              const isCurrentUser = user.username.trim().toLowerCase() === currentUsername.trim().toLowerCase();
               return (
                 <li
                   key={index}
@@ -87,6 +107,12 @@ const Achievements = () => {
             })
           )}
         </ul>
+        {/* New Share XP Points Button */}
+        {userXp > 0 && (
+          <button className="share-xp-btn" onClick={shareXPPoints}>
+            Share My XP
+          </button>
+        )}
       </div>
 
       {/* Achievements Section */}
@@ -98,7 +124,7 @@ const Achievements = () => {
               className={`achievement-card ${achievement.username === currentUsername ? "current-user-card" : ""}`}
             >
               <img
-                src={achievement.badgeUrl}
+                src={achievement.badgeUrl ||`https://c7.alamy.com/comp/2JWAX9E/golden-badget-with-two-star-2JWAX9E.jpgt+${achievement.achievements_count}`}
                 alt={achievement.title}
                 className="achievement-badge"
               />
@@ -124,11 +150,11 @@ const Achievements = () => {
             </p>
           </div>
         )}
-        {/* {achievements.length === 0 && userXp === 0 && (
+        {achievements.length === 0 && userXp === 0 && (
           <p className="no-achievements">
             You haven't earned any achievements yet. Start practicing to unlock rewards!
           </p>
-        )} */}
+        )}
       </div>
     </div>
   );
