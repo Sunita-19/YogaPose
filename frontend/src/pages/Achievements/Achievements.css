@@ -52,28 +52,46 @@
 
 /* Leaderboard Items */
 .leaderboard li {
-  font-size: 18px;
-  font-weight: bold;
-  background: rgba(255, 255, 255, 0.85);
-  padding: 12px;
-  border-radius: 10px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
-  transition: all 0.3s ease;
+  font-size: 18px;
+  font-weight: bold;
+  background: rgba(255, 255, 255, 0.9);
+  padding: 10px;
+  border-radius: 8px;
+  margin: 5px 0;
+  box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s ease;
 }
 
-/* Highlight Top Achiever */
+/* Existing Hover Effect (do not modify) */
+.leaderboard li:hover {
+  transform: translateY(-5px);
+}
+
+/* Highlight Top Achiever remains */
 .leaderboard li:first-child {
   background: linear-gradient(45deg, #FFD700, #FFB300);
   color: white;
   font-size: 20px;
 }
 
-/* Hover Effect */
-.leaderboard li:hover {
-  transform: translateY(-5px);
+/* Highlight the logged-in user's leaderboard entry */
+.leaderboard li.current-user {
+  border: 2px solid #2E7D32;
+  background: rgba(46, 125, 50, 0.1);
+  color: #2E7D32;
+  font-weight: bold;
+  position: relative;
+}
+
+/* Optionally, add a badge or icon for the current user */
+.leaderboard li.current-user::after {
+  content: " (You)";
+  font-size: 16px;
+  color: #2E7D32;
+  margin-left: 5px;
 }
 
 /* 🎖 Achievements Grid */
@@ -168,19 +186,15 @@
   padding: 0;
 }
 
-.leaderboard li {
-  display: flex;
-  justify-content: space-between;
-  font-size: 18px;
-  font-weight: bold;
-  background: rgba(255, 255, 255, 0.9);
-  padding: 10px;
-  border-radius: 8px;
-  margin: 5px 0;
-  box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.2);
-}
-
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(-10px); }
   to { opacity: 1; transform: translateY(0); }
+}
+
+/* Highlight fallback card and logged-in user's achievement card */
+.current-user-card {
+  border: 2px solid #2E7D32;
+  background: rgba(46, 125, 50, 0.1);
+  color: #2E7D32;
+  font-weight: bold;
 }

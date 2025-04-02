@@ -70,19 +70,40 @@ const Progress = () => {
   };
 
   // Deduplicate yogaHistory by pose name
-  const dedupedYogaHistory = Array.from(
-    new Map(
-      progress.yogaHistory.map(record => [record.pose_name || "Yoga Pose", record])
-    ).values()
-  );
+  const dedupedYogaHistory = (() => {
+    const historyMap = new Map();
+    progress.yogaHistory.forEach(record => {
+      const key = record.pose_name || "Yoga Pose";
+      if (!historyMap.has(key)) {
+        historyMap.set(key, record);
+      } else {
+        // Compare dates and update if current record is more recent
+        const existingRecord = historyMap.get(key);
+        if (new Date(record.activity_date) > new Date(existingRecord.activity_date)) {
+          historyMap.set(key, record);
+        }
+      }
+    });
+    return Array.from(historyMap.values());
+  })();
 
   // Deduplicate "Your Recent Activities" from recentActivities (user_activity data)
   const practiceActivities = progress.recentActivities || [];
-  const dedupedPracticeActivities = Array.from(
-    new Map(
-      practiceActivities.map(item => [ (item.pose_name || "Yoga Pose").toLowerCase(), item])
-    ).values()
-  );
+  const dedupedPracticeActivities = (() => {
+    const activityMap = new Map();
+    practiceActivities.forEach(item => {
+      const key = (item.pose_name || "Yoga Pose").toLowerCase();
+      if (!activityMap.has(key)) {
+        activityMap.set(key, item);
+      } else {
+        const existingItem = activityMap.get(key);
+        if (new Date(item.activity_date) > new Date(existingItem.activity_date)) {
+          activityMap.set(key, item);
+        }
+      }
+    });
+    return Array.from(activityMap.values());
+  })();
 
   // Compute final recommended list by merging backend and fallback poses, deduplicated by name
   const finalRecommended = (() => {
