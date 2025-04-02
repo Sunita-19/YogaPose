@@ -24,6 +24,30 @@ const Progress = () => {
     return `http://localhost:5000/${url}`;
   };
 
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    const day = date.getDate().toString().padStart(2, '0');
+    const month = (date.getMonth() + 1).toString().padStart(2, '0');
+    const year = date.getFullYear();
+    return `${day}/${month}/${year}`;
+  };
+
+  // Add these near your helper functions
+  const quotes = [
+    "Eat healthy, live healthy. Your body is your temple.",
+    "You are what you eat. Fuel wisely for a vibrant life.",
+    "Healthy eating is a form of self-respect.",
+    "Your diet is your bank account. Invest in good food.",
+    "Nourish your body with every bite."
+  ];
+
+  const getDailyQuote = (dateString) => {
+    // Use the day-of-month as a seed so the quote changes daily.
+    const date = new Date(dateString);
+    const day = date.getDate();  // 1 to 31
+    return quotes[(day - 1) % quotes.length];
+  };
+
   useEffect(() => {
     if (token) {
       axios
@@ -170,7 +194,7 @@ const Progress = () => {
                   )}
                   <div className="card-content">
                     <h3>{record.pose_name || "Yoga Pose"}</h3>
-                    <p className="date">{new Date(record.activity_date).toLocaleDateString()}</p>
+                    <p className="date">{formatDate(record.activity_date)}</p>
                   </div>
                 </div>
               ))}
@@ -217,7 +241,7 @@ const Progress = () => {
                   )}
                   <div className="card-content">
                     <h3>{item.name || 'Yoga Pose'}</h3>
-                    <p className="date">{new Date(item.activity_date).toLocaleDateString()}</p>
+                    <p className="date">{formatDate(item.activity_date)}</p>
                   </div>
                 </div>
               ))
@@ -251,10 +275,10 @@ const Progress = () => {
                 return (
                   <div key={idx} className="diet-chart-card">
                     <div>
-                      <p className="date">{new Date(item.date).toLocaleDateString()}</p>
+                      <p className="date">{formatDate(item.date)}</p>
                     </div>
                     <div className="diet-quote">
-                      "Eat healthy, live healthy. Your body is your temple."
+                      {getDailyQuote(item.date)}
                     </div>
                     <div className="diet-grid">
                       <div className="diet-card">

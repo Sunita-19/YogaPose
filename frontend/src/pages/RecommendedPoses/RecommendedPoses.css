@@ -106,3 +106,42 @@ button[type="submit"] {
 button[type="submit"]:hover {
   background-color: #0f6dc6;
 }
+
+.checkbox-group {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start; /* left align each checkbox option */
+  gap: 10px; /* spacing between options */
+  margin-top: 0; /* remove extra top margin if needed */
+}
+
+.checkbox-group label {
+  display: flex;
+  flex-direction: row;  /* ensures checkbox and text are side by side */
+  align-items: center;
+  font-size: 16px;
+  cursor: pointer;
+  margin-left: 25px; /* adjust the value as needed */
+}
+
+.checkbox-group input[type="checkbox"] {
+  margin-right: 20px;
+}
+
+/* Ensure the overall form-group for health conditions is left aligned */
+.form-group.health-conditions {
+  display: flex;
+  flex-direction: column; /* stack the label and the checkboxes */
+  align-items: right; /* left align everything */
+  gap: 5px;
+}
+
+/* Style the label for the health conditions group */
+.form-group.health-conditions > label {
+  font-weight: 600;
+  color: #34495e;
+}
+
+.form-group.health-conditions .checkbox-group {
+  margin-left: 80px; /* adjust the value as needed */
+}

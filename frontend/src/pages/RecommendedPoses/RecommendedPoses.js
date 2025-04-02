@@ -22,7 +22,7 @@ const RecommendedPoses = () => {
     weight: "",
     gender: "female",
     fitnessLevel: "beginner",
-    healthConditions: "none",
+    healthConditions: [],
     activityLevel: "low"
   });
   const [error, setError] = useState("");
@@ -30,6 +30,22 @@ const RecommendedPoses = () => {
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handleCheckboxChange = (e) => {
+    const { value, checked } = e.target;
+    let newHealthConditions;
+    if(checked) {
+      newHealthConditions = [...formData.healthConditions, value];
+    } else {
+      newHealthConditions = formData.healthConditions.filter(item => item !== value);
+    }
+    if (value === "none" && checked) {
+      newHealthConditions = ["none"];
+    } else if (value !== "none" && newHealthConditions.includes("none")) {
+      newHealthConditions = newHealthConditions.filter(item => item !== "none");
+    }
+    setFormData({ ...formData, healthConditions: newHealthConditions });
   };
 
   const fetchPoses = async () => {
@@ -79,9 +95,13 @@ const RecommendedPoses = () => {
     setLastFormData(formData);
   };
 
-  // Updated click handler to navigate to the PoseDetails page
-  const handleAsanaClick = (asanaId) => {
-    navigate(`/pose/${asanaId}`);
+  const handleAsanaClick = (asanaId, asanaName) => {
+    const idNumber = Number(asanaId);
+    if (isNaN(idNumber)) {
+      navigate("/start", { state: { selectedPose: asanaName } });
+    } else {
+      navigate(`/pose/${asanaId}`);
+    }
   };
 
   return (
@@ -136,15 +156,50 @@ const RecommendedPoses = () => {
               <option value="advanced">Advanced</option>
             </select>
           </div>
-
-          <div className="form-group">
-            <label>Health Conditions:</label>
-            <select name="healthConditions" value={formData.healthConditions} onChange={handleChange}>
-              <option value="none">None</option>
-              <option value="back pain">Back Pain</option>
-              <option value="high blood pressure">High Blood Pressure</option>
-              <option value="joint pain">Joint Pain</option>
-            </select>
+          <div className="form-group"> <label>Health Conditions:</label></div>
+          <div className="form-group health-conditions">
+            <div className="checkbox-group">
+              <label>
+                <input 
+                  type="checkbox" 
+                  name="healthConditions" 
+                  value="back pain"
+                  onChange={handleCheckboxChange}
+                  checked={formData.healthConditions.includes("back pain")}
+                />
+                Back Pain
+              </label>
+              <label>
+                <input 
+                  type="checkbox" 
+                  name="healthConditions" 
+                  value="high blood pressure"
+                  onChange={handleCheckboxChange}
+                  checked={formData.healthConditions.includes("high blood pressure")}
+                />
+                High Blood Pressure
+              </label>
+              <label>
+                <input 
+                  type="checkbox" 
+                  name="healthConditions" 
+                  value="joint pain"
+                  onChange={handleCheckboxChange}
+                  checked={formData.healthConditions.includes("joint pain")}
+                />
+                Joint Pain
+              </label>
+              <label>
+                <input 
+                  type="checkbox" 
+                  name="healthConditions" 
+                  value="none"
+                  onChange={handleCheckboxChange}
+                  checked={formData.healthConditions.includes("none")}
+                />
+                None
+              </label>
+            </div>
           </div>
 
           <div className="form-group">
@@ -170,7 +225,7 @@ const RecommendedPoses = () => {
                 <li 
                   key={asana.id}
                   className="pose-name"
-                  onClick={() => handleAsanaClick(asana.id)}
+                  onClick={() => handleAsanaClick(asana.id, asana.name)}
                 >
                   {asana.name}
                 </li>
