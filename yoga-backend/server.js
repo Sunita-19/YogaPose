@@ -317,6 +317,7 @@ app.post('/api/recommended-poses', authenticateToken, (req, res) => {
 });
 
 app.get('/api/progress-report', authenticateToken, (req, res) => {
+    console.log(`Progress report request for user ${req.user.id}`);
     const userId = req.user.id;
     
     // Sessions query (if needed)
@@ -484,6 +485,28 @@ app.post('/api/update-xp', (req, res) => {
         }
         res.json({ message: 'XP updated successfully' });
     });
+});
+
+app.post('/api/feedback', (req, res) => {
+//   console.log('Feedback payload:', req.body);
+  const { name, email, satisfaction, comments } = req.body;
+  
+  if (!name || !email || !satisfaction || !comments) {
+    return res.status(400).json({ message: 'All fields are required' });
+  }
+  
+  // Insert feedback into the feedback table
+  db.query(
+    'INSERT INTO feedback (name, email, satisfaction, comments) VALUES (?, ?, ?, ?)',
+    [name, email, satisfaction, comments],
+    (err, results) => {
+      if (err) {
+        console.error('Error inserting feedback:', err);
+        return res.status(500).json({ message: 'Database error while inserting feedback' });
+      }
+      res.status(200).json({ message: 'Feedback submitted successfully' });
+    }
+  );
 });
 
 app.listen(port, () => {
