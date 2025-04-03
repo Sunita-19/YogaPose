@@ -15,16 +15,47 @@
 }
 
 .profile-photo-container {
+  position: relative;
   margin-bottom: 1rem;
 }
 
 .profile-photo {
-  width: 150px;
-  height: 150px;
+  width: 200px;  /* increased size */
+  height: 200px; /* increased size */
   object-fit: cover;
   border-radius: 50%;
-  border: 3px solid #1e88e5;
+  border: 4px solid #1e88e5;
 }
+
+/* Pencil icon overlay */
+.change-photo-wrapper {
+  position: absolute;
+  bottom: 8px;
+  right: 8px;
+  background: #1e88e5;
+  color: #fff;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 20px;
+  z-index: 10;
+}
+
+.change-photo-wrapper input[type="file"] {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  cursor: pointer;
+}
+
+/* Optionally, you can style a label for the file input instead */
 
 .profile-container label {
   display: block;

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import './Profile.css';
 
-const defaultPlaceholder = 'https://via.placeholder.com/150?text=Profile';
+const defaultPlaceholder = 'https://via.placeholder.com/200?text=Profile';
 
 const Profile = () => {
   const [profile, setProfile] = useState({
@@ -42,7 +42,7 @@ const Profile = () => {
   const handlePhotoChange = (e) => {
     if(e.target.files && e.target.files[0]){
       setPhotoFile(e.target.files[0]);
-      // For preview purposes, set the file URL
+      // For immediate preview, set the profilePhoto URL
       setProfile(prev => ({ ...prev, profilePhoto: URL.createObjectURL(e.target.files[0]) }));
     }
   };
@@ -66,7 +66,7 @@ const Profile = () => {
     .then(response => {
       setMessage('Profile updated successfully!');
       setIsEditing(false);
-      setProfile(response.data); // update fields with latest data
+      setProfile(response.data); // update fields with latest data from backend
     })
     .catch(error => {
       console.error('Error updating profile:', error);
@@ -81,10 +81,20 @@ const Profile = () => {
       <h1>Your Profile</h1>
       <div className="profile-photo-container">
         <img 
-          src={profile.profilePhoto || defaultPlaceholder} 
+          src={profile.profilePhoto ? `http://localhost:5000/${profile.profilePhoto}` : defaultPlaceholder} 
           alt="Profile" 
           className="profile-photo" 
         />
+        {isEditing && (
+          <label className="change-photo-wrapper">
+            ✏️
+            <input 
+              type="file" 
+              accept="image/*" 
+              onChange={handlePhotoChange} 
+            />
+          </label>
+        )}
       </div>
       {message && <p className="message">{message}</p>}
       <form onSubmit={handleSubmit} className="profile-form">
@@ -116,24 +126,14 @@ const Profile = () => {
         />
 
         {isEditing && (
-          <>
-            <label>Profile Photo:</label>
-            <input 
-              type="file" 
-              accept="image/*" 
-              onChange={handlePhotoChange} 
-            />
-          </>
-        )}
-
-        {isEditing ? (
           <div className="btn-group">
             <button type="submit" className="edit-btn">Save</button>
             <button type="button" className="edit-btn" onClick={() => setIsEditing(false)}>
               Cancel
             </button>
           </div>
-        ) : (
+        )}
+        {!isEditing && (
           <button 
             type="button" 
             onClick={() => setIsEditing(true)} 

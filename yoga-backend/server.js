@@ -5,6 +5,8 @@ const mysql = require('mysql2');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const multer = require('multer');
+const fs = require('fs');
+const path = require('path');
 require('dotenv').config();
 
 const app = express();
@@ -27,6 +29,14 @@ db.connect((err) => {
     }
     console.log('Connected to the database.');
 });
+
+const uploadDir = path.join(__dirname, 'uploads');
+if (!fs.existsSync(uploadDir)) {
+  fs.mkdirSync(uploadDir, { recursive: true });
+}
+
+// Expose uploads as a static folder so files can be accessed by the frontend
+app.use('/uploads', express.static(uploadDir));
 
 function authenticateToken(req, res, next) {
     const token = req.headers['authorization'];
@@ -525,7 +535,6 @@ app.get('/api/achievements', authenticateToken, (req, res) => {
 // Configure storage for profile photos
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    // Ensure the uploads folder exists, or change path as needed
     cb(null, 'uploads/');
   },
   filename: function (req, file, cb) {
