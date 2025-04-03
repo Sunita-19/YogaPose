@@ -1,126 +1,183 @@
 export const poseInstructions = {
     Tree: [
-        'Get into position. Tree pose often starts from mountain pose (or Tadasana), with both feet planted firmly on the ground and your weight adequately distributed so that you are balanced.',
-        'Bend one leg at the knee. Choose the leg you are going to fold in first. If your left leg is your standing leg, keep your left foot planted on the ground, and slowly bend in your right leg at the right knee so that the sole of your right foot rests against your left inner thigh. Point the knee of your bent leg outward, away from your body.',
-        'Lengthen your body. Clasp your hands together in Anjali Mudra (prayer position).',
-        'Hold and repeat. Hold the pose for as long as needed, and then switch legs.'
+        'Start in Mountain Pose (Tadasana) with feet firmly grounded and weight evenly distributed.',
+        'Shift weight onto your left foot, keeping it rooted to the ground.',
+        'Bend your right knee and place the sole of your right foot on the inner left thigh or calf (avoid placing it on the knee).',
+        'Press your foot and leg against each other for stability.',
+        'Bring your palms together in Anjali Mudra (prayer position) at your chest or extend your arms overhead.',
+        'Focus your gaze on a fixed point to help maintain balance.',
+        'Hold the pose for several breaths, then gently lower your right foot and repeat on the other side.'
     ],
     Cobra: [
-        'Lie prone on the floor with your legs stretched back and the tops of your feet on the floor.',
-        'Place your hands under your shoulders. On an inhalation, gently press through your hands to lift your chest off the floor while keeping a light bend in your elbows.',
-        'Maintain a soft gaze forward and hold the position while breathing steadily.',
-        'Exhale and return to the starting position.'
+        'Lie prone on the floor with your legs extended back and the tops of your feet pressing into the mat.',
+        'Place your hands under your shoulders, elbows close to your body.',
+        'Inhale and gently press through your palms to lift your head, chest, and upper abdomen off the floor, keeping a slight bend in the elbows.',
+        'Engage your back muscles and open your chest forward.',
+        'Keep your shoulders relaxed and away from your ears.',
+        'Maintain a soft gaze forward and hold the position for several breaths.',
+        'Exhale and slowly lower your torso back to the floor.'
     ],
     Dog: [
-        'Come onto your hands and knees with your hands a little in front of your shoulders.',
-        'Exhale and lift your knees off the floor, reaching your hips up and back to form an inverted V-shape.',
-        'Press your heels gently toward the floor, and keep your head between your upper arms.',
-        'Hold the pose for several breaths.'
+        'Begin on your hands and knees in a tabletop position, with wrists aligned under shoulders and knees under hips.',
+        'Spread your fingers wide and press firmly through your palms.',
+        'Tuck your toes under and, on an exhale, lift your knees off the floor, raising your hips toward the ceiling.',
+        'Straighten your legs as much as comfortable, aiming to form an inverted V-shape with your body.',
+        'Press your heels gently toward the floor without forcing them.',
+        'Keep your head between your upper arms, aligning your ears with your biceps.',
+        'Hold the pose for several breaths, then gently lower back to the starting position.'
     ],
     Chair: [
-        'Stand with your feet slightly wider than hip-width apart and arms at your sides.',
-        'Inhale and lift your arms parallel to the floor as you begin to bend your knees, as if preparing to sit in a chair.',
-        'Keep your weight on your heels and your back straight.',
-        'Hold the pose for 30 seconds to a minute, breathing steadily.'
+        'Stand with your feet hip-width apart, arms resting at your sides.',
+        'Inhale and raise your arms overhead, palms facing each other or touching.',
+        'Exhale and bend your knees, lowering your hips as if sitting back into an imaginary chair.',
+        'Keep your thighs as parallel to the floor as possible, knees aligned over your feet.',
+        'Engage your core and lift your chest to prevent rounding your back.',
+        'Distribute your weight evenly across your feet, ensuring knees do not extend past toes.',
+        'Hold the pose for 30 seconds to a minute, breathing steadily, then inhale to stand back up.'
     ],
     Warrior: [
-        'Begin in a lunge position with the front knee bent and the back leg straight.',
-        'Rotate your back foot slightly and raise your arms overhead, palms facing each other.',
-        'Ensure your hips and shoulders face forward and hold the pose while breathing deeply.'
+        'Begin in a standing position (Mountain Pose).',
+        'Step your left foot back about 3-4 feet, turning the foot out at a 45-degree angle.',
+        'Bend your right knee to a 90-degree angle, ensuring the knee is directly over the ankle.',
+        'Keep your left leg straight and strong, pressing the outer edge of the foot into the floor.',
+        'Square your hips and shoulders to face forward.',
+        'Raise your arms overhead with palms facing each other or touching.',
+        'Relax your shoulders away from your ears and gaze forward or slightly upward.',
+        'Hold the pose for several breaths, then repeat on the other side.'
     ],
     Triangle: [
-        'Stand with your feet wide apart.',
-        'Turn your left foot out 90 degrees and your right foot in slightly, then extend your arms out to the sides.',
-        'Lean over your left leg and reach your left hand down toward your left foot, while your right hand stretches upward.',
-        'Keep your chest open and spine long as you hold the pose. Repeat on the other side.'
+        'Stand with your feet wide apart, approximately 3-4 feet.',
+        'Turn your right foot out 90 degrees and your left foot in slightly.',
+        'Extend your arms parallel to the floor, palms facing down.',
+        'Engage your thigh muscles and ground both feet firmly.',
+        'Inhale and reach your right arm forward over your right leg, lengthening your torso.',
+        'Exhale and hinge at your hip to lower your right hand to your shin, ankle, or the floor outside your right foot.',
+        'Extend your left arm toward the ceiling, aligning both shoulders vertically.',
+        'Turn your head to gaze at your left thumb, if comfortable.',
+        'Hold the pose for several breaths, then press through your feet to rise back up and repeat on the other side.'
     ],
     Shoulderstand: [
-        'Lie on your back with your shoulders on a folded blanket for support.',
-        'Lift your legs and hips off the ground, supporting your lower back with your hands.',
-        'Align your body in a straight line, and hold the pose while keeping your gaze upward.',
-        'Exhale and slowly lower your body back to the floor.'
+        'Lie on your back with your arms alongside your body, palms facing down.',
+        'Engage your core and lift your legs perpendicular to the floor.',
+        'Press your hands into the floor to lift your hips, bringing your legs over your head into a plow-like position.',
+        'Bend your elbows and place your hands on your lower back for support.',
+        'Extend your legs upward, aligning your feet over your head to form a straight line.',
+        'Keep your neck neutral and gaze upward, holding the pose with steady breathing.',
+        'To release, lower your legs back over your head, then gently roll your spine down to the floor.'
     ],
     'King Pigeon Pose': [
-        'Begin by standing tall as a mountain pose.',
-        'Shift your weight onto one leg and fold the other leg behind you, resting the top of your foot near your opposite shoulder.',
-        'Open your chest and bring your hands together in prayer position at your heart.',
-        'Breathe deeply while holding the pose for 30 seconds to 1 minute, then switch sides.'
+        'Begin in a high lunge with your right foot forward.',
+        'Lower your left knee to the floor and slide it back slightly.',
+        'Place your right hand on your right thigh and reach your left arm back.',
+        'Bend your left knee and attempt to grasp your left foot with your left hand.',
+        'Square your hips forward and lift your chest, deepening the backbend.',
+        'Hold the pose, breathing deeply, then switch sides.'
     ],
     'Virabhadrasana I': [
-        'Step into a lunge with your right foot forward, keeping the left leg straight and turned slightly inwards.',
-        'Raise your arms overhead with palms facing each other while keeping your shoulders down.',
-        'Square your hips toward the front and ensure your front knee is directly over your ankle.',
-        'Hold the pose while breathing deeply and then repeat on the opposite side.'
+        'Start in Mountain Pose (Tadasana).',
+        'Step your left foot back about 3-4 feet, turning the foot out at a 45-degree angle.',
+        'Bend your right knee to a 90-degree angle, ensuring the knee is directly over the ankle.',
+        'Square your hips and shoulders to the front.',
+        'Raise your arms overhead with palms facing each other.',
+        'Hold the pose, breathing deeply, then repeat on the other side.'
     ],
     Balasana: [
-        'Kneel on the mat with your knees spread apart, big toes touching.',
-        'Sit back on your heels and lean forward, lowering your chest to rest on your thighs and your forehead to the mat.',
-        'Stretch your arms forward or let them rest alongside your body.',
-        'Breathe deeply, relaxing in the pose for as long as comfortable.'
+        'Kneel on the floor with big toes touching and knees spread apart.',
+        'Sit back on your heels and extend your arms forward, lowering your torso between your thighs.',
+        'Rest your forehead on the mat and relax your neck.',
+        'Breathe deeply, holding the pose for as long as comfortable.'
     ],
     'Setu Bandhasana': [
-        'Lie on your back with your knees bent and your feet flat on the mat, hip-width apart.',
-        'Press your feet into the floor as you slowly lift your hips toward the ceiling.',
-        'Interlace your fingers under your back and roll onto your shoulders to lift your chest higher.',
-        'Hold the pose for a few breaths before lowering your hips down.'
+        'Lie on your back with knees bent and feet flat on the floor, hip-width apart.',
+        'Place your arms alongside your body, palms facing down.',
+        'Press your feet and arms into the floor as you lift your hips toward the ceiling.',
+        'Interlace your fingers under your back and roll your shoulders underneath you.',
+        'Lift your chest toward your chin, engaging your glutes and thighs.',
+        'Hold the pose for several breaths, then release by slowly lowering your hips to the floor.'
     ],
     'Marjaryasana-Bitilasana': [
-        'Begin on your hands and knees in a tabletop position with your wrists under your shoulders and knees under your hips.',
-        'On an inhalation, lower your belly, lift your head and tailbone (Cow Pose).',
-        'On an exhalation, round your spine upward, tucking your chin toward your chest (Cat Pose).',
-        'Alternate between these two movements slowly, coordinating your breath with the motion.'
+        'Begin on your hands and knees in a tabletop position with wrists aligned under shoulders and knees under hips.',
+        'Inhale into Cow Pose (Bitilasana):',
+        '   - Drop your belly toward the mat, lifting your tailbone and chest upward.',
+        '   - Gaze forward or slightly upward, ensuring your neck remains long.',
+        'Exhale into Cat Pose (Marjaryasana):',
+        '   - Round your spine toward the ceiling, tucking your tailbone and chin.',
+        '   - Draw your navel toward your spine, engaging your abdominal muscles.',
+        'Continue to flow between Cow Pose on the inhale and Cat Pose on the exhale for several breaths, promoting spinal flexibility and warmth.'
     ],
     Paschimottanasana: [
-        'Sit on the floor with your legs straight in front of you and your spine upright.',
-        'Inhale to lengthen your spine, and slowly lean forward from the hips while keeping your back as flat as possible.',
+        'Sit on the floor with your legs extended straight in front of you, feet flexed.',
+        'Inhale to lengthen your spine, sitting up tall.',
+        'Exhale and hinge at your hips to fold forward over your legs, leading with your chest.',
         'Reach your hands toward your feet, ankles, or shins, depending on your flexibility.',
-        'Relax your neck and hold the pose for several deep breaths, then gently return to an upright seated position.'
+        'Keep your spine long and avoid rounding your back.',
+        'With each inhale, find length in your spine; with each exhale, deepen the fold.',
+        'Hold the pose for several breaths, then inhale to rise back to a seated position.'
     ],
     'Ardha Chandrasana (Half Moon Pose)': [
-        'Stand tall and shift your weight onto your left foot.',
-        'Lift your right leg behind you, keeping it straight, and extend your right arm upward for balance.',
-        'Place your left hand on the floor a few inches in front, opening your chest and torso.',
-        'Hold the pose while keeping your core engaged and your gaze upward.'
+        'Begin in Warrior II with your right foot forward.',
+        'Shift your weight onto your right foot and place your right hand on the floor or a block about 12 inches in front of your right foot.',
+        'Simultaneously, lift your left leg parallel to the floor, keeping it straight and strong.',
+        'Extend your left arm toward the ceiling, stacking your shoulders and opening your chest.',
+        'Engage your core and find balance, gazing at your left hand if comfortable.',
+        'Hold the pose for several breaths, then lower your left leg and return to Warrior II.',
+        'Repeat on the other side.'
     ],
     'Bakasana (Crow Pose)': [
-        'Begin in a deep squat with your feet close together.',
-        'Place your hands on the ground in front of you with fingers spread wide.',
-        'Lean forward, shift your weight onto your hands, and lift your knees onto your triceps.',
-        'Focus your gaze forward and balance the pose, engaging your core and arms.',
-        'Hold the pose for a few controlled breaths before releasing.'
+        'Begin in a squat with your feet close together and knees wide apart.',
+        'Place your hands on the floor shoulder-width apart, fingers spread wide.',
+        'Bend your elbows slightly and engage your core.',
+        'Lift your hips and shift your weight forward, bringing your knees to rest on the backs of your upper arms.',
+        'Continue to lean forward until your feet lift off the ground, balancing on your hands.',
+        'Keep your gaze forward and avoid looking down to maintain balance.',
+        'Hold the pose for several breaths, then gently lower your feet back to the ground.'
     ],
     'Navasana (Boat Pose)': [
-        'Sit on the floor with your legs extended in front of you.',
-        'Lean back slightly and lift your legs off the floor, keeping them straight or bending them if needed.',
-        'Extend your arms forward parallel to the floor.',
-        'Engage your core to maintain balance, forming a V-shape with your body.',
-        'Hold the pose while keeping your spine straight.'
+        'Sit on the floor with your knees bent and feet flat.',
+        'Lean back slightly, keeping your spine straight and chest lifted.',
+        'Engage your core and lift your feet off the floor, bringing your shins parallel to the ground.',
+        'If comfortable, straighten your legs to form a V-shape with your body.',
+        'Extend your arms forward, parallel to the floor, with palms facing each other.',
+        'Balance on your sit bones and hold the pose for several breaths.',
+        'To release, lower your feet back to the floor and sit upright.'
     ],
     'Phalakasana (Plank Pose)': [
-        'Start in a push-up position with your hands directly under your shoulders and legs extended behind.',
-        'Keep your body in a straight line from head to heels, engaging your core.',
-        'Avoid sagging or lifting your hips too high.',
-        'Hold the pose for as long as you can maintain proper form.'
+        'Begin on your hands and knees in a tabletop position.',
+        'Step your feet back, straightening your legs to form a straight line from head to heels.',
+        'Position your wrists directly under your shoulders, fingers spread wide.',
+        'Engage your core, thighs, and glutes to maintain alignment.',
+        'Keep your neck neutral by gazing at a point on the floor slightly ahead of your hands.',
+        'Hold the pose for several breaths, ensuring your hips don’t sag or lift too high.',
+        'To release, lower your knees to the floor and return to the starting position.'
     ],
     'Scorpion Pose Kapotasana': [
-        'Begin in a plank position with your core engaged.',
-        'Slowly shift your weight to one side as you arch backward, trying to bring your feet closer to your head.',
-        'Make sure to keep your core and leg muscles active for support.',
-        'Hold the pose briefly (for a few seconds) and then return to plank. Repeat on the other side.'
+        'Begin in a forearm stand with your forearms parallel on the mat and shoulders stacked over your elbows.',
+        'Engage your core and lift both legs overhead, bending your knees.',
+        'Slowly arch your back, bringing your feet toward your head.',
+        'Keep your gaze forward and maintain balance by engaging your core and shoulders.',
+        'Hold the pose for several breaths, then carefully straighten your legs back overhead.',
+        'Lower one leg at a time to return to the starting position.'
     ],
     'Eka Pada Rajakapotasana (Pigeon Pose)': [
-        'Begin in a tabletop position and slide your right knee forward between your hands.',
-        'Extend your left leg straight back, keeping your hips square.',
-        'Lower your torso over your right leg by folding forward gradually.',
-        'Keep your back leg extended and relax into the stretch.',
-        'Hold the pose for several deep breaths and then switch sides.'
+        'From Downward Facing Dog, bring your right knee forward, placing it behind your right wrist.',
+        'Extend your right ankle toward your left wrist, adjusting the shin’s angle as comfortable.',
+        'Slide your left leg back, straightening it and keeping the hips square.',
+        'Lower your hips toward the floor, ensuring they remain level.',
+        'Inhale to lengthen your spine, and exhale to fold your torso over your right leg, resting on your forearms or forehead.',
+        'Hold the pose for several breaths, feeling the stretch in your right hip and left hip flexor.',
+        'To release, press into your hands, tuck your left toes, and step back to Downward Facing Dog.',
+        'Repeat on the other side.'
     ],
     'Ustrasana (Camel Pose)': [
-        'Kneel on the floor with your knees hip-width apart.',
-        'Place your hands on your lower back for support as you gently arch backward.',
-        'Lean your head back and open your chest, reaching for your heels if comfortable.',
-        'Engage your core and keep your knees stable.',
-        'Hold the pose for several deep breaths before returning to an upright position.'
+        'Kneel on the floor with your knees hip-width apart and thighs perpendicular to the ground.',
+        'Place your hands on your lower back with fingers pointing downward.',
+        'Inhale to lift your chest and lengthen your spine.',
+        'Exhale and begin to arch your back, gently pressing your hips forward.',
+        'Reach your hands back to grasp your heels, one hand at a time, if accessible.',
+        'Keep your neck neutral or let your head drop back, depending on comfort.',
+        'Engage your thighs and core to support the backbend.',
+        'Hold the pose for several breaths, then bring your hands back to your lower back.',
+        'Inhale to lift your torso back upright, leading with your chest.'
     ]
 };
 
