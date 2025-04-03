@@ -260,7 +260,7 @@ const Progress = () => {
       {/* Diet Chart Slider Section */}
       {progress.dietCharts && progress.dietCharts.length > 0 && (
         <section className="segment diet-section" style={{ background: "white" }}>
-          <h2 className="segment-heading">Your Diet For Today</h2>
+          <h2 className="segment-heading">Your Diet</h2>
           <div className="carousel-container">
             <button 
               className="carousel-nav left" 
