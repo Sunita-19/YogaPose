@@ -1,44 +1,53 @@
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
 /* Overall Page Styling */
 .achievements-container {
-  max-width: 900px;
+  max-width: 1000px;
   margin: 40px auto;
-  padding: 40px;
+  padding: 2rem;
   text-align: center;
-  background: linear-gradient(135deg, #E0F7FA, #7eeefd);
+  background: linear-gradient(to bottom, #f0f4f8, #d9e2ec);
   border-radius: 20px;
-  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
-  font-family: 'Poppins', sans-serif;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+  font-family: 'Press Start 2P', cursive;
   position: relative;
+  color: #333;
 }
 
 /* Header Styling */
 .achievements-container h1 {
-  font-size: 42px;
-  color: #004D40;
+  font-size: 2.5rem;
+  color: #1a1a1a;
   font-weight: 700;
-  margin-bottom: 10px;
+  margin-bottom: 1rem;
+  text-shadow: 2px 2px #fff;
+}
+
+.achievements-container h1::after {
+  content: " 🎮✨";
 }
 
 .achievements-container p {
-  font-size: 18px;
-  color: #444;
-  margin-bottom: 30px;
+  font-size: 1.2rem;
+  color: #555;
+  margin-bottom: 2rem;
 }
 
 /* 🏆 Leaderboard Styling */
 .leaderboard {
-  background: rgba(255, 255, 255, 0.9);
-  padding: 20px;
-  border-radius: 15px;
-  margin-bottom: 30px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  background: rgba(255, 255, 255, 0.7);
+  padding: 1rem;
+  border-radius: 10px;
+  margin-bottom: 2rem;
+  border: 2px solid #2196f3;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
 }
 
 .leaderboard h2 {
-  font-size: 26px;
-  color: #D32F2F;
+  font-size: 1.5rem;
+  color: #e91e63;
   font-weight: bold;
-  margin-bottom: 15px;
+  margin-bottom: 1rem;
 }
 
 /* Leaderboard List */
@@ -55,14 +64,35 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  font-size: 18px;
+  font-size: 1.1rem;
   font-weight: bold;
-  background: rgba(255, 255, 255, 0.9);
+  background: #ffffff;
   padding: 10px;
   border-radius: 8px;
   margin: 5px 0;
-  box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.2);
+  box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.1);
   transition: transform 0.3s ease;
+  margin-bottom: 0.5rem;
+}
+
+.top-achiever {
+  color: #ff9800;
+  font-weight: bold;
+}
+
+.share-xp-btn {
+  background: #e91e63;
+  border: none;
+  padding: 0.8rem 1.4rem;
+  font-size: 1rem;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+  color: #fff;
+}
+
+.share-xp-btn:hover {
+  transform: scale(1.1);
 }
 
 /* Existing Hover Effect (do not modify) */
@@ -72,16 +102,16 @@
 
 /* Highlight Top Achiever remains */
 .leaderboard li:first-child {
-  background: linear-gradient(45deg, #FFD700, #FFB300);
-  color: white;
+  background: linear-gradient(45deg, #ff9800, #f44336);
+  color: #fff;
   font-size: 20px;
 }
 
 /* Highlight the logged-in user's leaderboard entry */
 .leaderboard li.current-user {
-  border: 2px solid #2E7D32;
-  background: rgba(46, 125, 50, 0.1);
-  color: #2E7D32;
+  border: 2px solid #4caf50;
+  background: rgba(76, 175, 80, 0.1);
+  color: #4caf50;
   font-weight: bold;
   position: relative;
 }
@@ -90,39 +120,70 @@
 .leaderboard li.current-user::after {
   content: " (You)";
   font-size: 16px;
-  color: #2E7D32;
+  color: #4caf50;
   margin-left: 5px;
 }
 
 /* 🎖 Achievements Grid */
 .achievements-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1.5rem;
   margin-top: 20px;
 }
 
 /* 🏅 Achievement Cards */
 .achievement-card {
-  background: rgba(255, 255, 255, 0.95);
-  padding: 20px;
-  border-radius: 15px;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
+  background: #ffffff;
+  padding: 1rem;
+  border-radius: 10px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
   text-align: center;
-  transition: all 0.3s ease;
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+  position: relative;
+  border: 2px solid #03a9f4;
+  width: 520px;  /* Increased width for more horizontal spacing */
+  min-height: 320px;
+}
+
+/* Pop-up emojis on hover (do not affect the badge) */
+.achievement-card:hover::after {
+  content: "🥳🎊🎉👏";
+  position: absolute;
+  top: -20px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 2.5rem;
+  animation: popEmojis 1s ease-out;
+}
+
+@keyframes popEmojis {
+  0% { opacity: 0; transform: translate(-50%, -20px) scale(0.5); }
+  50% { opacity: 1; transform: translate(-50%, -40px) scale(1.3); }
+  100% { opacity: 0; transform: translate(-50%, -60px) scale(0.5); }
 }
 
 .achievement-card:hover {
   transform: translateY(-10px);
+  box-shadow: 0 0 15px #03a9f4;
   background: #f9f9f9;
 }
 
 /* Achievement Badge */
 .achievement-badge {
-  width: 80px;
-  height: 80px;
-  margin-bottom: 15px;
-  animation: glow 1.5s infinite alternate;
+  width: 220px;
+  height: 220px;
+  margin-bottom: 1rem;
+  animation: spinBadge 5s linear infinite;
+  object-fit: cover;
+  border: 3px solid #ff9800;
+  border-radius: 50%;
+}
+
+@keyframes spinBadge {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
 }
 
 /* ✨ Glow Effect */
@@ -138,13 +199,20 @@
   overflow: hidden;
   height: 12px;
   margin-top: 10px;
+  margin: 0.5rem 0;
 }
 
 .achievement-progress .progress-bar {
-  background: linear-gradient(45deg, #4CAF50, #8BC34A);
+  background: linear-gradient(90deg, #03a9f4, #ff9800);
   height: 100%;
   transition: width 0.5s ease;
   border-radius: 5px;
+  animation: progressAnimation 2s ease-out forwards;
+}
+
+@keyframes progressAnimation {
+  from { width: 0; }
+  to { width: 100%; }
 }
 
 /* 🎉 Confetti Effect */
@@ -155,6 +223,7 @@
   width: 100%;
   height: 100%;
 }
+
 /* Motivational Message */
 .motivational-message {
   font-size: 20px;
@@ -172,8 +241,8 @@
 .no-achievements {
   font-size: 18px;
   font-weight: bold;
-  color: #D32F2F;
-  background: rgba(211, 47, 47, 0.1);
+  color: #d32f2f;
+  background: rgba(211, 47, 47, 0.2);
   padding: 10px;
   border-radius: 10px;
   margin-bottom: 20px;
@@ -193,8 +262,45 @@
 
 /* Highlight fallback card and logged-in user's achievement card */
 .current-user-card {
-  border: 2px solid #2E7D32;
-  background: rgba(46, 125, 50, 0.1);
-  color: #2E7D32;
+  border: 2px dashed #ff69b4;
+  background: rgba(255, 105, 180, 0.1);
+  color: #4caf50;
   font-weight: bold;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.03); }
+  100% { transform: scale(1); }
+}
+
+/* Prepend an emoji on achievement titles */
+.achievement-card h3::before {
+  content: "🏅 ";
+}
+
+/* Share Button */
+.share-btn {
+  background: #e91e63;
+  border: none;
+  padding: 0.8rem 1.4rem;
+  font-size: 0.9rem;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 0.5rem;
+  transition: transform 0.3s ease;
+  color: #fff;
+}
+
+.share-btn:hover {
+  transform: scale(1.05);
+}
+
+/* User Level */
+.user-level {
+  margin-top: 0.5rem;
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #4caf50;
 }

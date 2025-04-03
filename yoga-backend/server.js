@@ -509,13 +509,11 @@ app.get('/api/achievements', authenticateToken, (req, res) => {
       console.error('Error fetching achievements:', err);
       return res.status(500).json({ error: 'Failed to fetch achievements' });
     }
-    // Map your data as needed for the frontend
-    // (You might adjust these fields and mappings as per your design)
     const achievements = results.map(row => ({
-      badgeUrl: row.badge_url || 'https://via.placeholder.com/150', // Use a default placeholder if needed
-      title: row.achievements_count > 0 ? `Achievement ${row.achievements_count}` : 'Keep Practicing',
-      description: `You have earned ${row.xp} XP.`,
-      progress: row.xp > 0 ? 100 : 0,
+      badgeUrl: row.badgeUrl || '', // The table does not store a badgeUrl so this will be empty.
+      title: `Achievement ${row.achievements_count}`,
+      description: `Keep practicing! You have earned ${row.xp} XP so far.`,
+      progress: row.xp ? Math.min((row.xp / 500) * 100, 100) : 0,
       username: row.username,
       level: row.achievements_count
     }));

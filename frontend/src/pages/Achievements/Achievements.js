@@ -1,5 +1,6 @@
 import React, { useEffect, useState, lazy, Suspense } from 'react';
 import axios from 'axios';
+import badgetImage from '../../utils/images/badget.jpeg';
 import './Achievements.css';
 
 const Confetti = lazy(() => import('react-confetti'));
@@ -9,9 +10,9 @@ const Achievements = () => {
   const [leaderboard, setLeaderboard] = useState([]);
   const [showConfetti, setShowConfetti] = useState(false);
   const token = localStorage.getItem('token');
-  const currentUsername = localStorage.getItem('username') || ""; 
+  const currentUsername = localStorage.getItem('username') || "";
 
-  // Use a case-insensitive search for the current user's leaderboard entry.
+  // Find the current user in the leaderboard (case-insensitive)
   const currentUserBoard = leaderboard.find(user => {
     return (user.username || "").trim().toLowerCase() === currentUsername.trim().toLowerCase();
   });
@@ -25,7 +26,8 @@ const Achievements = () => {
         title: 'My Yoga Achievement!',
         text: shareText,
         url: window.location.href
-      }).then(() => console.log('Thanks for sharing!'))
+      })
+        .then(() => console.log('Thanks for sharing!'))
         .catch(console.error);
     } else {
       const twitterUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}`;
@@ -41,10 +43,9 @@ const Achievements = () => {
         text: shareText,
         url: window.location.href
       })
-      .then(() => console.log('Thanks for sharing!'))
-      .catch(error => console.error('Error sharing:', error));
+        .then(() => console.log('Thanks for sharing!'))
+        .catch(error => console.error('Error sharing:', error));
     } else {
-      // Fallback: open Twitter share URL
       const twitterUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}`;
       window.open(twitterUrl, '_blank');
     }
@@ -52,11 +53,12 @@ const Achievements = () => {
 
   useEffect(() => {
     if (token) {
-      // Fetch achievements
+      // Fetch achievements from the API.
       axios.get('http://localhost:5000/api/achievements', {
         headers: { Authorization: `Bearer ${token}` }
       })
       .then(response => {
+        // Expect the API to return an array of achievement objects
         setAchievements(response.data.achievements || []);
         if (response.data.newAchievement) {
           setShowConfetti(true);
@@ -64,13 +66,12 @@ const Achievements = () => {
         }
       })
       .catch(error => console.error('Error fetching achievements:', error));
-      
-      // Fetch leaderboard
+
+      // Fetch leaderboard data
       axios.get('http://localhost:5000/api/leaderboard', {
         headers: { Authorization: `Bearer ${token}` }
       })
       .then(response => {
-        // Assuming your backend sends { leaderboard: [...] } 
         setLeaderboard(response.data.leaderboard || []);
       })
       .catch(error => console.error('Error fetching leaderboard:', error));
@@ -93,7 +94,7 @@ const Achievements = () => {
             <p>No leaderboard data available</p>
           ) : (
             leaderboard.slice(0, 5).map((user, index) => {
-              const isCurrentUser = user.username.trim().toLowerCase() === currentUsername.trim().toLowerCase();
+              const isCurrentUser = (user.username || "").trim().toLowerCase() === currentUsername.trim().toLowerCase();
               return (
                 <li
                   key={index}
@@ -107,7 +108,6 @@ const Achievements = () => {
             })
           )}
         </ul>
-        {/* New Share XP Points Button */}
         {userXp > 0 && (
           <button className="share-xp-btn" onClick={shareXPPoints}>
             Share My XP
@@ -124,7 +124,9 @@ const Achievements = () => {
               className={`achievement-card ${achievement.username === currentUsername ? "current-user-card" : ""}`}
             >
               <img
-                src={achievement.badgeUrl ||`https://c7.alamy.com/comp/2JWAX9E/golden-badget-with-two-star-2JWAX9E.jpgt+${achievement.achievements_count}`}
+                src={
+                  achievement.badgeUrl || badgetImage
+                }
                 alt={achievement.title}
                 className="achievement-badge"
               />
@@ -137,7 +139,9 @@ const Achievements = () => {
                 Share
               </button>
               {achievement.username === currentUsername && (
-                <div className="user-level">Your Level: {achievement.level || "N/A"}</div>
+                <div className="user-level">
+                  Your Level: {achievement.level || "N/A"}
+                </div>
               )}
             </div>
           ))
