@@ -1,4 +1,3 @@
-// src/components/ResetPassword.js
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './ResetPassword.css';
@@ -17,7 +16,7 @@ const ResetPassword = () => {
       return;
     }
 
-    const trimmedToken = token.trim();
+    const trimmedToken = token.trim(); // Ensure no extra whitespace is sent
 
     try {
       const response = await fetch('http://localhost:5000/api/reset-password', {
@@ -76,3 +75,24 @@ const ResetPassword = () => {
 };
 
 export default ResetPassword;
+
+// Server-side code for handling the reset-password request
+const handleResetPasswordRequest = (req, res) => {
+  const { token, newPassword } = req.body;
+
+  db.query(
+    'SELECT * FROM users WHERE resetToken = ? AND resetTokenExpiry > UTC_TIMESTAMP()',
+    [token.trim()],
+    async (err, results) => {
+      if (err) {
+        console.error('Database error during reset-password:', err);
+        return res.status(500).json({ message: 'Database error' });
+      }
+      console.log("Reset token query results:", results);
+      if (results.length === 0) {
+        return res.status(400).json({ message: 'Invalid or expired token.' });
+      }
+      // … continue with password hashing and update.
+    }
+  );
+};

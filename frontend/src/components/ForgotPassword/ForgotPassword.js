@@ -13,7 +13,7 @@ const ForgotPassword = () => {
 
         // Call the API to request a password reset
         try {
-            const response = await fetch('/api/forgot-password', {
+            const response = await fetch('http://localhost:5000/api/forgot-password', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ email }), // Send email as JSON
@@ -22,8 +22,7 @@ const ForgotPassword = () => {
             const data = await response.json();
             if (response.ok) {
                 setMessage('Check your email for reset instructions.'); // Success message
-                // Redirect to Reset Password page
-                navigate('/reset-password'); // Change this to your actual reset password route
+                // Optionally navigate to /reset-password only if token dispatch is working as expected.
             } else {
                 setMessage(data.message || 'Something went wrong!'); // Error message
             }
