@@ -67,10 +67,16 @@ const Profile = () => {
       setMessage('Profile updated successfully!');
       setIsEditing(false);
       setProfile(response.data); // update fields with latest data from backend
+      setTimeout(() => {
+        setMessage('');
+      }, 3000);
     })
     .catch(error => {
       console.error('Error updating profile:', error);
       setMessage('Failed to update profile.');
+      setTimeout(() => {
+        setMessage('');
+      }, 3000);
     });
   };
 

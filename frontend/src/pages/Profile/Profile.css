@@ -16,22 +16,24 @@
 
 .profile-photo-container {
   position: relative;
-  margin-bottom: 1rem;
+  width: 200px;
+  height: 200px;
+  margin: 0 auto 1rem auto;
 }
 
 .profile-photo {
-  width: 200px;  /* increased size */
-  height: 200px; /* increased size */
+  width: 100%;
+  height: 100%;
   object-fit: cover;
   border-radius: 50%;
   border: 4px solid #1e88e5;
 }
 
-/* Pencil icon overlay */
+/* Pencil icon overlay (bottom right) */
 .change-photo-wrapper {
   position: absolute;
-  bottom: 8px;
-  right: 8px;
+  bottom: 0;
+  right: 0;
   background: #1e88e5;
   color: #fff;
   width: 36px;

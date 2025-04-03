@@ -556,7 +556,11 @@ app.get('/api/profile', authenticateToken, (req, res) => {
     if (results.length === 0) {
       return res.status(404).json({ error: 'User not found' });
     }
-    res.json(results[0]);
+    const user = results[0];
+    if (user.profilePhoto) {
+      user.profilePhoto = user.profilePhoto.replace(/\\/g, '/');
+    }
+    res.json(user);
   });
 });
 
@@ -587,7 +591,12 @@ app.put('/api/profile', authenticateToken, upload.single('profilePhoto'), (req, 
         console.error('Error fetching updated profile:', err);
         return res.status(500).json({ error: 'Failed to fetch updated profile' });
       }
-      res.json(results[0]);
+      // Convert any backslashes to forward slashes
+      const user = results[0];
+      if (user.profilePhoto) {
+        user.profilePhoto = user.profilePhoto.replace(/\\/g, '/');
+      }
+      res.json(user);
     });
   });
 });

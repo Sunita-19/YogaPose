@@ -35,6 +35,7 @@ import Profile from './pages/Profile/Profile'; // Import Profile component
 export default function App() {
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
     const [isAuthenticated, setIsAuthenticated] = useState(false); // Authentication state
+    const [user, setUser] = useState(null); // User state
 
     // Toggle the sidebar visibility
     const toggleSidebar = () => {
@@ -61,7 +62,7 @@ export default function App() {
                                 <Route path='*' element={
                                     <>
                                         <Header toggleSidebar={toggleSidebar} />
-                                        <Sidebar isOpen={isSidebarOpen} toggleSidebar={toggleSidebar} />
+                                        <Sidebar isOpen={isSidebarOpen} toggleSidebar={toggleSidebar} user={user} />
                                         <main className="main-content">
                                             <Routes>
                                                 <Route path='/home' element={<Home />} />
