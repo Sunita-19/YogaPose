@@ -5,13 +5,10 @@ import './Sidebar.css';
 const Sidebar = () => {
   return (
     <div className="sidebar">
-      <nav>
-        <ul>
-          <li><Link to="/progress">Progress</Link></li>
-          <li><Link to="/achievements">Achievements</Link></li>
-          {/* Other sidebar links */}
-        </ul>
-      </nav>
+      <Link to="/profile">Profile</Link>
+      <Link to="/progress">Progress</Link>
+      <Link to="/achievements">Achievements</Link>
+      {/* Other links */}
     </div>
   );
 };

@@ -1,0 +1,75 @@
+.profile-container {
+  max-width: 600px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background: #f7f7f7;
+  border-radius: 10px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  font-family: Arial, sans-serif;
+}
+
+.profile-container h1 {
+  margin-bottom: 1rem;
+  color: #333;
+}
+
+.profile-photo-container {
+  margin-bottom: 1rem;
+}
+
+.profile-photo {
+  width: 150px;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 3px solid #1e88e5;
+}
+
+.profile-container label {
+  display: block;
+  text-align: left;
+  margin: 0.5rem 0 0.2rem;
+  color: #555;
+}
+
+.profile-container input,
+.profile-container textarea {
+  width: 100%;
+  padding: 0.8rem;
+  margin-bottom: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.profile-form input[type="file"] {
+  padding: 0;
+  border: none;
+}
+
+.btn-group {
+  display: flex;
+  gap: 1rem;
+  justify-content: space-around;
+}
+
+.edit-btn {
+  background: #1e88e5;
+  color: #fff;
+  border: none;
+  padding: 0.8rem 1.2rem;
+  border-radius: 5px;
+  cursor: pointer;
+  flex: 1; /* Ensures save and cancel have the same width */
+  transition: background 0.3s ease;
+}
+
+.edit-btn:hover {
+  background: #1565c0;
+}
+
+.message {
+  color: #388e3c;
+  font-weight: bold;
+  margin-bottom: 1rem;
+}

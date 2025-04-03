@@ -4,6 +4,7 @@ const cors = require('cors');
 const mysql = require('mysql2');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+const multer = require('multer');
 require('dotenv').config();
 
 const app = express();
@@ -518,6 +519,67 @@ app.get('/api/achievements', authenticateToken, (req, res) => {
       level: row.achievements_count
     }));
     res.json({ achievements });
+  });
+});
+
+// Configure storage for profile photos
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    // Ensure the uploads folder exists, or change path as needed
+    cb(null, 'uploads/');
+  },
+  filename: function (req, file, cb) {
+    const ext = file.originalname.split('.').pop();
+    cb(null, `${req.user.id}-${Date.now()}.${ext}`);
+  }
+});
+const upload = multer({ storage });
+
+// GET profile details for the logged in user
+app.get('/api/profile', authenticateToken, (req, res) => {
+  const userId = req.user.id;
+  // Now select profilePhoto as well as username, email, mobile
+  db.query('SELECT username, email, mobile, profilePhoto FROM users WHERE id = ?', [userId], (err, results) => {
+    if (err) {
+      console.error('Error fetching profile:', err);
+      return res.status(500).json({ error: 'Database error' });
+    }
+    if (results.length === 0) {
+      return res.status(404).json({ error: 'User not found' });
+    }
+    res.json(results[0]);
+  });
+});
+
+// PUT update profile details (with optional profile photo upload)
+app.put('/api/profile', authenticateToken, upload.single('profilePhoto'), (req, res) => {
+  const { username, email, mobile } = req.body;
+  const userId = req.user.id;
+  const profilePhoto = req.file ? req.file.path : null;
+
+  // Build update query dynamically
+  let query = 'UPDATE users SET username = ?, email = ?, mobile = ?';
+  const params = [username, email, mobile];
+  if (profilePhoto) {
+    query += ', profilePhoto = ?';
+    params.push(profilePhoto);
+  }
+  query += ' WHERE id = ?';
+  params.push(userId);
+
+  db.query(query, params, (err, results) => {
+    if (err) {
+      console.error('Error updating profile:', err);
+      return res.status(500).json({ error: 'Failed to update profile' });
+    }
+    // Return updated profile data
+    db.query('SELECT username, email, mobile, profilePhoto FROM users WHERE id = ?', [userId], (err, results) => {
+      if (err) {
+        console.error('Error fetching updated profile:', err);
+        return res.status(500).json({ error: 'Failed to fetch updated profile' });
+      }
+      res.json(results[0]);
+    });
   });
 });
 

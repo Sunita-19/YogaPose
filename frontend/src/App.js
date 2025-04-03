@@ -30,6 +30,8 @@ import RecommendedPoses from './pages/RecommendedPoses/RecommendedPoses'; // Imp
 import DetailedReport from './pages/Progress/DetailedReport'; // Import the DetailedReport component
 import Logout from './pages/Logout/Logout'; // Import Logout component
 import Achievements from './pages/Achievements/Achievements'; // Import Achievements component
+import Profile from './pages/Profile/Profile'; // Import Profile component
+
 export default function App() {
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
     const [isAuthenticated, setIsAuthenticated] = useState(false); // Authentication state
@@ -83,6 +85,7 @@ export default function App() {
                                                 <Route path="/yoga-poses" element={<YogaPosesVideos />} />
                                                 <Route path="/recommended-poses" element={<RecommendedPoses />} />
                                                 <Route path="/achievements" element={<Achievements />} />
+                                                <Route path="/profile" element={<Profile />} />
                                             </Routes>
                                         </main>
                                         <Footer />
