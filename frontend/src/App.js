@@ -45,7 +45,6 @@ export default function App() {
     const handleLogin = () => {
         setIsAuthenticated(true); // Set authenticated to true on successful login
     };
-
     return (
         <UserProvider>
             <Router>
