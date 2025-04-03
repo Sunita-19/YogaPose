@@ -280,7 +280,7 @@ app.get('/api/yoga_poses/:id', authenticateToken, (req, res) => {
 
 
 app.post('/api/recommended-poses', authenticateToken, (req, res) => {
-    console.log('Received request:', req.body);
+    // console.log('Received request:', req.body);
 
     // Fallback yoga.js list (the same as your dropdown list)
     const fallbackPoseList = [
@@ -328,7 +328,7 @@ app.post('/api/recommended-poses', authenticateToken, (req, res) => {
 });
 
 app.get('/api/progress-report', authenticateToken, (req, res) => {
-    console.log(`Progress report request for user ${req.user.id}`);
+    // console.log(`Progress report request for user ${req.user.id}`);
     const userId = req.user.id;
     
     // Sessions query (if needed)
