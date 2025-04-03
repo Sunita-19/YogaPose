@@ -40,11 +40,11 @@ export const poseInstructions = {
         'Align your body in a straight line, and hold the pose while keeping your gaze upward.',
         'Exhale and slowly lower your body back to the floor.'
     ],
-    Tadasana: [
-        'Stand tall with your feet together or hip-width apart.',
-        'Distribute your weight evenly through your feet and engage your leg muscles.',
-        'Lift your chest, roll your shoulders back and down, and let your arms hang naturally at your sides.',
-        'Focus on your breath and hold the pose for a few deep breaths.'
+    'King Pigeon Pose': [
+        'Begin by standing tall as a mountain pose.',
+        'Shift your weight onto one leg and fold the other leg behind you, resting the top of your foot near your opposite shoulder.',
+        'Open your chest and bring your hands together in prayer position at your heart.',
+        'Breathe deeply while holding the pose for 30 seconds to 1 minute, then switch sides.'
     ],
     'Virabhadrasana I': [
         'Step into a lunge with your right foot forward, keeping the left leg straight and turned slightly inwards.',
@@ -102,12 +102,11 @@ export const poseInstructions = {
         'Avoid sagging or lifting your hips too high.',
         'Hold the pose for as long as you can maintain proper form.'
     ],
-    'Parivrtta Trikonasana (Revolved Triangle Pose)': [
-        'Stand with your feet wide apart and extend your arms out to the sides.',
-        'Turn your right foot out and your left foot slightly in, then twist your torso to the right.',
-        'Place your left hand on your right leg or the floor while extending your right arm upward.',
-        'Keep the left leg straight and maintain hip alignment as you twist.',
-        'Hold the pose and then switch sides.'
+    'Scorpion Pose Kapotasana': [
+        'Begin in a plank position with your core engaged.',
+        'Slowly shift your weight to one side as you arch backward, trying to bring your feet closer to your head.',
+        'Make sure to keep your core and leg muscles active for support.',
+        'Hold the pose briefly (for a few seconds) and then return to plank. Repeat on the other side.'
     ],
     'Eka Pada Rajakapotasana (Pigeon Pose)': [
         'Begin in a tabletop position and slide your right knee forward between your hands.',

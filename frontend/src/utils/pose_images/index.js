@@ -5,12 +5,14 @@ import tree from './tree.jpg'
 import warrior from './warrior.jpg'
 import traingle from './traingle.jpg'
 import shoulderstand from './shoulderstand.jpg'
-import tadasana from './tadasana.jpg'
 import virabhadrasanaI from './virabhadrasana_i.jpg';
 import balasana from './balasana.jpg'
 import setuBandhasana from './setu_bandhasanan.jpg'
 import marjaryasanaBitilasana from './marjaryasana_bitilasana.jpg'
 import paschimottanasana from './paschimottanasana.jpg'
+// Newly added poses with new images:
+import kingPigeonPose from './KingPigeonPose.jpeg';
+import scorpionPose from './ScorpionPose.jpeg';
 
 // Newly added poses
 import ardhaChandrasana from './ardha_chandrasana.jpg'
@@ -29,7 +31,7 @@ export const poseImages = {
     Chair: chair,
     Triangle: traingle,
     Shoulderstand: shoulderstand,
-    Tadasana: tadasana,
+    'King Pigeon Pose': kingPigeonPose,
     'Virabhadrasana I': virabhadrasanaI,
     Balasana: balasana,
     Paschimottanasana: paschimottanasana,
@@ -40,6 +42,7 @@ export const poseImages = {
     'Navasana (Boat Pose)': navasana,
     'Phalakasana (Plank Pose)': phalakasana,
     'Parivrtta Trikonasana (Revolved Triangle Pose)': parivrttaTrikonasana,
+    'Scorpion Pose Kapotasana': scorpionPose,
     'Eka Pada Rajakapotasana (Pigeon Pose)': ekaPadaRajakapotasana,
     'Ustrasana (Camel Pose)': ustrasana
 }
