@@ -46,4 +46,5 @@ export const poseImages = {
   'Eka Pada Rajakapotasana (Pigeon Pose)': ekaPadaRajakapotasana,
   'Scorpion Pose Kapotasana': scorpionPose,
   'Ustrasana (Camel Pose)': ustrasana
+  
 };
