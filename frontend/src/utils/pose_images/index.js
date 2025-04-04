@@ -21,7 +21,7 @@ import parivrttaTrikonasana from './parivrtta_trikonasana.jpg';
 import ekaPadaRajakapotasana from './eka_pada_rajakapotasana.jpg';
 import ustrasana from './ustrasana.jpg';
 
-const poseImages = {
+export const poseImages = {
   Tree: tree,
   Cobra: cobra,
   Dog: dog,
@@ -43,5 +43,3 @@ const poseImages = {
   'Eka Pada Rajakapotasana (Pigeon Pose)': ekaPadaRajakapotasana,
   'Ustrasana (Camel Pose)': ustrasana
 };
-
-export default poseImages;

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import './Progress.css';
-import poseImages from '../../utils/pose_images';
+import { poseImages } from '../../utils/pose_images';
 
 const Progress = () => {
   const [progress, setProgress] = useState(null);
