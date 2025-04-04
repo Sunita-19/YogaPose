@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { poseInstructions } from '../../utils/data';
-import { poseImages } from '../../utils/pose_images';
+import poseImages from '../../utils/pose_images';
 import './Instructions.css';
 
 export default function Instructions({ currentPose }) {

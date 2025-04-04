@@ -1,5 +1,5 @@
 import React from 'react';
-import { poseImages } from '../../utils/pose_images';
+import poseImages from '../../utils/pose_images';
 import './DropDown.css';
 
 let poseList = [
