@@ -20,6 +20,8 @@ import phalakasana from './phalakasana.jpg';
 import parivrttaTrikonasana from './parivrtta_trikonasana.jpg';
 import ekaPadaRajakapotasana from './eka_pada_rajakapotasana.jpg';
 import ustrasana from './ustrasana.jpg';
+import kingPigeonPose from './KingPigeonPose.jpeg';
+import scorpionPose from './ScorpionPose.jpeg';
 
 export const poseImages = {
   Tree: tree,
@@ -39,7 +41,9 @@ export const poseImages = {
   'Bakasana (Crow Pose)': bakasana,
   'Navasana (Boat Pose)': navasana,
   'Phalakasana (Plank Pose)': phalakasana,
-  'Parivrtta Trikonasana (Revolved Triangle Pose)': parivrttaTrikonasana,
+  // Updated keys to match UI:
+  'King Pigeon Pose': kingPigeonPose,
   'Eka Pada Rajakapotasana (Pigeon Pose)': ekaPadaRajakapotasana,
+  'Scorpion Pose Kapotasana': scorpionPose,
   'Ustrasana (Camel Pose)': ustrasana
 };
