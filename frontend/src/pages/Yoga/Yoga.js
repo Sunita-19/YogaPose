@@ -21,7 +21,7 @@ let poseList = [
   'Dog',
   'Shoulderstand',
   'Triangle',
-  'Tadasana',
+  'King Pigeon Pose',            // replaced "Tadasana"
   'Virabhadrasana I',
   'Balasana',
   'Paschimottanasana',
@@ -31,7 +31,7 @@ let poseList = [
   'Bakasana',
   'Navasana',
   'Phalakasana',
-  'Parivrtta Trikonasana ',
+  'Scorpion Pose Kapotasana',     // replaced "Parivrtta Trikonasana "
   'Eka Pada Rajakapotasana',
   'Ustrasana'
 ];
