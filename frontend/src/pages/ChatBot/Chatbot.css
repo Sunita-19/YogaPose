@@ -55,14 +55,14 @@
 
 /* User messages already show white text */
 .user {
-    background: #2588f1;
-    color: white;
+    background: #2588f1; /* blue background */
+    color: white !important; /* force white text */
     align-self: flex-end;
 }
 
 .assistant {
     background: #f1f1f1;
-    color: #070606;
+    color: black; /* Changed from #070606 to black */
     align-self: flex-start;
 }
 
