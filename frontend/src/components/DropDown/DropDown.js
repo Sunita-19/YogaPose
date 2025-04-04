@@ -10,17 +10,17 @@ let poseList = [
   'Dog',
   'Shoulderstand',
   'Triangle',
-  'Tadasana',
+  'King Pigeon Pose',            // replaced "Tadasana"
   'Virabhadrasana I',
   'Balasana',
   'Paschimottanasana',
-  'Setu Bandhasana', // exactly the same as key in poseInstructions (with the space)
+  'Setu Bandhasana',
   'Marjaryasana-Bitilasana',
   'Ardha Chandrasana (Half Moon Pose)',
   'Bakasana (Crow Pose)',
   'Navasana (Boat Pose)',
   'Phalakasana (Plank Pose)',
-  'Parivrtta Trikonasana (Revolved Triangle Pose)',
+  'Scorpion Pose Kapotasana',     // replaced "Parivrtta Trikonasana (Revolved Triangle Pose)"
   'Eka Pada Rajakapotasana (Pigeon Pose)',
   'Ustrasana (Camel Pose)'
 ];

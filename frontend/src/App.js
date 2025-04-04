@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
 import Header from './components/Header/Header';
 import Sidebar from './components/Sidebar/Sidebar';
 import Footer from './components/Footer/Footer'; // Import Footer component
 import { UserProvider } from './context/UserContext'; // Import UserProvider
+import axios from 'axios';
 
 // Import page components
 import Home from './pages/Home/Home';
@@ -36,6 +37,22 @@ export default function App() {
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
     const [isAuthenticated, setIsAuthenticated] = useState(false); // Authentication state
     const [user, setUser] = useState(null); // User state
+    const token = localStorage.getItem('token');
+
+    // Fetch user profile on mount (or on login)
+    useEffect(() => {
+        if (token) {
+            axios.get('http://localhost:5000/api/profile', {
+                headers: { Authorization: `Bearer ${token}` }
+            })
+            .then(response => {
+                setUser(response.data);
+            })
+            .catch(error => {
+                console.error('Error fetching user:', error);
+            });
+        }
+    }, [token]);
 
     // Toggle the sidebar visibility
     const toggleSidebar = () => {

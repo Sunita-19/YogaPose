@@ -7,6 +7,7 @@ const jwt = require('jsonwebtoken');
 const multer = require('multer');
 const fs = require('fs');
 const path = require('path');
+const nodemailer = require('nodemailer');
 require('dotenv').config();
 
 const app = express();
@@ -115,6 +116,115 @@ app.post('/api/login', async (req, res) => {
 app.post('/api/logout', authenticateToken, (req, res) => {
     // Do not delete any records on logout.
     res.status(200).json({ message: 'Logout successful' });
+});
+
+app.post('/api/forgot-password', (req, res) => {
+  const { email } = req.body;
+  if (!email) {
+    return res.status(400).json({ message: 'Email is required.' });
+  }
+  db.query('SELECT * FROM users WHERE email = ?', [email], (err, results) => {
+    if (err) {
+      console.error('Database error during forgot-password:', err);
+      return res.status(500).json({ message: 'Database error' });
+    }
+    if (results.length === 0) {
+      return res.status(404).json({ message: 'Email not found' });
+    }
+    // Generate a 6-digit token as a string
+    const resetToken = Math.floor(100000 + Math.random() * 900000).toString();
+    // New version (using UTC_TIMESTAMP())
+    db.query(
+      'UPDATE users SET resetToken = ?, resetTokenExpiry = DATE_ADD(UTC_TIMESTAMP(), INTERVAL 15 MINUTE) WHERE email = ?',
+      [resetToken, email],
+      (updateErr) => {
+        if (updateErr) {
+          console.error('Error updating token:', updateErr);
+          return res.status(500).json({ message: 'Could not update token' });
+        }
+        
+        // Create a transporter using nodemailer (using Gmail as example)
+        let transporter = nodemailer.createTransport({
+          service: 'gmail',
+          auth: {
+            user: process.env.EMAIL_USER, // set your Gmail address in your .env file
+            pass: process.env.EMAIL_PASS  // set your Gmail app password or credentials in your .env file
+          }
+        });
+        
+        // Email options
+        let mailOptions = {
+          from: process.env.EMAIL_USER,
+          to: email,
+          subject: 'Reset Your Fun Yoga Password',
+          text: `Your password reset token is: ${resetToken}. Use this token to reset your password. It expires in 15 minutes.`
+        };
+        
+        transporter.sendMail(mailOptions, (mailErr, info) => {
+          if (mailErr) {
+            console.error('Error sending email:', mailErr);
+            return res.status(500).json({ message: 'Failed to send reset email.' });
+          }
+          console.log(`Reset token for ${email} is: ${resetToken}`);
+          return res.status(200).json({ message: 'Reset instructions sent to your email.' });
+        });
+      }
+    );
+  });
+});
+
+app.post('/api/reset-password', async (req, res) => {
+  console.log("Reset password request body:", req.body);
+  const { token, newPassword } = req.body;
+  if (!token || !newPassword) {
+    return res.status(400).json({ message: 'Token and new password are required.' });
+  }
+  
+  // Debug extra logging for the token:
+  console.log("Raw token:", token);
+  console.log("Token length:", token.length);
+  const trimmedToken = token.trim();
+  console.log("Trimmed token:", trimmedToken);
+  console.log("Trimmed token length:", trimmedToken.length);
+  console.log("Token hex:", Buffer.from(trimmedToken).toString('hex'));
+  
+  console.log(`Received token: ${trimmedToken}, newPassword: ${newPassword}`);
+  console.log("Current server time:", new Date());
+  
+  db.query(
+    'SELECT * FROM users WHERE resetToken = ? AND resetTokenExpiry > UTC_TIMESTAMP()',
+    [trimmedToken],
+    async (err, results) => {
+      if (err) {
+        console.error('Database error during reset-password:', err);
+        return res.status(500).json({ message: 'Database error' });
+      }
+      console.log("Reset token query results:", results);
+      if (results.length === 0) {
+        return res.status(400).json({ message: 'Invalid or expired token.' });
+      }
+      const user = results[0];
+      try {
+        const hashedPassword = await bcrypt.hash(newPassword, 10);
+        console.log(`Hashed password for user id ${user.id}: ${hashedPassword}`);
+        db.query(
+          'UPDATE users SET password = ?, resetToken = NULL, resetTokenExpiry = NULL WHERE id = ?',
+          [hashedPassword, user.id],
+          (updateErr) => {
+            if (updateErr) {
+              console.error('Error updating password:', updateErr);
+              return res.status(500).json({ message: 'Failed to update password.' });
+            }
+            console.log(`Password updated successfully for user id ${user.id}`);
+            return res.status(200).json({ message: 'Password reset successfully.' });
+          }
+        );
+      } catch (error) {
+        console.error('Hashing error:', error);
+        return res.status(500).json({ message: 'Error processing request.' });
+      }
+    }
+  );
 });
 
 app.post('/api/practice', authenticateToken, (req, res) => {
@@ -280,7 +390,7 @@ app.get('/api/yoga_poses/:id', authenticateToken, (req, res) => {
 
 
 app.post('/api/recommended-poses', authenticateToken, (req, res) => {
-    console.log('Received request:', req.body);
+    // console.log('Received request:', req.body);
 
     // Fallback yoga.js list (the same as your dropdown list)
     const fallbackPoseList = [
@@ -328,7 +438,7 @@ app.post('/api/recommended-poses', authenticateToken, (req, res) => {
 });
 
 app.get('/api/progress-report', authenticateToken, (req, res) => {
-    console.log(`Progress report request for user ${req.user.id}`);
+    // console.log(`Progress report request for user ${req.user.id}`);
     const userId = req.user.id;
     
     // Sessions query (if needed)
@@ -603,4 +713,5 @@ app.put('/api/profile', authenticateToken, upload.single('profilePhoto'), (req, 
 
 app.listen(port, () => {
     console.log(`Server is running on http://localhost:${port}`);
+    console.log("Current server time:", new Date());
 });
