@@ -39,6 +39,9 @@ if (!fs.existsSync(uploadDir)) {
 // Expose uploads as a static folder so files can be accessed by the frontend
 app.use('/uploads', express.static(uploadDir));
 
+const poseImagesDir = path.join(__dirname, '../frontend/src/utils/pose_images');
+app.use('/pose_images', express.static(poseImagesDir));
+
 function authenticateToken(req, res, next) {
     const token = req.headers['authorization'];
     if (!token) return res.status(401).json({ message: 'Access denied, no token provided' });
@@ -199,7 +202,7 @@ app.post('/api/reset-password', async (req, res) => {
         console.error('Database error during reset-password:', err);
         return res.status(500).json({ message: 'Database error' });
       }
-      console.log("Reset token query results:", results);
+      // console.log("Reset token query results:", results);
       if (results.length === 0) {
         return res.status(400).json({ message: 'Invalid or expired token.' });
       }
@@ -713,5 +716,5 @@ app.put('/api/profile', authenticateToken, upload.single('profilePhoto'), (req, 
 
 app.listen(port, () => {
     console.log(`Server is running on http://localhost:${port}`);
-    console.log("Current server time:", new Date());
+    // console.log("Current server time:", new Date());
 });
